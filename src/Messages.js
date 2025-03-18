@@ -1,10 +1,8 @@
 import { useState } from 'react';
 
-function MessageBox() {
+export function MessageBox() {
     const [message, setMessage] = useState('');
-    const [messages, setMessages] = useState([{
-
-    }])
+    const [messages, setMessages] = useState([{}])
 
     return (
         <>
@@ -16,7 +14,7 @@ function MessageBox() {
         <button className="messageButton" onClick={
             setMessages([
                 ...messages,
-                message
+                {'name': message}
             ])
         }></button>
         </>
