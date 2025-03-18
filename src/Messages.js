@@ -1,0 +1,24 @@
+import { useState } from 'react';
+
+function MessageBox() {
+    const [message, setMessage] = useState('');
+    const [messages, setMessages] = useState([{
+
+    }])
+
+    return (
+        <>
+        // <h1>Messages:</h1>
+        <input className="inputBox" onChange={e => {
+            setMessage(e.target.value);
+        }}>Enter your message</input>
+        
+        <button className="messageButton" onClick={
+            setMessages([
+                ...messages,
+                message
+            ])
+        }></button>
+        </>
+    )
+}
