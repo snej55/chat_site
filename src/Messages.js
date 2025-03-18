@@ -5,8 +5,8 @@ export function MessageBox() {
     const [messages, setMessages] = useState([{}])
 
     return (
-        <>
-        // <h1>Messages:</h1>
+        <div>
+        <h1>Messages:</h1>
         <input className="inputBox" onChange={e => {
             setMessage(e.target.value);
         }}>Enter your message</input>
@@ -17,6 +17,6 @@ export function MessageBox() {
                 {'name': message}
             ])
         }></button>
-        </>
+        </div>
     )
 }
