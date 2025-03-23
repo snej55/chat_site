@@ -1,10 +1,27 @@
-import { useState } from 'react';
-import './MessageBox.css'
+import { useState, useEffect } from 'react';
+import './MessageBox.css';
+import io from "socket.io-client";
+
+const socket = io("http://localhost:5000");
 
 export function MessageBox() {
     const [messageData, setMessageData] = useState('');
     const [messages, setMessages] = useState([]);
     const [messageID, setMessageID] = useState(0);
+
+    useEffect(() => {
+        // list for incoming messages
+        socket.on("message", (message) => {
+            setMessages([
+                ...messages,
+                message
+            ]);
+        });
+
+        return () => {
+            socket.off("message");
+        };
+    }, [messages]);
 
     function getTime() {
         var currentDate = new Date();
@@ -13,12 +30,10 @@ export function MessageBox() {
     }
 
     function addUserMessage() {
-        if (messageData) {
+        if (messageData.trim() !== "") {
             setMessageID(messageID + 1);
-            setMessages([
-                ...messages,
-                {'content': messageData, 'time': getTime(), 'user': 'test-bob', 'uid': messageID}
-            ]);
+            const message = {content: messageData, time: getTime(), user: 'test-bob', uid: messageID};
+            socket.emit("message", message);
             document.getElementsByClassName('message-text')[0].value = '';
         }
     }
