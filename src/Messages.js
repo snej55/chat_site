@@ -21,16 +21,16 @@ export function MessageBox() {
     }
 
     return (
-        <div className="container">
+        <div className="chat-container">
             <div className='message-box'>
                 {messages.map(
-                    i =><div key={i.uid}>
-                            <span className={(i.user === 'test-bob') ? 'user' : 'other'}>{i.content}</span>
+                    i =><div key={i.uid} class={(i.user === 'test-bob') ? 'message user' : 'message other'}>
+                            <span className='bubble'>{i.content}</span>
                         </div>
                 )}
             </div>
             <div className='input-box'>
-                <textarea onChange={e => setMessageData(e.target.value)} placeholder='Enter your message here...'></textarea>
+                <textarea className='message-text' onChange={e => setMessageData(e.target.value)} placeholder='Enter your message here...'></textarea>
                 <button className="send-button" onClick={messageData ? addUserMessage : null}>Send</button>
             </div>
         </div>
