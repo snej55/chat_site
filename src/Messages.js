@@ -2,29 +2,37 @@ import { useState } from 'react';
 import './MessageBox.css'
 
 export function MessageBox() {
-    const [message, setMessage] = useState('');
-    const [messages, setMessages] = useState([])
+    const [messageData, setMessageData] = useState('');
+    const [messages, setMessages] = useState([]);
     const [messageID, setMessageID] = useState(0);
 
-    // message = {'content', 'id', 'username'}
-    function addMessage() {
+    function getTime() {
+        var currentDate = new Date();
+        var dateTime = currentDate.getHours() + ':' + currentDate.getMinutes();
+        return dateTime;
+    }
+
+    function addUserMessage() {
+        setMessageID(messageID + 1);
         setMessages([
             ...messages,
-            {'content': message, 'id': messageID}
+            {'content': messageData, 'time': getTime(), 'user': 'test-bob', 'uid': messageID}
         ]);
-        setMessageID(messageID + 1);
     }
 
     return (
-        <div className="messageBox">
-        <h1>Messages:</h1>
-        <ol>
-            {messages.map(message => (
-                <div className="messageItem" key={message.id}>Content: '{message.content}' (ID: {message.id})</div>
-            ))}
-        </ol>
-        <input value={message} className="messageInput" onChange={e => setMessage(e.target.value)}/>
-        <button className="messageButton"  onClick={message ? addMessage : null}>Enter</button>
+        <div className="container">
+            <div className='message-box'>
+                {messages.map(
+                    i =><div key={i.uid}>
+                            <span className={(i.user === 'test-bob') ? 'user' : 'other'}>{i.content}</span>
+                        </div>
+                )}
+            </div>
+            <div className='input-box'>
+                <textarea onChange={e => setMessageData(e.target.value)} placeholder='Enter your message here...'></textarea>
+                <button className="send-button" onClick={messageData ? addUserMessage : null}>Send</button>
+            </div>
         </div>
-    );
+    )
 }
