@@ -29,7 +29,9 @@
 
 .message {
     display: flex;
-    margin-bottom: 10px
+    margin-bottom: 10px;
+    /* flex-direction: column; */
+    /* flex-direction: column; */
 }
 
 .user {
@@ -42,6 +44,7 @@
 
 .bubble {
     max-width: 75%;
+    width: fit-content;
     padding: 10px;
     border-radius: 15px;
     word-wrap: break-word;
@@ -66,6 +69,7 @@
     color: #ddd;
     text-align: left;
     border-bottom-left-radius: 5px;
+    flex-direction: column;
 }
 
 .input-box {
@@ -82,6 +86,16 @@
     resize: none;
     min-height: 40px;
     font-size: 16px;
+}
+
+.message-info {
+    color: #555;
+    font-size: 14px;
+    font-style: italic;
+    justify-content: left;
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 20px;
 }
 
 .send-button {

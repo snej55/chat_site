@@ -42,12 +42,14 @@ export function MessageBox({getUserName}) {
 
     return (
         <div className="chat-container">
-            <div className="chat-header">ChatBox v0.1.0</div>
+            <div className="chat-header">ChatBox v0.1.1</div>
             <div className='message-box'>
                 {messages.map(
                     i =><div key={i.uid} class={(i.user === getUserName()) ? 'message user' : 'message other'}>
-                            <span className='bubble'>{i.content}</span>
-                            {/* <span className='message-info'>{i.user} at {i.time}</span> */}
+                            <div>
+                                <span className='bubble'>{i.content}</span>
+                                {(i.user !== getUserName()) ? <div className='message-info'>{i.user} at {i.time}</div> : <div className='message-info'></div>}
+                            </div>
                         </div>
                 )}
             </div>
