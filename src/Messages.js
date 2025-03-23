@@ -9,8 +9,8 @@ export function MessageBox() {
     // message = {'content', 'id', 'username'}
     function addMessage() {
         setMessages([
-            {'content': message, 'id': messageID},
-            ...messages
+            ...messages,
+            {'content': message, 'id': messageID}
         ]);
         setMessageID(messageID + 1);
     }
@@ -18,18 +18,13 @@ export function MessageBox() {
     return (
         <div className="messageBox">
         <h1>Messages:</h1>
-        <input value={message} className="messageInput" onChange={e => setMessage(e.target.value)}/>
-        <style>
-            {/* {1 ? (
-                
-            ) : (<div></div>)} */}
-        </style>
-        <button className="messageButton" onClick={addMessage}>Enter</button>
         <ol>
             {messages.map(message => (
                 <div className="messageItem" key={message.id}>Content: '{message.content}' (ID: {message.id})</div>
             ))}
         </ol>
+        <input value={message} className="messageInput" onChange={e => setMessage(e.target.value)}/>
+        <button className="messageButton"  onClick={message ? addMessage : null}>Enter</button>
         </div>
     );
 }
