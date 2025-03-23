@@ -13,15 +13,19 @@ export function MessageBox() {
     }
 
     function addUserMessage() {
-        setMessageID(messageID + 1);
-        setMessages([
-            ...messages,
-            {'content': messageData, 'time': getTime(), 'user': 'test-bob', 'uid': messageID}
-        ]);
+        if (messageData) {
+            setMessageID(messageID + 1);
+            setMessages([
+                ...messages,
+                {'content': messageData, 'time': getTime(), 'user': 'test-bob', 'uid': messageID}
+            ]);
+            document.getElementsByClassName('message-text')[0].value = '';
+        }
     }
 
     return (
         <div className="chat-container">
+            <div className="chat-header">ChatBox v0.1.0</div>
             <div className='message-box'>
                 {messages.map(
                     i =><div key={i.uid} class={(i.user === 'test-bob') ? 'message user' : 'message other'}>
@@ -30,8 +34,8 @@ export function MessageBox() {
                 )}
             </div>
             <div className='input-box'>
-                <textarea className='message-text' onChange={e => setMessageData(e.target.value)} placeholder='Enter your message here...'></textarea>
-                <button className="send-button" onClick={messageData ? addUserMessage : null}>Send</button>
+                <textarea className='message-text' onChange={e => setMessageData(e.target.value)} placeholder='Enter your message here...' onKeyDown={e => (e.key === 'Enter' ? addUserMessage() : null)}></textarea>
+                <button className="send-button" onClick={addUserMessage}>Send</button>
             </div>
         </div>
     )
