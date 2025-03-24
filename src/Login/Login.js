@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-
+import './Login.css';
 export function Login({setUserName}) {
     const [name, setName] = useState();
 
@@ -10,18 +10,22 @@ export function Login({setUserName}) {
     }
 
     return (
+
+
         <div className="login-wrapper">
+            
             <h1>Please log in</h1>
             <form onSubmit={handleSubmit}>
                 <label>
-                    <p>Username</p>
+                    <p>Input Your Username</p>
                     <input type="text" onChange={e => setName(e.target.value)}/>
                 </label>
                 <div>
-                    <button type="submit">Submit</button>
+                    <button type="submit">Continue</button>
                 </div>
             </form>
         </div>
+
     )
 }
 
