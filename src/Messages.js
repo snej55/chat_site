@@ -37,12 +37,13 @@ export function MessageBox({getUserName}) {
             const message = {content: messageData, time: getTime(), user: getUserName(), uid: messageID};
             socket.emit("message", message);
             document.getElementsByClassName('message-text')[0].value = '';
+            setMessageData('');
         }
     }
 
     return (
         <div className="chat-container">
-            <div className="chat-header">ChatBox v0.1.1</div>
+            <div className="chat-header">{getUserName()} in ChatBox v0.1.1</div>
             <div className='message-box'>
                 {messages.map(
                     i =><div key={i.uid} class={(i.user === getUserName()) ? 'message user' : 'message other'}>
