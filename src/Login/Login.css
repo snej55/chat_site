@@ -1,3 +1,10 @@
+body {
+    display: flex;
+    min-height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+
 .login-wrapper {
     /* background-image: linear-gradient(red, yellow); */
 
@@ -8,12 +15,9 @@
     background-image: url("../../public/cast_building_wiki.jpg");
     background-repeat: no-repeat;
     background-size: 300px,300px;
-    
-
-
 }
+
 h1{
     color: rgb(224, 232, 255);
     font-family: 'Courier New', Courier, monospace;
-    
 }
