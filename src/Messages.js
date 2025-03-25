@@ -4,7 +4,7 @@ import io from "socket.io-client";
 
 import PropTypes from 'prop-types';
 
-// const socket = io("http://10.24.79.110:5001");
+//const socket = io("http://10.24.79.110:5001");
 const socket = io("http://10.24.79.194:5001");
 
 export function MessageBox({getUserName}) {
