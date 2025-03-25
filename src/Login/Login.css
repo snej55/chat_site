@@ -8,7 +8,8 @@ html, body {
 body {
     /* fake gradxwient for dimmer backgr */
     background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)),
-    url("../../public/cast_building_wiki.jpg");
+    /* url("../../public/cast_building_wiki.jpg"); */
+    url("../../public/image.jpg");
     background-size: cover;
     background-position: center; 
     background-repeat: no-repeat; 
