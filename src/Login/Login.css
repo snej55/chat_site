@@ -30,7 +30,7 @@ body {
 
 
 }
-h1{
+/* h1{
     color: rgb(224, 232, 255);
     font-family: 'Courier New', Courier, monospace;
     padding: 0%;
@@ -50,9 +50,9 @@ h2{
 p{
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     margin: 0px;
-}
+} */
 
-input{
+/* input{
     border: 2px solid gray;
     border-radius: 4px;
     width: 150px;
@@ -75,4 +75,4 @@ button{
     font-size: larger;
     border-radius: 4px;
     margin-top: auto;
-}
+} */

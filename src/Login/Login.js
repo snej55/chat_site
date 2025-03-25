@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import './Login.css';
+// import './Login.css';
 export function Login({setUserName}) {
     const [name, setName] = useState();
 

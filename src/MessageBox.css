@@ -47,11 +47,9 @@
 .bubble {
     max-width: 75%;
     width: fit-content;
-    /* height: fit-content; */
     padding: 10px;
-    /* padding-bottom: 10px; */
     border-radius: 15px;
-    word-wrap: normal;
+    word-wrap: break-word;
     opacity: 1.0;
     transition: 0.3s;
     cursor: pointer;
@@ -66,7 +64,6 @@
     color: white;
     text-align: right;
     border-bottom-right-radius: 5px;
-
 }
 
 .other .bubble {

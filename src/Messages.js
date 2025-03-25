@@ -5,7 +5,7 @@ import io from "socket.io-client";
 import PropTypes from 'prop-types';
 
 //const socket = io("http://10.24.79.110:5001");
-const socket = io("http://10.24.79.194:5001");
+const socket = io("http://10.24.78.110:5000");
 
 export function MessageBox({getUserName}) {
     const [messageData, setMessageData] = useState('');
