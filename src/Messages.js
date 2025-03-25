@@ -4,17 +4,12 @@ import io from "socket.io-client";
 
 import PropTypes from 'prop-types';
 
-const socket = io("http://10.24.78.110:5000");
+const socket = io("http://10.24.78.110:3000");
 
 export function MessageBox({getUserName}) {
     const [messageData, setMessageData] = useState('');
     const [messages, setMessages] = useState([]);
     const [messageID, setMessageID] = useState(0);
-
-    // let userList = [];
-    // for (let i = 0; i < messages.length; ++i) {
-
-    // }
 
     useEffect(() => {
         // list for incoming messages

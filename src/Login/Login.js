@@ -14,11 +14,19 @@ export function Login({setUserName}) {
 
         <div className="login-wrapper">
             
-            <h1>Please log in</h1>
+            <h1>Welcome to CIMS</h1>
+            <h2>Please Login</h2>
+     
             <form onSubmit={handleSubmit}>
+                
                 <label>
-                    <p>Input Your Username</p>
-                    <input type="text" onChange={e => setName(e.target.value)}/>
+                    {/* <p>Input Username</p> */}
+                    <input type="text" onChange={e => setName(e.target.value)} placeholder='Username' />
+                </label>
+                <p></p>{/* Don't remove, everything breaks without this, IDK why but it does */}
+                <label>
+                    {/* <p>Input Passkey</p> */}
+                    {/* <input type="password" onChange={e => setName(e.target.value)} placeholder='Password'/> */}
                 </label>
                 <div>
                     <button type="submit">Continue</button>

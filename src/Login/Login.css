@@ -1,8 +1,18 @@
+html, body {
+    margin: 0; 
+    padding: 0; 
+    height: 100%;
+    width: 100%; 
+}
+
 body {
-    display: flex;
-    min-height: 100vh;
-    justify-content: center;
-    align-items: center;
+    /* fake gradxwient for dimmer backgr */
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)),
+    url("../../public/cast_building_wiki.jpg");
+    background-size: cover;
+    background-position: center; 
+    background-repeat: no-repeat; 
+
 }
 
 .login-wrapper {
@@ -10,14 +20,58 @@ body {
 
     display: flex;
     flex-direction: column;
+
+    text-align: center;
     align-items: center;
    
-    background-image: url("../../public/cast_building_wiki.jpg");
-    background-repeat: no-repeat;
-    background-size: 300px,300px;
-}
 
+    
+
+
+}
 h1{
     color: rgb(224, 232, 255);
     font-family: 'Courier New', Courier, monospace;
+    padding: 0%;
+    box-sizing: border-box;
+    margin-bottom: 0;
+    
+}
+button{
+    margin-top: 12px;
+}
+
+h2{
+    margin-bottom: 30px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    
+}
+p{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    margin: 0px;
+}
+
+input{
+    border: 2px solid gray;
+    border-radius: 4px;
+    width: 150px;
+    height: 30px;
+    color:royalblue;
+    transition: width 0.1s ease-in-out;
+    resize: none;
+    margin-bottom: 10px;
+    
+}
+input:focus{
+    width: 300px;
+}
+button{
+    background-color: rgb(224, 232, 255);
+    width: 158px;
+    height: 40px;
+    border: none;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: larger;
+    border-radius: 4px;
+    margin-top: auto;
 }
