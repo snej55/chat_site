@@ -100,15 +100,16 @@
     margin-bottom: 20px;
 }
 
-.send-button {
+button {
     background-color: #444;
     padding: 10px 15px;
     margin-left: 10px;
     cursor: pointer;
     transition: 0.3s;
+    border: none;
 }
 
-.send-button:hover {
+button:hover {
     background-color: #555;
 }
 
