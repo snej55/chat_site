@@ -36,7 +36,7 @@ npm install
 To start the server, run `$ npm run start`.
 
 ## TODO: 
- * Better login
+ * ~~Better login~~
  * No login impersonation
  * User list
  * Replying
