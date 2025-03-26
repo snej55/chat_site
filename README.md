@@ -2,6 +2,10 @@
 
 This is a basic messaging client, that sends and recieves messages via socket.io
 
+### Note:
+
+Please use `localhost:PORT` for testing instead of your ip address in *Messages.js*, unless you're testing with other people.
+
 ## How to set up:
 
 _Requirements: npm installed and added to path_
