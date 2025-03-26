@@ -10,7 +10,8 @@ import PropTypes from 'prop-types';
 // nathan (new): http://10.24.78.182:5001
 // jens: http://10.24.76.110:5001 or 10.24.79.53 at *a* port
 
-const socket = io("http://10.24.79.53:5000");
+// !! PLEASE USE localhost:PORT for testing to avoid issues with serverside code
+const socket = io("http://localhost:5000");
 
 export function MessageBox({getUserName}) {
     const [messageData, setMessageData] = useState('');
