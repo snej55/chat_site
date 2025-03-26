@@ -25,6 +25,10 @@ export function MessageBox({getUserName}) {
         setFirstConnection(true);
         socket.emit("new_user", getUserName());
     }
+  
+    const scrollToBottom = () => {
+        document.getElementById("messageEnd").scrollIntoView({ behavior: "smooth" });
+    }
 
     useEffect(() => {
         // listen for incoming messages
@@ -33,6 +37,7 @@ export function MessageBox({getUserName}) {
                 ...messages,
                 message
             ]);
+            scrollToBottom();
         });
 
         // clean up
@@ -56,6 +61,8 @@ export function MessageBox({getUserName}) {
             // clear textarea
             document.getElementsByClassName('message-text')[0].value = '';
             setMessageData('');
+
+            scrollToBottom();
         }
     }
 
@@ -71,10 +78,16 @@ export function MessageBox({getUserName}) {
                             </div>
                         </div>
                 )}
+                {/* dummy div to automatically scroll to bottom */}
+                <div style={{ float:"left", clear: "both" }} id="messageEnd">
+                </div>
             </div>
             <div className='input-box'>
-                <textarea className='message-text' onChange={e => setMessageData(e.target.value)} placeholder='Enter your message here...' onKeyDown={e => (e.key === 'Enter' ? addUserMessage() : null)}></textarea>
+                <textarea maxlength="500" className='message-text' onChange={e => setMessageData(e.target.value)} placeholder='Enter your message here...' onKeyDown={e => (e.key === 'Enter' ? addUserMessage() : null)}></textarea>
                 <button className="send-button" onClick={addUserMessage}>Send</button>
+            </div>
+            <div className="info-panel">
+                <span className="characters-left">{messageData.length}/500</span>
             </div>
         </div>
     )
