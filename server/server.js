@@ -14,6 +14,12 @@ const io = new Server(server, {
 
 addresses_connected = []
 
+function getTime() {
+  var currentDate = new Date();
+  var dateTime = currentDate.getHours() + ':' + (currentDate.getMinutes() < 10 ? '0' : '') + currentDate.getMinutes() + ':' + (currentDate.getSeconds() < 10 ? '0' : '') + currentDate.getSeconds();
+  return dateTime;
+}
+
 // Handle WebSocket connections here
 io.on("connection", (socket) => {
   console.log("A new user has connected", socket.id);
@@ -28,12 +34,19 @@ io.on("connection", (socket) => {
     io.emit("message", message);
   });
 
+  // listen for new user
+  socket.on("new_user", (username) => {
+    console.log(username + " has joined!");
+    var messageData = username + " has joined the chatbox!"
+    io.emit("message", {content: messageData, time: getTime(), user: "ADMIN", uid: 1001});
+  })
+
   // Handle disconnections
   socket.on("disconnect", () => {
     console.log(socket.id, " disconnected");
   });
 });
 
-server.listen(5001, () => {
-  console.log("Server is running on port 5001");
+server.listen(5000, () => {
+  console.log("Server is running on port 5000");
 });
