@@ -8,7 +8,7 @@ let messagestr;
 let contentstr;
 const fs = require("fs");
 const blockedWords = JSON.parse(fs.readFileSync("blockedWords.json", "utf8")).blockedWords;
-
+const periodicTableElements = JSON.parse(fs.readFileSync("funnyreplacements.json","utf8")).periodicTableElements
 const app = express();
 const server = http.createServer(app);
 // initialize socket.io
@@ -41,15 +41,25 @@ io.on("connection", (socket) => {
     console.log(message);
 
     blockedWords.forEach((word) => {
-      const regex = new RegExp(word, "gi");  // Find the not so gooood word (don't care about lower upper)
+      const regex = new RegExp(word, "gi"); // Change the blocked word(Whole, No UPPER, lower)
       if (message.content.includes(word)) {
-        message.content = message.content.replace(regex, "*".repeat(word.length)); 
+        // Select a random element
+        const randomElement = periodicTableElements[Math.floor(Math.random() * periodicTableElements.length)];
+        message.content = message.content.replace(regex, randomElement); // replace it
+        console.log("Filtered Content:", message.content);
       }
+    });
+
+//     blockedWords.forEach((word) => {
+//       const regex = new RegExp(word, "gi");  // Find the not so gooood word (don't care about lower upper)
+//       if (message.content.includes(word)) {
+//         message.content = message.content.replace(regex, "*".repeat(word.length)); 
+//       }
       
       
       
     
-});   
+// });   
     io.emit("message", message)
     
     
@@ -71,6 +81,6 @@ io.on("connection", (socket) => {
 });
 
 // list to PORT
-server.listen(5000, () => {
+server.listen(5001, () => {
   console.log("Server is running on port 5000");
 });

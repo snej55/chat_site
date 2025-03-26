@@ -12,7 +12,7 @@ import './MessageBox.css';
 // jens: http://10.24.76.110:5001 or 10.24.79.53 at *a* port
 
 // !! PLEASE USE localhost:PORT for testing to avoid issues with serverside code
-const socket = io("http://localhost:5000");
+const socket = io("http://localhost:5001");
 
 export function MessageBox({getUserName}) {
     const [messageData, setMessageData] = useState('');
