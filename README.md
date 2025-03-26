@@ -46,3 +46,5 @@ To start the server, run `$ npm run start`.
  * Replying
  * Filtering
  * Encryption
+ * Colored admin messages
+ * ~~Auto scroll~~
