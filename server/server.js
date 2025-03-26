@@ -1,24 +1,28 @@
-// server.js
+// BACKEND SERVER CODE
 
+// initialize express server
 const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
 
 const app = express();
 const server = http.createServer(app);
+// initialize socket.io
 const io = new Server(server, {
   cors: {
     origin: "*",
   },
 });
 
-addresses_connected = []
-
+// helper function for quick way to get time as HH:MM:SS
 function getTime() {
   var currentDate = new Date();
   var dateTime = currentDate.getHours() + ':' + (currentDate.getMinutes() < 10 ? '0' : '') + currentDate.getMinutes() + ':' + (currentDate.getSeconds() < 10 ? '0' : '') + currentDate.getSeconds();
   return dateTime;
 }
+
+// list to store ip addresses that have connected.
+addresses_connected = []
 
 // Handle WebSocket connections here
 io.on("connection", (socket) => {
@@ -38,6 +42,8 @@ io.on("connection", (socket) => {
   socket.on("new_user", (username) => {
     console.log(username + " has joined!");
     var messageData = username + " has joined the chatbox!"
+
+    // send admin message to rest of users
     io.emit("message", {content: messageData, time: getTime(), user: "ADMIN", uid: 1001});
   })
 
@@ -47,6 +53,7 @@ io.on("connection", (socket) => {
   });
 });
 
+// list to PORT
 server.listen(5000, () => {
   console.log("Server is running on port 5000");
 });

@@ -10,9 +10,9 @@ export function Login({setUserName}) {
     const [name, setName] = useState('');
 
     const handleSubmit = e => {
-        e.preventDefault();
+        e.preventDefault(); // this prevents the page from reloading
         if (checkUsername(name)) {
-            setUserName(name);
+            setUserName(name); // call set username hook
         }
     }
 
@@ -35,15 +35,19 @@ export function Login({setUserName}) {
             }
         }
 
+        if (username.toLowerCase() === "admin") {
+            alert("Sorry, this username has been taken!");
+            return false;
+        }
+
         return true;
     }
 
     return (
+        // simple form for username input
         <div className="login-wrapper">
             
             <h1 id="h1">Welcome To The ChatBox</h1>
-            {/* <h2>Please Enter Your Username</h2> */}
-     
             <form onSubmit={handleSubmit}>
                 
                 <label>

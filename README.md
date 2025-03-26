@@ -22,7 +22,7 @@ Next, install the required packages for the client side:
 npm install
 ```
 
-You can run the client with `$ npm run start`.
+You can start the client with `$ npm run start`.
 
 #### Server set up:
 

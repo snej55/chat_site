@@ -32,7 +32,8 @@
 .message {
     display: flex;
     margin-bottom: 10px;
-    /* flex-direction: column; */
+    flex-direction: column;
+    /* justify-content: flex-end; */
     /* flex-direction: column; */
 }
 
@@ -64,6 +65,8 @@
     color: white;
     text-align: right;
     border-bottom-right-radius: 5px;
+    /* this fixes alignment issue */
+    margin-left: auto; 
 }
 
 .other .bubble {
@@ -72,6 +75,8 @@
     text-align: left;
     border-bottom-left-radius: 5px;
     flex-direction: column;
+    /* this fixes alignment issue */
+    margin-right: auto;
 }
 
 .input-box {

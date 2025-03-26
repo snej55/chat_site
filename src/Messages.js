@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
-import './MessageBox.css';
 import io from "socket.io-client";
-
 import PropTypes from 'prop-types';
+
+import { getTime } from './utils';
+import './MessageBox.css';
 
 // addresses:
 
@@ -19,13 +20,14 @@ export function MessageBox({getUserName}) {
     const [messageID, setMessageID] = useState(0);
     const [firstConnection, setFirstConnection] = useState(false);
 
+    // check if this is the first time we connected
     if (!firstConnection) {
         setFirstConnection(true);
         socket.emit("new_user", getUserName());
     }
 
     useEffect(() => {
-        // list for incoming messages
+        // listen for incoming messages
         socket.on("message", (message) => {
             setMessages([
                 ...messages,
@@ -33,22 +35,25 @@ export function MessageBox({getUserName}) {
             ]);
         });
 
+        // clean up
         return () => {
             socket.off("message");
         };
     }, [messages]);
 
-    function getTime() {
-        var currentDate = new Date();
-        var dateTime = currentDate.getHours() + ':' + (currentDate.getMinutes() < 10 ? '0' : '') + currentDate.getMinutes() + ':' + (currentDate.getSeconds() < 10 ? '0' : '') + currentDate.getSeconds();
-        return dateTime;
+    function generateMessage() {
+        return {content: messageData, time: getTime(), user: getUserName(), uid: messageID};
     }
 
     function addUserMessage() {
         if (messageData.trim() !== "") {
             setMessageID(messageID + 1);
-            const message = {content: messageData, time: getTime(), user: getUserName(), uid: messageID};
+            const message = generateMessage();
+
+            // send message to server
             socket.emit("message", message);
+
+            // clear textarea
             document.getElementsByClassName('message-text')[0].value = '';
             setMessageData('');
         }
@@ -61,7 +66,7 @@ export function MessageBox({getUserName}) {
                 {messages.map(
                     i =><div key={i.uid} class={(i.user === getUserName()) ? 'message user' : 'message other'}>
                             <div>
-                                <span className='bubble'>{i.content}</span>
+                                <div className='bubble'>{i.content}</div>
                                 {(i.user !== getUserName()) ? <div className='message-info'>{i.user} at {i.time}</div> : <div className='message-info'></div>}
                             </div>
                         </div>
@@ -75,6 +80,7 @@ export function MessageBox({getUserName}) {
     )
 }
 
+// for getUserName() hook
 MessageBox.propTypes = {
     getUserName: PropTypes.func.isRequired
 }
