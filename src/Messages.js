@@ -69,7 +69,12 @@ export function MessageBox({getUserName}) {
     return (
         <div className="chat-container">
             <div className="chat-header">{getUserName()} in ChatBox v0.1.1</div>
+
             <div className='message-box'>
+            <p className="watermark" id="wm1">
+                {/* Invisiable watermark math stuff prevents moving out of the screen*/}
+                {getUserName().repeat(Math.floor(70 / getUserName().length))}
+            </p>
                 {messages.map(
                     i =><div key={i.uid} class={(i.user === getUserName()) ? 'message user' : 'message other'}>
                             <div>
@@ -82,10 +87,12 @@ export function MessageBox({getUserName}) {
                 <div style={{ float:"left", clear: "both" }} id="messageEnd">
                 </div>
             </div>
+            
             <div className='input-box'>
                 <textarea maxlength="500" className='message-text' onChange={e => setMessageData(e.target.value)} placeholder='Enter your message here...' onKeyDown={e => (e.key === 'Enter' ? addUserMessage() : null)}></textarea>
                 <button className="send-button" onClick={addUserMessage}>Send</button>
             </div>
+            
             <div className="info-panel">
                 <span className="characters-left">{messageData.length}/500</span>
             </div>

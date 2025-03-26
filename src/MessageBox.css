@@ -75,6 +75,7 @@
     color: #ddd;
     text-align: left;
     border-bottom-left-radius: 5px;
+    margin-right: auto; 
 }
 
 .input-box {
@@ -119,3 +120,18 @@ button {
 button:hover {
     background-color: #555;
 }
+p.watermark#wm1{
+    position:absolute;;
+    font-size: x-large;
+    color: rgba(155, 155, 155, 0.01);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg); /* Center watermark */
+    text-align: center;
+    scale: 1.05;
+    pointer-events: none;
+    overflow: hidden;
+    
+}
+
+
