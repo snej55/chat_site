@@ -9,13 +9,8 @@ body {
     /* fake gradxwient for dimmer backgr */
     display: flex;
     min-height: 100vh;
-<<<<<<< HEAD
-    justify-content: centre;
-    align-items: centre;
-=======
     justify-content: center;
     align-items: center;
->>>>>>> a6e316a2bb098cac6ba542c7d502a842ed1b4bec
     background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)),
     /* url("../../public/cast_building_wiki.jpg"); */ 
 
