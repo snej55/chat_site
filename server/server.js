@@ -4,6 +4,10 @@
 const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
+let messagestr;
+let contentstr;
+const fs = require("fs");
+const blockedWords = JSON.parse(fs.readFileSync("blockedWords.json", "utf8")).blockedWords;
 
 const app = express();
 const server = http.createServer(app);
@@ -35,7 +39,20 @@ io.on("connection", (socket) => {
   socket.on("message", (message) => {
     // Broadcast the message to all connected clients
     console.log(message);
-    io.emit("message", message);
+
+    blockedWords.forEach((word) => {
+      const regex = new RegExp(word, "gi");  // Find the not so gooood word (don't care about lower upper)
+      if (message.content.includes(word)) {
+        message.content = message.content.replace(regex, "*".repeat(word.length)); 
+      }
+      
+      
+      
+    
+});   
+    io.emit("message", message)
+    
+    
   });
 
   // listen for new user

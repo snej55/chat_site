@@ -47,7 +47,10 @@ export function Login({setUserName}) {
         // simple form for username input
         <div className="login-wrapper">
             
-            <h1 id="h1">Welcome To The ChatBox</h1>
+            <h1 id="h1">Welcome To CIMS</h1>
+            
+            {/* <h2>Please Enter Your Username</h2> */}
+     
             <form onSubmit={handleSubmit}>
                 
                 <label>

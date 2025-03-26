@@ -1,0 +1,30 @@
+{
+    "blockedWords": [
+        "abuse", "accessory", "acid", "adultery", "affair", "alcohol", "alien", "anger", "animal cruelty", "anxiety",
+        "assault", "asshole", "atrocity", "awful", "bastard", "bitch", "blowjob", "bullshit", "cheat", "child abuse",
+        "cock", "cocaine", "corruption", "crack", "crime", "cruelty", "cunt", "death", "dick", "drugs", "enema", 
+        "erotic", "evil", "extortion", "fag", "faggot", "fart", "fear", "feminism", "flirt", "fornication", "fuck", 
+        "genocide", "gluttony", "gore", "gross", "harassment", "hate", "hater", "homophobic", "horrible", "idiot", 
+        "incest", "insult", "intercourse", "intolerance", "invasion", "jail", "jealousy", "joke", "kill", "killing", 
+        "lesbian", "liar", "lie", "masturbation", "murder", "neglect", "nigga", "nigger", "pedophilia", "penis", 
+        "pervert", "plagiarism", "police brutality", "prostitution", "pussy", "racism", "rape", "revenge", "sex", 
+        "sexual", "slut", "slutty", "snuff", "sodomize", "sodomite", "spank", "spoiled", "stalker", "steal", "stealing", 
+        "stupid", "suicide", "torture", "toxic", "trafficking", "violent", "violence", "virgin", "vulgar", "whore", 
+        "wicked", "zombie", "abortion", "addiction", "adultery", "aggression", "alcoholism", "anger", "asshole", "assault", 
+        "bastard", "bitch", "blowjob", "bomb", "bullshit", "cheating", "child abuse", "clash", "cock", "cocaine", 
+        "corruption", "cunt", "cynical", "death", "depression", "discrimination", "drugs", "election", "erotic", "extortion", 
+        "failure", "faggot", "fist", "foul", "freak", "fuck", "gamble", "gang", "genocide", "hate", "horror", "incest", 
+        "insult", "intolerance", "irresponsible", "jealousy", "joke", "kill", "killing", "lesbian", "lie", "lies", "murder", 
+        "neglect", "obsession", "pedophile", "penis", "pervert", "porn", "prostitution", "rape", "racist", "revenge", "savage", 
+        "sex", "sexism", "slave", "slut", "stalker", "stealing", "stupid", "suicide", "torture", "vandalism", "violence", 
+        "violent", "war", "whore", "worship", "abominable", "abuse", "accused", "adulterer", "alien", "angry", "asshole", 
+        "atrocity", "bastard", "bitch", "blowjob", "cheating", "crime", "cunt", "dark", "deadly", "dick", "dirty", 
+        "erotic", "evil", "extortion", "fatal", "fool", "genocide", "harassment", "horrible", "illegal", "incest", "infidel", 
+        "lesbian", "lust", "masturbation", 
+        "misogyny", "murder", "neglect", "nigga", "pedophile", "pervert", "pussy", "rape", "racist", "revenge", "sexism", 
+        "sodomite", "stalker", "steal", "slut", "snuff", "spank", "stupid", "suicide", "torture", "toxic", "vandalism", 
+        "violent", "whore", "wicked", "zombie", "violent", "whore", "yelling", "youth", "blackmail",
+        "criminal", "drunk", "extreme", "flaw", "freak", "grotesque", "hunger", "insensitive", "invade", "lawless", "mistake",
+        "misfortune", "murderer", "nasty", "pathological", "perversion", "prostitute", "rape", "ridiculous", "spite", "torture","cum"
+      ]
+}
