@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-// import './Login.css';
+import './Login.css';
 export function Login({setUserName}) {
     const [name, setName] = useState();
 
@@ -14,14 +14,14 @@ export function Login({setUserName}) {
 
         <div className="login-wrapper">
             
-            <h1>Welcome to CIMS</h1>
-            <h2>Please Login</h2>
+            <h1 id="h1">Welcome To The Jens Fan Club</h1>
+            {/* <h2>Please Enter Your Username</h2> */}
      
             <form onSubmit={handleSubmit}>
                 
                 <label>
                     {/* <p>Input Username</p> */}
-                    <input type="text" onChange={e => setName(e.target.value)} placeholder='Username' />
+                    <input id="input" type="text" onChange={e => setName(e.target.value)} placeholder='Username' />
                 </label>
                 <p></p>{/* Don't remove, everything breaks without this, IDK why but it does */}
                 <label>
@@ -29,7 +29,7 @@ export function Login({setUserName}) {
                     {/* <input type="password" onChange={e => setName(e.target.value)} placeholder='Password'/> */}
                 </label>
                 <div>
-                    <button type="submit">Continue</button>
+                    <button id="button" type="submit">Continue</button>
                 </div>
             </form>
         </div>

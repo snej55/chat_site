@@ -8,15 +8,11 @@ html, body {
 body {
     /* fake gradxwient for dimmer backgr */
     display: flex;
-    min-heigh: 100vh;
-    justify-contents: centre;
-    align-items: centre;
+    min-height: 100vh;
+    justify-content: center;
+    align-items: center;
     background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)),
-    /* url("../../public/cast_building_wiki.jpg"); */
-    url("../../public/image.jpg");
-    background-size: cover;
-    background-position: center; 
-    background-repeat: no-repeat; 
+    /* url("../../public/cast_building_wiki.jpg"); */ 
 
 }
 
@@ -28,22 +24,60 @@ body {
 
     text-align: center;
     align-items: center;
+    justify-content: center;
+    width: 290px;
+    height: 400px;
+    background: -webkit-linear-gradient(#333, #222);
+    background:    -moz-linear-gradient(#333, #222);
+    background:         linear-gradient(#333, #222);
+    border-radius: 12px;
+    flex-direction: column;
+    color: #fff;
+    padding: 15px 25px;
 }
+
 form {
     display: flex;
-    justify-content: centre;
+    justify-content: center;
+    flex-direction: column;
+    color: #fff;
 }
-/* h1{
-    color: rgb(224, 232, 255);
-    font-family: 'Courier New', Courier, monospace;
-    padding: 0%;
-    box-sizing: border-box;
-    margin-bottom: 0;
-    
+
+h1#h1 {
+    padding: 20px 0 30px 0;
 }
-button{
-    margin-top: 12px;
+
+input#input {
+    background-color: #333;
+    border: none;
+    color: #fff;
+    border-radius: 6px;
+    padding: 12px;
+    transform: scale(1);
+    transition: ease-in-out 0.2s;
 }
+
+input#input:hover {
+    transform: scale(1.1);
+}
+
+input#input:focus {
+    transform: scale(1.2, 1.1);
+}
+
+button#button{
+    margin: 0 0 18px 0;
+    border-radius: 5px;
+    color: #fff;
+    transition: 0.2s;
+    transform: scale(1);
+} 
+
+button#button:hover {
+    transform: scale(1.1);
+}
+    /*
+
 
 h2{
     margin-bottom: 30px;
