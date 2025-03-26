@@ -7,15 +7,21 @@ import PropTypes from 'prop-types';
 // addresses:
 
 // jan (mint): http://10.24.76.198:5001
-// nathan: http://10.24.79.110:5001
-// jens: http://10.24.76.110:5001
+// nathan (new): http://10.24.78.182:5001
+// jens: http://10.24.76.110:5001 or 10.24.79.53 at *a* port
 
-const socket = io("http://10.24.76.110:76");
+const socket = io("http://10.24.79.53:5000");
 
 export function MessageBox({getUserName}) {
     const [messageData, setMessageData] = useState('');
     const [messages, setMessages] = useState([]);
     const [messageID, setMessageID] = useState(0);
+    const [firstConnection, setFirstConnection] = useState(false);
+
+    if (!firstConnection) {
+        setFirstConnection(true);
+        socket.emit("new_user", getUserName());
+    }
 
     useEffect(() => {
         // list for incoming messages
