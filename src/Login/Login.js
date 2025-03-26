@@ -1,12 +1,41 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './Login.css';
+
+const invalid_characters = ["$", "{", "}", " ", ".", "*", "%"];
+const max_username_length = 30;
+const min_username_length = 2;
+
 export function Login({setUserName}) {
-    const [name, setName] = useState();
+    const [name, setName] = useState('');
 
     const handleSubmit = e => {
         e.preventDefault();
-        setUserName(name);
+        if (checkUsername(name)) {
+            setUserName(name);
+        }
+    }
+
+    // check if usernames are valid
+    function checkUsername(username) {
+        // check if username is too short or long
+        if (username.length < min_username_length) {
+            alert(`Sorry, your username must be less than ${max_username_length} characters long, and more than ${min_username_length}. Please try again!`);
+            return false;
+        } else if (username.length > max_username_length) {
+            alert(`Sorry, your username must be less than ${max_username_length} characters long, and more than ${min_username_length}. Please try again!`)
+            return false;
+        }
+
+        // check if username contains illegal characters
+        for (var i = 0; i < invalid_characters.length; ++i) {
+            if (username.includes(invalid_characters[i])) {
+                alert("Sorry, your username cannot contain any of the following characters: $, {, }, ., *, % or any spaces");
+                return false;
+            }
+        }
+
+        return true;
     }
 
     return (
