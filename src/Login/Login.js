@@ -12,7 +12,7 @@ export function Login({setUserName}) {
     return (
         <div className="login-wrapper">
             
-            <h1 id="h1">Welcome To The Jens Fan Club</h1>
+            <h1 id="h1">Welcome To The ChatBox</h1>
             {/* <h2>Please Enter Your Username</h2> */}
      
             <form onSubmit={handleSubmit}>
