@@ -2,9 +2,16 @@
 
 This is a basic messaging client, that sends and recieves messages via socket.io
 
+# Features 
+ * Filtering words
+ * Moderation (TODO)
+ * Public Chatting
+ * Encryption (TODO)
+
+
 ### Note:
 
-Please use `localhost:PORT` for testing instead of your ip address in *Messages.js*, unless you're testing with other people.
+Please use `localhost:PORT`(Port Default 5001 and 3000 for interface) for testing instead of your ip address in *Messages.js*, unless you're testing with other people.
 
 ## How to set up:
 
@@ -44,7 +51,7 @@ To start the server, run `$ npm run start`.
  * No login impersonation
  * User list
  * Replying
- * Filtering
+ * ~~Filtering~~~ & Added Funny Replacements for filtered words
  * Encryption
  * Colored admin messages
  * ~~Auto scroll~~
