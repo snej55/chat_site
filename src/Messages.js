@@ -7,10 +7,10 @@ import PropTypes from 'prop-types';
 // addresses:
 
 // jan (mint): http://10.24.76.198:5001
-// nathan: http://10.24.79.110:5001
+// nathan (new): http://10.24.78.182:5001
 // jens: http://10.24.76.110:5001
 
-const socket = io("http://10.24.79.110:5001");
+const socket = io("http://10.24.78.182:5001");
 
 export function MessageBox({getUserName}) {
     const [messageData, setMessageData] = useState('');
