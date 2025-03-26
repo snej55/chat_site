@@ -8,8 +8,8 @@ html, body {
 body {
     /* fake gradxwient for dimmer backgr */
     display: flex;
-    min-heigh: 100vh;
-    justify-contents: centre;
+    min-height: 100vh;
+    justify-content: centre;
     align-items: centre;
     background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)),
     /* url("../../public/cast_building_wiki.jpg"); */
