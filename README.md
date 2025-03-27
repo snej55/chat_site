@@ -51,7 +51,10 @@ To start the server, run `$ npm run start`.
  * No login impersonation
  * User list
  * Replying
- * ~~Filtering & Added Funny Replacements for filtered words~~
  * Encryption
- * Colored admin messages
+ * Filter names
+ * Fix message bubbles css
+ * Banning & kicking
+ * ~~Filtering & Added Funny Replacements for filtered words~~
+ * ~~Colored admin messages~~
  * ~~Auto scroll~~
