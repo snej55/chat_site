@@ -40,6 +40,7 @@
 .user {
     justify-content: flex-end;
     align-items: flex-end;
+    align-self: flex-end;
 }
 
 .other {
@@ -50,18 +51,21 @@
 .admin {
     justify-content: flex-start;
     align-items: flex-start;
+    align-self: flex-start;
 }
 
 .bubble {
-    width: fit-content;
-    max-width: 75%;
     padding: 8px;
     border-radius: 15px;
-    /* Prevent words from overlapping */
-    word-break: normal;
-    /* text-wrap: wrap; */
-    /* white-space: pre-line; */
-    /* overflow-wrap: normal; */
+    inline-size: min-content;
+    overflow-wrap: break-word;
+    overflow: hidden;
+
+    min-width: 20px;
+    max-width: 40vw;
+    width: auto;
+    text-align: center;
+    display: inline-block;
     opacity: 1.0;
     transition: 0.3s;
     cursor: pointer;
