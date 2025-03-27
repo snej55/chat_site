@@ -127,7 +127,7 @@ io.on("connection", (socket) => {
         console.log(uname.username + ' has disconnected');
         
         // send message to everyone
-        var messageData = `${uname.username} has disconnected!`
+        var messageData = `${uname.username} has left!`
         io.emit("message", {content: messageData, time: getTime(), user: "ADMIN", uid: 1001});
         uname.username = '';
       }
