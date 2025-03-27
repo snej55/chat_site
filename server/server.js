@@ -25,6 +25,8 @@ function getTime() {
 
 // list to store ip addresses that have connected.
 addresses_connected = []
+usernames = []
+const max_word_length = 50;
 
 // Handle WebSocket connections here
 io.on("connection", (socket) => {
@@ -48,6 +50,21 @@ io.on("connection", (socket) => {
       }
     });
 
+    // quick script to cap length of words to less than max_word_length
+    audited_message = '';
+    message.content.split(' ').forEach((word) => {
+      if (word.length > max_word_length) {
+        audited_message = audited_message + word.slice(0, max_word_length) + ' ';
+      } else {
+        audited_message = audited_message + word + ' ';
+      }
+    })
+
+    audited_message = audited_message.trim();
+    message.content = audited_message;
+
+    console.log(`Audited message: ${message.content}`);
+
     io.emit("message", message);
   });
 
@@ -55,6 +72,7 @@ io.on("connection", (socket) => {
   socket.on("new_user", (username) => {
     console.log(username + " has joined!");
     var messageData = username + " has joined the chatbox!"
+    usernames.push(username);
 
     // send admin message to rest of users
     io.emit("message", {content: messageData, time: getTime(), user: "ADMIN", uid: 1001});

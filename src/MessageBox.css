@@ -57,17 +57,14 @@
     max-width: 75%;
     padding: 8px;
     border-radius: 15px;
-    /* Prevent words from overlapping */    
+    /* Prevent words from overlapping */
     word-break: normal;
-    /* white-space: pre-li */
+    /* text-wrap: wrap; */
+    /* white-space: pre-line; */
+    /* overflow-wrap: normal; */
     opacity: 1.0;
-    transition: 0.2s;
+    transition: 0.3s;
     cursor: pointer;
-    inline-size: fit-content;
-    box-shadow: 
-		0 0 8rem 0 rgba(black, 0.1),
-		0rem 2rem 4rem -3rem rgba(black, 0.5);
-    white-space: normal;
 }
 
 .bubble:hover {
@@ -76,9 +73,10 @@
 
 .user .bubble {
     background: #077519;
-    color: #ddd;
+    color: white;
     text-align: left;
     border-bottom-right-radius: 5px;
+    /* this fixes alignment issue */
     margin-left: auto; 
 }
 
@@ -143,13 +141,17 @@ button:hover {
 p.watermark#wm1{
     position:absolute;;
     font-size: x-large;
-    color: rgba(155, 155, 155, 0.01);
+    color: rgba(155, 155, 155, 0.005);
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) rotate(-45deg); /* Center watermark */
     text-align: center;
     scale: 1.05;
     pointer-events: none;
-    overflow: hidden;
-    
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    overflow: hidden;   
 }
