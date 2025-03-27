@@ -35,7 +35,7 @@ export function Login({setUserName}) {
             }
         }
 
-        if (username.toLowerCase() === "admin") {
+        if (username.toLowerCase() === "admin" || username.toLowerCase() === "admln" || username.toLowerCase() === "aomin" || username.toLowerCase() === "a0min") {
             alert("Sorry, this username has been taken!");
             return false;
         }
