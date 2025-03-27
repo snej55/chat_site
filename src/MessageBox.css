@@ -34,7 +34,7 @@
 .message {
     display: flex;
     flex-direction: column; /* Ensure proper stacking for multiline messages */
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
 .user {
@@ -124,7 +124,7 @@
     color: #555;
     font-size: 14px;
     font-style: italic;
-    margin-top: 5px; /* Adjust spacing around the message info */
+    margin-top: 0px; /* Adjust spacing around the message info */
     text-align: left;
 }
 

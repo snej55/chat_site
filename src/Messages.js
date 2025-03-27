@@ -78,7 +78,7 @@ export function MessageBox({getUserName}) {
                 {messages.map(
                     i =><div key={i.uid} class={(i.user === getUserName()) ? 'message user' : ((i.user.toLowerCase() === 'admin') ? 'message admin' : 'message other')}>
                             <div>
-                                <p className='bubble'>{i.content}</p>
+                                <div className='bubble'>{i.content}</div>
                                 {(i.user !== getUserName()) ? <div className='message-info'>{i.user} at {i.time}</div> : <div className='message-info'></div>}
                             </div>
                         </div>
