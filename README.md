@@ -49,7 +49,7 @@ To start the server, run `$ npm run start`.
 ## TODO: 
  * ~~Better login~~
  * ~~No login impersonation~~
- * User list
+ * ~~User list~~
  * Replying
  * Encryption
  * ~~Filter names~~
