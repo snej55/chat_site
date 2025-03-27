@@ -59,9 +59,12 @@
     border-radius: 15px;
     /* Prevent words from overlapping */
     word-break: break-word;
+    /* white-space: pre-li */
     opacity: 1.0;
     transition: 0.3s;
     cursor: pointer;
+    inline-size: fit-content;
+    overflow-wrap: break-word;
 }
 
 .bubble:hover {
