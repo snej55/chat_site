@@ -1,0 +1,14 @@
+.info-header{
+    /* slghtly lighter than admin messages for contrast */
+    color: magenta;
+    font-size: larger;
+}
+.info-user-list{
+    color: white;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+span.dummypadding{
+    padding: 100px;
+}

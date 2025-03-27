@@ -142,7 +142,7 @@ button {
     transform: translateY(0);
 }
 50% {
-    transform: translateY(-2px);
+    transform: translateY(-3px);
 }
 100% {
     transform: translateY(0);
@@ -156,7 +156,8 @@ button:hover {
 p.watermark#wm1{
     position:absolute;;
     font-size: x-large;
-    color: rgba(155, 155, 155, 0.005);
+    /* Do not change rgba value! */
+    color: rgba(155, 155, 155, 0.008);
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) rotate(-45deg); /* Center watermark */

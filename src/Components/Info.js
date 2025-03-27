@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-
+import './Info.css'
 export function InfoPanel({ getUserName, socket }) {
     const [userList, setUserList] = useState([]);
 
@@ -19,6 +19,8 @@ export function InfoPanel({ getUserName, socket }) {
             <div className="info-user-list">
                 {userList.map(i => <div class="info-text-user">
                     <span>{getUserName() === i.username ? <b>{i.username}</b> : i.username}</span>
+                    {/* Dummy <p> for padding, remove for better solution */}
+                    <p id = "dummypadding"></p>
                 </div>)}
             </div>
         </div>
