@@ -47,11 +47,18 @@
     align-items: flex-start;
 }
 
+.admin {
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
 .bubble {
+    width: fit-content;
     max-width: 75%;
-    padding: 10px;
+    padding: 8px;
     border-radius: 15px;
-    word-break: break-word; /* Prevent words from overlapping */
+    /* Prevent words from overlapping */
+    word-break: break-word;
     opacity: 1.0;
     transition: 0.3s;
     cursor: pointer;
@@ -72,6 +79,14 @@
 
 .other .bubble {
     background: #595959;
+    color: #ddd;
+    text-align: left;
+    border-bottom-left-radius: 5px;
+    margin-right: auto; 
+}
+
+.admin .bubble {
+    background: #980063;
     color: #ddd;
     text-align: left;
     border-bottom-left-radius: 5px;
