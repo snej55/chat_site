@@ -57,7 +57,7 @@
     max-width: 75%;
     padding: 8px;
     border-radius: 15px;
-    /* Prevent words from overlapping */
+    /* Prevent words from overlapping */    
     word-break: break-word;
     /* white-space: pre-li */
     opacity: 1.0;
@@ -65,6 +65,10 @@
     cursor: pointer;
     inline-size: fit-content;
     overflow-wrap: break-word;
+    box-shadow: 
+		0 0 8rem 0 rgba(black, 0.1),
+		0rem 2rem 4rem -3rem rgba(black, 0.5);
+    white-space: normal;
 }
 
 .bubble:hover {
@@ -152,5 +156,3 @@ p.watermark#wm1{
     overflow: hidden;
     
 }
-
-

@@ -42,7 +42,7 @@ io.on("connection", (socket) => {
 
     blockedWords.forEach((word) => {
       const regex = new RegExp(word.toLowerCase(), "gi"); // Change the blocked word(Whole, No UPPER, lower)
-      if (message.content.includes(word)) {
+      if (message.content.toLowerCase().includes(word)) {
         // Select a random element
         const randomElement = periodicTableElements[Math.floor(Math.random() * periodicTableElements.length)];
         message.content = message.content.replace(regex, randomElement); // replace it
@@ -50,19 +50,7 @@ io.on("connection", (socket) => {
       }
     });
 
-//     blockedWords.forEach((word) => {
-//       const regex = new RegExp(word, "gi");  // Find the not so gooood word (don't care about lower upper)
-//       if (message.content.includes(word)) {
-//         message.content = message.content.replace(regex, "*".repeat(word.length)); 
-//       }
-      
-      
-      
-    
-// });   
-    io.emit("message", message)
-    
-    
+    io.emit("message", message);
   });
 
   // listen for new user
