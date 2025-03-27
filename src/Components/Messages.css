@@ -22,6 +22,7 @@
 }
 
 .message-box {
+    
     flex: 1 1 auto;
     overflow-y: auto;
     padding: 15px;
@@ -57,15 +58,11 @@
 .bubble {
     padding: 8px;
     border-radius: 15px;
-    inline-size: min-content;
-    overflow-wrap: break-word;
-    overflow: hidden;
-
-    min-width: 20px;
-    max-width: 40vw;
-    width: auto;
-    text-align: center;
-    display: inline-block;
+    /* Prevent words from overlapping */
+    word-break: break-word;
+    /* text-wrap: wrap; */
+    /* white-space: pre-line; */
+    /* overflow-wrap: normal; */
     opacity: 1.0;
     transition: 0.3s;
     cursor: pointer;
@@ -82,6 +79,7 @@
     border-bottom-right-radius: 5px;
     /* this fixes alignment issue */
     margin-left: auto; 
+    
 }
 
 .other .bubble {

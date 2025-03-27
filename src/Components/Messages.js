@@ -18,6 +18,7 @@ export function MessageBox({getUserName, socket}) {
   
     const scrollToBottom = () => {
         document.getElementById("messageEnd").scrollIntoView({ behavior: "smooth" });
+        
     }
 
     useEffect(() => {
@@ -84,6 +85,7 @@ export function MessageBox({getUserName, socket}) {
             <div className='input-box'>
                 <textarea maxlength="500" className='message-text' onChange={e => setMessageData(e.target.value)} placeholder='Enter your message here...' onKeyDown={e => (e.key === 'Enter' ? addUserMessage() : null)}></textarea>
                 <button className="send-button" onClick={addUserMessage}>Send</button>
+                
             </div>
             
             <div className="info-panel">
