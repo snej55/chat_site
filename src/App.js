@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import './App.css';
 import io from "socket.io-client";
 
-import { MessageBox } from './Messages';
-import { Login } from './Login/Login';
+import { MessageBox } from './Components/Messages';
+import { Login } from './Components/Login';
 
 // ip addresses (old):
 
