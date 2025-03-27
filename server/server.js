@@ -4,8 +4,6 @@
 const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
-let messagestr;
-let contentstr;
 const fs = require("fs");
 const blockedWords = JSON.parse(fs.readFileSync("blockedWords.json", "utf8")).blockedWords;
 const periodicTableElements = JSON.parse(fs.readFileSync("funnyreplacements.json","utf8")).periodicTableElements
