@@ -1,13 +1,16 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-export default function InfoPanel({ getUserName, socket }) {
+export function InfoPanel({ getUserName, socket }) {
     const [userList, setUserList] = useState([]);
 
     useEffect(() => {
         socket.on("update_users", (userlist) => {
             setUserList(userlist);
         })
+
+        // !! DO NOT REMOVE THIS COMMENT
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userList]);
 
     return (

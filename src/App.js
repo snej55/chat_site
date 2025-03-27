@@ -3,6 +3,7 @@ import './App.css';
 import io from "socket.io-client";
 
 import { MessageBox } from './Components/Messages';
+import { InfoPanel } from './Components/Info.js';
 import { Login } from './Components/Login';
 
 // ip addresses (old):
@@ -30,6 +31,7 @@ export default function App() {
   // return actual message box
   return (
     <div className="container">
+      <InfoPanel getUserName={getUserName} socket={socket} />
       <MessageBox getUserName={getUserName} socket={socket} />
     </div>
   );

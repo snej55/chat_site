@@ -77,6 +77,9 @@ io.on("connection", (socket) => {
     usernames.push({'username': username, 'socket_id': socket.id});
     console.log(usernames);
 
+    // update username lists on client side
+    io.emit("update_users", usernames);
+
     // send admin message to rest of users
     io.emit("message", {content: messageData, time: getTime(), user: "ADMIN", uid: 1001});
   })
@@ -129,6 +132,9 @@ io.on("connection", (socket) => {
         uname.username = '';
       }
     })
+
+    // update users for clients
+    io.emit("update_users", usernames);
 
     console.log(usernames);
     console.log(socket.id, " disconnected");
