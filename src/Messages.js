@@ -1,20 +1,10 @@
 import { useState, useEffect } from 'react';
-import io from "socket.io-client";
 import PropTypes from 'prop-types';
 
 import { getTime } from './utils';
 import './MessageBox.css';
 
-// addresses:
-
-// jan (mint): http://10.24.76.198:5001
-// nathan (new): http://10.24.78.182:5001
-// jens: http://10.24.76.110:5001 or 10.24.79.53 at *a* port
-
-// !! PLEASE USE localhost:PORT for testing to avoid issues with serverside code
-const socket = io("http://localhost:5001");
-
-export function MessageBox({getUserName}) {
+export function MessageBox({getUserName, socket}) {
     const [messageData, setMessageData] = useState('');
     const [messages, setMessages] = useState([]);
     const [messageID, setMessageID] = useState(0);
@@ -44,6 +34,9 @@ export function MessageBox({getUserName}) {
         return () => {
             socket.off("message");
         };
+        
+        // !! DO NOT REMOVE THIS COMMENT
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [messages]);
 
     function generateMessage() {
@@ -102,5 +95,6 @@ export function MessageBox({getUserName}) {
 
 // for getUserName() hook
 MessageBox.propTypes = {
-    getUserName: PropTypes.func.isRequired
+    getUserName: PropTypes.func.isRequired,
+    socket: PropTypes.any.isRequired
 }

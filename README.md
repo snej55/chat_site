@@ -53,7 +53,7 @@ To start the server, run `$ npm run start`.
  * Replying
  * Encryption
  * Filter names
- * Fix message bubbles css
+ * ~~Fix message bubbles css~~
  * Banning & kicking
  * ~~Filtering & Added Funny Replacements for filtered words~~
  * ~~Colored admin messages~~

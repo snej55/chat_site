@@ -16,7 +16,8 @@ export function Login({setUserName}) {
         }
     }
 
-    // check if usernames are valid
+    // basic checks for if username is valid
+    // important check are done on server side, not client side
     function checkUsername(username) {
         // check if username is too short or long
         if (username.length < min_username_length) {
