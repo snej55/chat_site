@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-import { getTime } from './utils';
-import './MessageBox.css';
+import { getTime } from '../utils';
+import './Messages.css';
 
 export function MessageBox({getUserName, socket}) {
     const [messageData, setMessageData] = useState('');
@@ -65,7 +65,7 @@ export function MessageBox({getUserName, socket}) {
 
             <div className='message-box'>
             <p className="watermark" id="wm1">
-                {/* Invisiable watermark math stuff prevents moving out of the screen*/}
+                {/* Invisable watermark math stuff prevents moving out of the screen*/}
                 {getUserName().repeat(Math.floor(70 / getUserName().length))}
             </p>
                 {messages.map(
