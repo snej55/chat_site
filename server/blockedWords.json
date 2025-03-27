@@ -6,17 +6,17 @@
         "erotic", "evil", "extortion", "fag", "faggot", "fart", "fear", "feminism", "flirt", "fornication", "fuck", 
         "genocide", "gluttony", "gore", "homophobic", "horrible", "idiot", 
         "incest", "insult", "intercourse", "intolerance", "invasion", "jail", "jealousy", "joke", "kill", "killing", 
-        "lesbian", "liar", "lie", "masturbation", "murder", "neglect", "nigga", "nigger", "pedophilia", "penis", 
+        "lesbian", "masturbation", "murder", "neglect", "nigga", "nigger", "pedophilia", "penis", 
         "pervert", "plagiarism", "police brutality", "prostitution", "boss", "racism", "rape", "sex", 
         "sexual", "boss", "slutty", "snuff", "sodomize", "sodomite", "spank", "spoiled", "stalker", "steal", "stealing", 
         "stupid", "suicide", "torture", "toxic", "trafficking", "violent", "violence", "virgin", "vulgar", 
         "wicked", "zombie", "abortion", "addiction", "adultery", "aggression", "alcoholism", "anger", "asshole",
         "bastard", "boss", "blowjob", "bomb", "bullshit", "cheating", "child abuse", "clash", "cock", "cocaine", 
         "corruption", "boss", "cynical", "death", "depression", "discrimination", "drugs", "election", "erotic", "extortion", 
-        "failure", "faggot", "fist", "foul", "freak", "fuck", "gamble", "gang", "genocide", "hate", "horror", "incest", 
-        "insult", "intolerance", "irresponsible", "jealousy", "joke", "kill", "killing", "lesbian", "lie", "lies", "murder", 
+        "faggot", "freak", "fuck", "gamble", "gang", "genocide", "horror", "incest", 
+        "kill", "killing", "lesbian", "lie", "lies", "murder", "shit",
         "neglect", "obsession", "pedophile", "penis", "pervert", "porn", "prostitution", "rape", "racist", "revenge", "savage", 
-        "sex", "sexism", "slave", "boss", "stalker", "stealing", "suicide", "torture", "vandalism", "violence", 
+        "sex", "sexism", "slave","stalker", "stealing", "suicide", "torture", "vandalism", "violence", 
         "violent", "war", "boss", "worship", "abominable", "abuse", "accused", "adulterer", "alien", "angry", "asshole", 
         "atrocity", "bastard", "boss", "blowjob", "cheating", "crime", "boss",  "deadly", "dick", "dirty", 
         "erotic", "extortion", "fatal", "fool", "genocide", "harassment", "horrible", "illegal", "incest", "infidel", 
@@ -24,7 +24,7 @@
         "misogyny", "murder", "neglect", "nigga", "pedophile", "pervert", "rape", "racist", "sexism", 
         "sodomite", "stalker", "steal", "boss", "snuff", "spank", "stupid", "suicide", "torture", "toxic", "vandalism", 
         "violent", "boss", "wicked", "zombie", "violent", "boss", "yelling", "youth", "blackmail",
-        "criminal", "drunk", "extreme", "flaw", "freak", "grotesque", "hunger", "insensitive", "invade", "lawless", "mistake",
-        "misfortune", "murderer", "nasty", "pathological", "perversion", "boss", "rape", "ridiculous", "spite", "torture","cum","DEBUG_BANNED_WORD"
+        "criminal", "grotesque", "insensitive", "invade", "lawless", "mistake",
+        "misfortune", "murderer", "nasty", "pathological", "perversion", "rape", "ridiculous", "spite", "torture","cum","DEBUG_BANNED_WORD"
       ]
 }
