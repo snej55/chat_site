@@ -50,6 +50,7 @@ To start the server, run `$ npm run start`.
  * ~~Better login~~
  * ~~No login impersonation~~
  * ~~User list~~
+ * Fix user list spacing
  * Replying
  * Encryption
  * ~~Filter names~~
