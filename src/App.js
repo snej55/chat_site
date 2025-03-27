@@ -17,10 +17,6 @@ const socket = io("http://localhost:5001");
 export default function App() {
   const [username, setUserName] = useState();
 
-  socket.on("server_reload", (_) => {
-    setUserName('');
-  })
-
   // if username is undefined,
   // banish them to the login page.
   if (!username) {

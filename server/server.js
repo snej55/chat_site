@@ -74,7 +74,7 @@ io.on("connection", (socket) => {
   socket.on("new_user", (username) => {
     console.log(username + " has joined!");
     var messageData = username + " has joined the chatbox!"
-    usernames.push(username);
+    usernames.push({'username': username, 'socket_id': socket.id});
     console.log(usernames);
 
     // send admin message to rest of users
@@ -87,7 +87,7 @@ io.on("connection", (socket) => {
     // check if there is already a user with this name
     var already_had = false;
     usernames.forEach((uname) => {
-      if (uname.toLowerCase() === username.toLowerCase()) {
+      if (uname.username.toLowerCase() === username.toLowerCase()) {
         already_had = true;
       }
     });
@@ -115,12 +115,22 @@ io.on("connection", (socket) => {
       console.log("checked");
       socket.emit("checked_username", contains_bad_word ? {"valid": false, "reason": "That's a very naughty word."} : {"valid": true, "reason": null});
     }
-
-    // socket.off("checked_username");
   })
 
   // Handle disconnections
   socket.on("disconnect", () => {
+    usernames.forEach((uname) => {
+      if (uname.socket_id === socket.id) {
+        console.log(uname.username + ' has disconnected');
+        
+        // send message to everyone
+        var messageData = `${uname.username} has disconnected!`
+        io.emit("message", {content: messageData, time: getTime(), user: "ADMIN", uid: 1001});
+        uname.username = '';
+      }
+    })
+
+    console.log(usernames);
     console.log(socket.id, " disconnected");
   });
 });

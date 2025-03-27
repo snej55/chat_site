@@ -28,8 +28,7 @@ export function Login({setUserName, socket}) {
             }
         })
 
-        // // clean up
-
+        // clean up
         return () => {
             socket.off("checked_username");
         }
