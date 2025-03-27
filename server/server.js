@@ -41,7 +41,7 @@ io.on("connection", (socket) => {
     console.log(message);
 
     blockedWords.forEach((word) => {
-      const regex = new RegExp(word, "gi"); // Change the blocked word(Whole, No UPPER, lower)
+      const regex = new RegExp(word.toLowerCase(), "gi"); // Change the blocked word(Whole, No UPPER, lower)
       if (message.content.includes(word)) {
         // Select a random element
         const randomElement = periodicTableElements[Math.floor(Math.random() * periodicTableElements.length)];
