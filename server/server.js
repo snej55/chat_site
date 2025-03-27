@@ -28,6 +28,8 @@ addresses_connected = []
 const usernames = []
 const max_word_length = 50;
 
+io.emit("server_reload", "server_restart");
+
 // Handle WebSocket connections here
 io.on("connection", (socket) => {
   console.log("A new user has connected", socket.id);
@@ -99,10 +101,22 @@ io.on("connection", (socket) => {
     });
 
     if (already_had) {
+      console.log("telling off: username taken");
       socket.emit("checked_username", {"valid": false, "reason": "Sorry, this username has already been taken."});
     } else {
-      socket.emit("checked_username", {"valid": true, "reason": null});
+
+      contains_bad_word = false;
+      blockedWords.forEach((word) => {
+        if (username.toLowerCase().includes(word.toLowerCase())) {
+          contains_bad_word = true;
+        }
+      })
+
+      console.log("checked");
+      socket.emit("checked_username", contains_bad_word ? {"valid": false, "reason": "That's a very naughty word."} : {"valid": true, "reason": null});
     }
+
+    // socket.off("checked_username");
   })
 
   // Handle disconnections
