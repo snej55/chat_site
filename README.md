@@ -48,11 +48,11 @@ To start the server, run `$ npm run start`.
 
 ## TODO: 
  * ~~Better login~~
- * No login impersonation
+ * ~~No login impersonation~~
  * User list
  * Replying
  * Encryption
- * Filter names
+ * ~~Filter names~~
  * ~~Fix message bubbles css~~
  * Banning & kicking
  * ~~Filtering & Added Funny Replacements for filtered words~~
