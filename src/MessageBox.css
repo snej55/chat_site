@@ -78,6 +78,7 @@
     border-bottom-right-radius: 5px;
     /* this fixes alignment issue */
     margin-left: auto; 
+    overflow-x: auto;
 }
 
 .other .bubble {
