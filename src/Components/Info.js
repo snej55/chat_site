@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './Info.css'
+
 export function InfoPanel({ getUserName, socket }) {
     const [userList, setUserList] = useState([]);
 
@@ -20,6 +21,10 @@ export function InfoPanel({ getUserName, socket }) {
                 {userList.map(i => <div class={getUserName() === i.username ? "info-text-user" : "info-text-other"}>
                     <div>{getUserName() === i.username ? <b>{i.username}</b> : i.username}</div>
                 </div>)}
+            </div>
+            <div className='announcement-container'>
+                <div className = "announcement-header"><b>Announcements</b></div>
+                <div className='announcement-content'>This is a example Announcement, move me to a seprate file. DON'T HARD CODE ME IN please</div>
             </div>
         </div>
     )

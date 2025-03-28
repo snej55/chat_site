@@ -19,7 +19,6 @@
 }
 
 .info-header{
-    /* slghtly lighter than admin messages for contrast */
     color: #c8e1eb;
     padding: 7px 12px;
     font-size: 17px;
@@ -48,4 +47,32 @@
     padding: 10px;
     margin: 10px 5px;
     border-radius: 8px;
+}
+
+.announcement-container {
+    width: 200px;
+    border-radius: 1;
+    height: 100vh;
+    margin-right: 20px;
+    background-color: #2b315277;
+    border: 1px solid #37415a;
+    user-select: none;
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+}
+
+.announcement-header{
+    color: #c8e1eb;
+    padding: 7px 12px;
+    font-size: 17px;
+    background-color: #37415a;
+    /* border: 2px solid #37415a; */
+}
+
+.announcement-content{
+    margin: 10px;
+    color: white;
+
 }
