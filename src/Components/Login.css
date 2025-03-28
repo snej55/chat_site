@@ -4,7 +4,7 @@ html, body {
     height: 100%;
     width: 100%; 
 }
-
+/* THIS body IS NOT IN USE! REPLACED BY THE ANIMATED BACKGROUND */
 body {
     /* fake gradxwient for dimmer backgr */
     display: flex;
@@ -17,6 +17,32 @@ body {
     background: -moz-linear-gradient(#000005, #191e3c);
     background: linear-gradient(#000005, #191e3c);
 }
+
+/* Start of background */
+@keyframes move-it {
+    0% {
+      background-position: initial;
+    }
+    100% {
+      background-position: 100px 0px;
+    }
+  }
+  
+  body {  
+    background: repeating-linear-gradient(
+    45deg,
+    #191e3c,
+    #191e3c 5%,
+    #141932 5%,
+    #141932 10%
+  );
+    background-size: 100px 100px;
+    animation: move-it 6s linear infinite;
+  }
+
+/* End of */
+
+
 
 .login-wrapper {
     /* background-image: linear-gradient(red, yellow); */
