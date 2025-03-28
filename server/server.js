@@ -51,7 +51,7 @@ io.on("connection", (socket) => {
         const randomElement = periodicTableElements[Math.floor(Math.random() * periodicTableElements.length)];
         const replacement = blockedWordsReplacements[word];
         console.log(replacement);
-        message.content = message.content.replace(regex, replacement === 'pe' ? randomElement : replacement); // replace it
+        message.content = message.content.replace(regex, replacement === 'PE' ? randomElement : replacement); // replace it
         console.log("Filtered Content:", message.content);
       }
     });
