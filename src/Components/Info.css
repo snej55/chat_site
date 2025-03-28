@@ -1,12 +1,14 @@
 .container {
     display: flex;
     flex-direction: row;
+    justify-content: center;
 }
 
 .info-container {
     width: 200px;
     border-radius: 12px;
     height: 100vh;
+    margin-right: 20px;
 }
 
 .info-header{
@@ -14,9 +16,17 @@
     color: magenta;
     font-size: larger;
 }
+
 .info-user-list{
     color: white;
     padding-top: 10px;
     padding-bottom: 10px;
     min-height: 400px;
+}
+
+.info-text-user {
+    background: linear-gradient(#333, #222);
+    padding: 10px;
+    margin: 10px 5px;
+    border-radius: 8px;
 }
