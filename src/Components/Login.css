@@ -56,6 +56,9 @@ input#input {
     padding: 12px;
     transform: scale(1);
     transition: ease-in-out 0.2s;
+    margin-bottom: 15px;
+
+    
 }
 
 input#input:hover {
@@ -76,6 +79,13 @@ button#button{
 
 button#button:hover {
     transform: scale(1.1);
+}
+
+input#inputAdmin{
+    background-color: rgba(0, 0, 0, 0);
+    color: red;
+    border: none;
+    cursor: default;
 }
     /*
 

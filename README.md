@@ -59,3 +59,5 @@ To start the server, run `$ npm run start`.
  * ~~Filtering & Added Funny Replacements for filtered words~~
  * ~~Colored admin messages~~
  * ~~Auto scroll~~
+ * Admin token
+ * Levenshtein distance to protect "ADMIN" username and sensored words

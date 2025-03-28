@@ -76,15 +76,16 @@ export function Login({setUserName, socket}) {
                     {/* <p>Input Username</p> */}
                     <input id="input" type="text" onChange={e => setName(e.target.value)} placeholder='Username' />
                 </label>
-                <p></p>{/* Don't remove, everything breaks without this, IDK why but it does */}
-                <label>
-                    {/* <p>Input Passkey</p> */}
-                    {/* <input type="password" onChange={e => setName(e.target.value)} placeholder='Password'/> */}
-                </label>
+                
+    
                 <div>
-                    <button id="button" type="submit">Continue</button>
+                    <button id="button" type="submit" >Continue</button>
                 </div>
             </form>
+            <label>
+                  {/* Input admin token */}
+                  <input id="inputAdmin" type ="password"></input>
+                </label>
         </div>
     )
 }
