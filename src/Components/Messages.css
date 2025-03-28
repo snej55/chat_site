@@ -149,7 +149,7 @@ button {
 }
 
 button:hover {
-    animation: bounce 1s infinite;
+    animation: bounce 1s infinite ease-in-out;
     background-color: #555;
 }
 p.watermark#wm1{
