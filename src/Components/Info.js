@@ -18,9 +18,7 @@ export function InfoPanel({ getUserName, socket }) {
             <div className="info-header">Currently connected users: </div>
             <div className="info-user-list">
                 {userList.map(i => <div class="info-text-user">
-                    <span>{getUserName() === i.username ? <b>{i.username}</b> : i.username}</span>
-                    {/* Dummy <p> for padding, remove for better solution */}
-                    <p id = "dummypadding"></p>
+                    <div>{getUserName() === i.username ? <b>{i.username}</b> : i.username}</div>
                 </div>)}
             </div>
         </div>
