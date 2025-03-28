@@ -61,4 +61,5 @@ To start the server, run `$ npm run start`.
  * ~~Colored admin messages~~
  * ~~Auto scroll~~
  * Admin token
+ * Fix announcement hard coded in issue
  * Levenshtein distance to protect "ADMIN" username and sensored words
