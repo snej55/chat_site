@@ -28,7 +28,7 @@ function getTime() {
 // list to store ip addresses that have connected.
 addresses_connected = []
 const usernames = []
-const max_word_length = 50;
+const max_word_length = 500;
 
 io.emit("server_reload", "server_restart");
 
