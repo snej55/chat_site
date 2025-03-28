@@ -100,44 +100,8 @@ p#copyright{
     font-size: x-small;
     padding: auto;
 }
-p#github{
+
+a#github{
     color:#7891a5;
     font-size: x-small;
 }
-    /*
-
-
-h2{
-    margin-bottom: 30px;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    
-}
-p{
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    margin: 0px;
-} */
-
-/* input{
-    border: 2px solid gray;
-    border-radius: 4px;
-    width: 150px;
-    height: 30px;
-    color:royalblue;
-    transition: width 0.1s ease-in-out;
-    resize: none;
-    margin-bottom: 10px;
-    
-}
-input:focus{
-    width: 300px;
-}
-button{
-    background-color: rgb(224, 232, 255);
-    width: 158px;
-    height: 40px;
-    border: none;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: larger;
-    border-radius: 4px;
-    margin-top: auto;
-} */

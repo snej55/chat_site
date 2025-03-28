@@ -87,7 +87,7 @@ export function Login({setUserName, socket}) {
                 <input id="inputAdmin" type ="password"></input>
             </label>
             <p id = 'copyright'>Copyright © 2025 Jens Kromdijk, Nathan Yin, Jan Lukasiak</p>
-            {/* <p id = 'github'>https://github.com/snej55/chat_site</p> */}
+            <a href="https://github.com/snej55/chat_site" id = 'github'>GitHub</a>
         </div>
     )
 }
