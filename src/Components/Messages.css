@@ -115,6 +115,7 @@
     border-top: 1px solid #37415a;
 }
 
+
 .message-text {
     flex-grow: 1;
     background: #37415a;
@@ -129,10 +130,19 @@
     border-radius: 5px;
     border: none;
     word-break: break-word; /* Prevent overflow of input text */
+    /* Removing scrowbar on firefox & other non-webkit (God know why they don't use webkit, It's just adding more work for devs) */
+    overflow: auto;
+    scrollbar-width: none; 
+}
+
+.message-text::-webkit-scrollbar {
+    /* Removing scrownbar on webkit browsers */
+    display: none;
 }
 
 .message-text:focus {
     min-height: 80px;
+    
 }
 
 .message-info {
