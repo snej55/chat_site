@@ -83,9 +83,11 @@ export function Login({setUserName, socket}) {
                 </div>
             </form>
             <label>
-                  {/* Input admin token */}
-                  <input id="inputAdmin" type ="password"></input>
-                </label>
+                {/* Input admin token */}
+                <input id="inputAdmin" type ="password"></input>
+            </label>
+            <p id = 'copyright'>Copyright © 2025 Jens Kromdijk, Nathan Yin, Jan Lukasiak</p>
+            {/* <p id = 'github'>https://github.com/snej55/chat_site</p> */}
         </div>
     )
 }

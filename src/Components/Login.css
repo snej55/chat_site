@@ -46,6 +46,7 @@ form {
 h1#h1 {
     padding: 20px 0 30px 0;
     font-family: Arial, Helvetica, sans-serif;
+    cursor: default;
 }
 
 input#input {
@@ -86,6 +87,16 @@ input#inputAdmin{
     color: red;
     border: none;
     cursor: default;
+}
+
+p#copyright{
+    color:gray;
+    font-size: x-small;
+    padding: auto;
+}
+p#github{
+    color:gray;
+    font-size: x-small;
 }
     /*
 
