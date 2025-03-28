@@ -1,3 +1,12 @@
+.container {
+    display: flex;
+}
+
+.info-container {
+    width: 200px;
+    border-radius: 12px;
+}
+
 .info-header{
     /* slghtly lighter than admin messages for contrast */
     color: magenta;
