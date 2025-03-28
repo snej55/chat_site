@@ -89,7 +89,7 @@ export function MessageBox({getUserName, socket}) {
             </div>
             
             <div className="info-panel">
-                <span className="characters-left">{messageData.length}/500</span>
+                <div className="characters-left">{messageData.length}/500</div>
             </div>
         </div>
     )

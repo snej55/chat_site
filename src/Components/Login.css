@@ -11,9 +11,11 @@ body {
     min-height: 100vh;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)),
-    url("../../public/mac.png"); 
-
+    /* background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)),
+    url("../../public/mac.png");  */
+    background: -webkit-linear-gradient(#000005, #191e3c);
+    background: -moz-linear-gradient(#000005, #191e3c);
+    background: linear-gradient(#000005, #191e3c);
 }
 
 .login-wrapper {
@@ -27,9 +29,11 @@ body {
     justify-content: center;
     width: 290px;
     height: 400px;
-    background: -webkit-linear-gradient(#333, #222);
-    background:    -moz-linear-gradient(#333, #222);
-    background:         linear-gradient(#333, #222);
+    background-color: #191e3c;
+    border: 3px solid #37415a;
+    /* background: -webkit-linear-gradient(#37415a, #191e3c);
+    background:    -moz-linear-gradient(#37415a, #191e3c);
+    background:         linear-gradient(#37415a, #191e3c); */
     border-radius: 12px;
     flex-direction: column;
     color: #fff;
@@ -50,7 +54,7 @@ h1#h1 {
 }
 
 input#input {
-    background-color: #333;
+    background-color: #37415a;
     border: none;
     color: #fff;
     border-radius: 6px;
@@ -68,6 +72,8 @@ input#input:hover {
 
 input#input:focus {
     transform: scale(1.2, 1.1);
+    outline: none;
+    border: 3px solid #7891a5;
 }
 
 button#button{
@@ -90,12 +96,12 @@ input#inputAdmin{
 }
 
 p#copyright{
-    color:gray;
+    color:#7891a5;
     font-size: x-small;
     padding: auto;
 }
 p#github{
-    color:gray;
+    color:#7891a5;
     font-size: x-small;
 }
     /*

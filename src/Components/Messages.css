@@ -4,20 +4,27 @@
     height: 100vh;
     width: 90vw;
     max-width: 800px;
-    background: -webkit-linear-gradient(#333, #222);
-    background: -moz-linear-gradient(#333, #222);
-    background: linear-gradient(#333, #222);
-    border-radius: 10px;
+    /* background: -webkit-linear-gradient(#191e3c, #000005);
+    background: -moz-linear-gradient(#191e3c, #000005);
+    background: linear-gradient(#191e3c, #000005); */
+    background-color: #13172f;
+    /* border-radius: 10px; */
     overflow: hidden;
-    box-shadow: 20px 20px 50px #111;
+    box-shadow: 20px 20px 50px #1111;
+    border: 1px solid #37415a;
 }
 
 .chat-header {
-    background: #333;
+    background: #37415a;
     padding: 15px;
     font-size: 18px;
     font-weight: 700;
     text-align: center;
+    user-select: none;
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
 }
 
 .message-box {
@@ -65,6 +72,11 @@
     opacity: 1.0;
     transition: 0.3s;
     cursor: pointer;
+    user-select: none;
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
 }
 
 .bubble:hover {
@@ -72,17 +84,16 @@
 }
 
 .user .bubble {
-    background: #077519;
+    background: #237d14;
     color: white;
     text-align: left;
     border-bottom-right-radius: 5px;
     /* this fixes alignment issue */
     margin-left: auto; 
-    
 }
 
 .other .bubble {
-    background: #595959;
+    background: #55647d;
     color: #ddd;
     text-align: left;
     border-bottom-left-radius: 5px;
@@ -90,7 +101,7 @@
 }
 
 .admin .bubble {
-    background: #980063;
+    background: #d72d2d;
     color: #ddd;
     text-align: left;
     border-bottom-left-radius: 5px;
@@ -100,16 +111,19 @@
 .input-box {
     display: flex;
     padding: 10px;
-    background-color: #222;
-    border-top: 1px solid #333;
+    background-color: #191e3c;
+    border-top: 1px solid #37415a;
 }
 
 .message-text {
     flex-grow: 1;
-    background: #333;
+    background: #37415a;
+    outline: 1px solid #37415a;
     padding: 10px;
     resize: none;
-    min-height: 40px;
+    min-height: 25px;
+    max-height: 25px;
+    transition: 0.3s;
     font-size: 16px;
     color: white;
     border-radius: 5px;
@@ -117,16 +131,32 @@
     word-break: break-word; /* Prevent overflow of input text */
 }
 
+.message-text:focus {
+    min-height: 80px;
+}
+
 .message-info {
-    color: #555;
+    color: #3d4758;
     font-size: 14px;
     font-style: italic;
-    margin-top: 0px; /* Adjust spacing around the message info */
+    margin-top: 5px; /* Adjust spacing around the message info */
     text-align: left;
+    user-select: none;
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+}
+
+.info-panel {
+    color: #7891a5;
+    background: #191e3c;
+    padding-left: 10px;
+    padding-bottom: 4px;
 }
 
 button {
-    background-color: #444;
+    background-color: #55647d;
     padding: 10px 15px;
     margin-left: 10px;
     cursor: pointer;
@@ -134,6 +164,8 @@ button {
     border: none;
     color: white;
     border-radius: 5px;
+    max-height: 70px;
+    min-height: 40px
 }
 
 @keyframes bounce {
@@ -143,7 +175,7 @@ button {
 }
 50% {
     transform: translateY(-4px);
-    transform: scale(1.1);
+    transform: scale(1.04);
 }
 100% {
     transform: translateY(0px);
@@ -153,7 +185,7 @@ button {
 
 button:hover {
     animation: bounce 1s infinite ease-in-out;
-    background-color: #555;
+    background-color: #7891a5;
 }
 p.watermark#wm1{
     position:absolute;;

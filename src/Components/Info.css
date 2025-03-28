@@ -6,15 +6,25 @@
 
 .info-container {
     width: 200px;
-    border-radius: 12px;
+    border-radius: 1;
     height: 100vh;
     margin-right: 20px;
+    background-color: #2b315277;
+    border: 1px solid #37415a;
+    user-select: none;
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
 }
 
 .info-header{
     /* slghtly lighter than admin messages for contrast */
-    color: magenta;
-    font-size: larger;
+    color: #c8e1eb;
+    padding: 7px 12px;
+    font-size: 17px;
+    background-color: #37415a;
+    /* border: 2px solid #37415a; */
 }
 
 .info-user-list{
@@ -25,7 +35,16 @@
 }
 
 .info-text-user {
-    background: linear-gradient(#333, #222);
+    background: linear-gradient(#0f5519, #0f3223);
+    padding: 10px;
+    margin: 10px 5px;
+    border-radius: 8px;
+    font-style: italic;
+    border: 2px solid #a5becd;
+}
+
+.info-text-other {
+    background: linear-gradient(#37415a, #2d355e);
     padding: 10px;
     margin: 10px 5px;
     border-radius: 8px;

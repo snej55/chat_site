@@ -131,7 +131,7 @@ io.on("connection", (socket) => {
         console.log(uname.username + ' has disconnected');
         
         // send message to everyone
-        var messageData = `${uname.username} has left!`
+        var messageData = `${uname.username} has left the chatbox!`
         io.emit("message", {content: messageData, time: getTime(), user: "ADMIN", uid: 1001});
         usernames.splice(usernames.indexOf(uname), 1);
       }
