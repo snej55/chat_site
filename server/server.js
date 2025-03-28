@@ -133,7 +133,7 @@ io.on("connection", (socket) => {
         // send message to everyone
         var messageData = `${uname.username} has left!`
         io.emit("message", {content: messageData, time: getTime(), user: "ADMIN", uid: 1001});
-        uname.username = '';
+        usernames.splice(usernames.indexOf(uname), 1);
       }
     })
 
