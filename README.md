@@ -8,6 +8,7 @@ This is a basic messaging client, that sends and recieves messages via socket.io
  * Public Chatting
  * Encryption (TODO)
 
+![image](https://github.com/snej55/chat_site/blob/main/media/Screenshot_0.png)
 
 ### Note:
 
@@ -50,7 +51,7 @@ To start the server, run `$ npm run start`.
  * ~~Better login~~
  * ~~No login impersonation~~
  * ~~User list~~
- * Fix user list spacing
+ * ~~Fix user list spacing~~
  * Replying
  * Encryption
  * ~~Filter names~~
