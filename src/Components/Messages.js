@@ -62,7 +62,7 @@ export function MessageBox({getUserName, socket}) {
 
     return (
         <div className="chat-container">
-            <div className="chat-header">{getUserName()} in ChatBox v0.1.1</div>
+            <div className="chat-header">{getUserName()} in ChatBox v0.2.0</div>
 
             <div className='message-box'>
             <p className="watermark" id="wm1">
