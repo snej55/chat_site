@@ -138,18 +138,21 @@ button {
 
 @keyframes bounce {
 0% {
-    transform: translateY(0);
+    transform: translateY(0px);
+    transform: scale(1);
 }
 50% {
-    transform: translateY(-3px);
+    transform: translateY(-4px);
+    transform: scale(1.1);
 }
 100% {
-    transform: translateY(0);
+    transform: translateY(0px);
+    transform: scale(1);
 }
 }
 
 button:hover {
-    animation: bounce 1s infinite;
+    animation: bounce 1s infinite ease-in-out;
     background-color: #555;
 }
 p.watermark#wm1{
