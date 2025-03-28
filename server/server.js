@@ -7,6 +7,7 @@ const { Server } = require("socket.io");
 const fs = require("fs");
 const blockedWords = JSON.parse(fs.readFileSync("blockedWords.json", "utf8")).blockedWords;
 const blockedWordsReplacements = JSON.parse(fs.readFileSync("new-blocked-words.json", "utf-8"));
+console.log(blockedWordsReplacements);
 const periodicTableElements = JSON.parse(fs.readFileSync("funnyreplacements.json","utf8")).periodicTableElements
 const app = express();
 const server = http.createServer(app);
@@ -48,17 +49,9 @@ io.on("connection", (socket) => {
       if (message.content.toLowerCase().includes(word)) {
         // Select a random element
         const randomElement = periodicTableElements[Math.floor(Math.random() * periodicTableElements.length)];
-        const replacement = '';
-        if (blockedWordsReplacements[word]) {
-          const replacement = blockedWordsReplacements[word];
-          if (replacement.toLowerCase() === "pe") {
-            replacement = randomElement;
-          }
-        } else {
-          replacement = randomElement;
-        }
+        const replacement = blockedWordsReplacements[word];
         console.log(replacement);
-        message.content = message.content.replace(regex, randomElement); // replace it
+        message.content = message.content.replace(regex, replacement === 'pe' ? randomElement : replacement); // replace it
         console.log("Filtered Content:", message.content);
       }
     });
