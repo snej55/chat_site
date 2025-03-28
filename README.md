@@ -8,7 +8,7 @@ This is a basic messaging client, that sends and recieves messages via socket.io
  * Public Chatting
  * Encryption (TODO)
 
-![image](https://github.com/snej55/chat_site/blob/main/media/Screenshot_0.png)
+![image](https://github.com/snej55/chat_site/blob/main/media/Screenshot%202025-03-28%20at%2019.21.38.png)
 
 ### Note:
 
