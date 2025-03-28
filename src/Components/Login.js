@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './Login.css';
 
-const invalid_characters = ["$", "{", "}", " ", ".", "*", "%"];
+const invalid_characters = ["$", "{", "}", ".", "*", "%"];
 const max_username_length = 30;
 const min_username_length = 2;
 
