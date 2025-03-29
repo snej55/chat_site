@@ -12,7 +12,7 @@ This is a basic messaging client, that sends and recieves messages via socket.io
 
 ### Note:
 
-Please use `localhost:PORT`(Port Default 5001 and 3000 for interface) for testing instead of your ip address in *Messages.js*, unless you're testing with other people.
+Please use `localhost:PORT`(Port Default 5001 and 3000 for interface) for testing instead of your ip address in *App.js*, unless you're testing with other people.
 
 ## How to set up:
 
