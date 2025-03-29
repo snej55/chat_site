@@ -53,7 +53,9 @@ To start the server, run `$ npm run start`.
  * ~~User list~~
  * ~~Fix user list spacing~~
  * Replying
- * Encryption
+ * Client side decryption for encrypted messages
+ * Debug server-side secret matching
+ * Fix duplicate messages bug
  * ~~Filter names~~
  * ~~Fix message bubbles css~~
  * Banning & kicking
