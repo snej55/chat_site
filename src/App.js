@@ -66,8 +66,6 @@ export default function App() {
       // calculate public key
       var pub = (generator ** priv) % prime;
 
-      console.log('prime', prime, 'generator',generator, 'priv',priv, 'pub',pub);
-
       setPrivateKey(priv);
       setPubKey(pub);
 
@@ -87,7 +85,7 @@ export default function App() {
       setSecret(secret);
 
       const verification = AES.encrypt("verify", secret, {iv: encIV}).toString();
-      console.log(`verifying ${verification}`)
+      console.log(`verifying...`);
       socket.emit("verify_secret", {verification: verification, iv: encIV});
     });
 
@@ -99,6 +97,7 @@ export default function App() {
   useEffect(() => {
     socket.on("verified_secret", (success) => {
       if (success) {
+        console.log("verified!");
         setVerifiedSecret(true);
       } else { // try again
         console.log("exchanging keys...");

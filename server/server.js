@@ -169,7 +169,7 @@ io.on("connection", (socket) => {
 
   // encryption stuff
   socket.on("enc_prime", (prime) => {
-    console.log("Recieved prime: ", prime);
+    console.log("Exchanging keys...");
     clientENC[socket.id] = {};
     clientENC[socket.id].encPrime = prime;
     socket.emit("prime_agreed", clientENC[socket.id].encPrime);
@@ -177,13 +177,11 @@ io.on("connection", (socket) => {
 
   socket.on("enc_generator", (generator) => {
     clientENC[socket.id].encGenerator = generator;
-    console.log("Recieved generator: ", generator);
     socket.emit("generator_agreed", clientENC[socket.id].encGenerator);
   });
 
   socket.on("set_generator", (success) => {
     if (success) {
-      console.log(`Agreed on prime and generator:  P: ${clientENC[socket.id].encPrime}, G: ${clientENC[socket.id].encGenerator}`);
       socket.emit("enc_gp_agreed", {prime: clientENC[socket.id].encPrime, generator: clientENC[socket.id].encGenerator});
     }
   });
@@ -197,11 +195,6 @@ io.on("connection", (socket) => {
     // then calculate the secret
     clientENC[socket.id].encSecret = (pubKey ** clientENC[socket.id].encPrivKey) % clientENC[socket.id].encPrime;
     clientENC[socket.id].encSecret = string2Hash(String(clientENC[socket.id].encSecret * 7883));
-
-    console.log('recieved pub: ', pubKey);
-    console.log('pub: ', clientENC[socket.id].encPubKey, 'priv: ', clientENC[socket.id].encPrivKey);
-
-    console.log("calculated secret: ", clientENC[socket.id].encSecret);
 
     // give client our public key
     socket.emit("enc_pub_key_calculated", {pubKey: clientENC[socket.id].encPubKey, prime: clientENC[socket.id].encPrime});
