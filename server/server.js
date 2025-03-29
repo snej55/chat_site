@@ -114,7 +114,7 @@ io.on("connection", (socket) => {
           if (!(socs_sent_to.includes(soc)) && soc != io.socket) {
             message_encrypted = message;
             message_encrypted.content = AES.encrypt(message.content, clientENC[soc.id].encSecret, {iv: clientENC[soc.id].encIV}).toString();
-            soc.emit("message", message_encrypted);
+            soc.emit("message", message); // TODO: Change this to message_encrypted
             socs_sent_to.push(soc);
             console.log(soc.id);
           } else {

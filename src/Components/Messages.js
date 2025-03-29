@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { getTime } from '../utils';
 import './Messages.css';
 
-export function MessageBox({getUserName, socket, encryptMessage}) {
+export function MessageBox({getUserName, socket, encryptMessage, decryptMessage}) {
     const [messageData, setMessageData] = useState('');
     const [messages, setMessages] = useState([]);
     const [messageID, setMessageID] = useState(0);
@@ -18,16 +18,16 @@ export function MessageBox({getUserName, socket, encryptMessage}) {
   
     const scrollToBottom = () => {
         document.getElementById("messageEnd").scrollIntoView({ behavior: "smooth" });
-        
     }
 
     useEffect(() => {
         // listen for incoming messages
-        socket.on("message", (message) => {
-            console.log(`Recieved message: ${message.content}`)
+        socket.on("message", (mes) => {
+            console.log(`Recieved message: ${mes.content}`)
+            const message = {message: {content: mes.content, time: mes.time, user: mes.user, uid: mes.uid}, id: mes.length}
             setMessages([
                 ...messages,
-                {message: message, id: messages.length}
+                message
             ]);
             scrollToBottom();
         });
@@ -66,10 +66,10 @@ export function MessageBox({getUserName, socket, encryptMessage}) {
             <div className="chat-header">{getUserName()} in ChatBox v0.2.0</div>
 
             <div className='message-box'>
-            <p className="watermark" id="wm1">
-                {/* Invisable watermark math stuff prevents moving out of the screen*/}
-                {getUserName().repeat(Math.floor(70 / getUserName().length))}
-            </p>
+                <p className="watermark" id="wm1">
+                    {/* Invisable watermark math stuff prevents moving out of the screen*/}
+                    {getUserName().repeat(Math.floor(70 / getUserName().length))}
+                </p>
                 {messages.map(
                     i =><div key={i.id} class={(i.message.user === getUserName()) ? 'message user' : ((i.message.user.toLowerCase() === 'admin') ? 'message admin' : 'message other')}>
                             <div>
@@ -100,5 +100,6 @@ export function MessageBox({getUserName, socket, encryptMessage}) {
 MessageBox.propTypes = {
     getUserName: PropTypes.func.isRequired,
     socket: PropTypes.any.isRequired,
-    encryptMessage: PropTypes.func.isRequired
+    encryptMessage: PropTypes.func.isRequired,
+    decryptMessage: PropTypes.func.isRequired
 }

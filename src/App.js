@@ -137,11 +137,17 @@ export default function App() {
     return AES.encrypt(message, encSecret, {iv: encIV}).toString();
   }
 
+  function decryptMessage(message) {
+    const bytes =  AES.decrypt(message, encSecret, {iv: encIV});
+    console.log(`Decrypted: ${bytes.toString(enc.Utf8)}`);
+    return bytes.toString(enc.Utf8);
+  }
+
   // return actual message box
   return (
     <div className="container">
       <InfoPanel getUserName={getUserName} socket={socket} />
-      <MessageBox getUserName={getUserName} socket={socket} encryptMessage={encryptMessage} />
+      <MessageBox getUserName={getUserName} socket={socket} encryptMessage={encryptMessage} decryptMessage={decryptMessage}/>
     </div>
   );
 }
