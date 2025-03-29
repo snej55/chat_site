@@ -7,7 +7,6 @@ const { Server } = require("socket.io");
 const fs = require("fs");
 const blockedWords = JSON.parse(fs.readFileSync("blockedWords.json", "utf8")).blockedWords;
 const blockedWordsReplacements = JSON.parse(fs.readFileSync("new-blocked-words.json", "utf-8"));
-console.log(blockedWordsReplacements);
 const periodicTableElements = JSON.parse(fs.readFileSync("funnyreplacements.json","utf8")).periodicTableElements
 const app = express();
 const server = http.createServer(app);

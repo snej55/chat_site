@@ -13,7 +13,7 @@ import { Login } from './Components/Login';
 // jens: http://10.24.79.53:5001 at *a* port
 
 // !! PLEASE USE localhost:PORT for testing to avoid issues with serverside code
-const socket = io("http://192.168.0.15:5001");
+const socket = io("http://localhost:5001");
 
 export default function App() {
   const [username, setUserName] = useState();
