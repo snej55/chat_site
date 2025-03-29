@@ -23,7 +23,6 @@ const socket = io("http://localhost:5001");
 export default function App() {
   const [username, setUserName] = useState();
   const [exchangedKeys, setExchangedKeys] = useState(false);
-  console.log(exchangedKeys);
 
   const [encPubKey, setPubKey] = useState();
   const [encPrivateKey, setPrivateKey] = useState();
@@ -85,7 +84,7 @@ export default function App() {
       setSecret(secret);
 
       const verification = AES.encrypt("verify", secret, {iv: encIV}).toString();
-      console.log(`verifying...`);
+      console.log(`Verifying...`);
       socket.emit("verify_secret", {verification: verification, iv: encIV});
     });
 
@@ -97,10 +96,10 @@ export default function App() {
   useEffect(() => {
     socket.on("verified_secret", (success) => {
       if (success) {
-        console.log("verified!");
+        console.log("Verified!");
         setVerifiedSecret(true);
       } else { // try again
-        console.log("exchanging keys...");
+        console.log("Exchanging keys...");
         const primes = [179, 181, 191, 193, 283, 29, 127, 239, 199];
         socket.emit("enc_prime", primes[Math.floor(Math.random() * primes.length)]);
       }
@@ -118,7 +117,7 @@ export default function App() {
   }
   
   if (!exchangedKeys) {
-    console.log("exchanging keys...");
+    console.log("Exchanging keys...");
     const primes = [179, 181, 191, 193, 283, 29, 127, 239, 199];
     socket.emit("enc_prime", primes[Math.floor(Math.random() * primes.length)]);
     // socket.emit("enc_prime", 13);
@@ -134,11 +133,15 @@ export default function App() {
     return username;
   }
 
+  function encryptMessage(message) {
+    return AES.encrypt(message, encSecret, {iv: encIV}).toString();
+  }
+
   // return actual message box
   return (
     <div className="container">
       <InfoPanel getUserName={getUserName} socket={socket} />
-      <MessageBox getUserName={getUserName} socket={socket} />
+      <MessageBox getUserName={getUserName} socket={socket} encryptMessage={encryptMessage} />
     </div>
   );
 }

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { getTime } from '../utils';
 import './Messages.css';
 
-export function MessageBox({getUserName, socket}) {
+export function MessageBox({getUserName, socket, encryptMessage}) {
     const [messageData, setMessageData] = useState('');
     const [messages, setMessages] = useState([]);
     const [messageID, setMessageID] = useState(0);
@@ -24,9 +24,10 @@ export function MessageBox({getUserName, socket}) {
     useEffect(() => {
         // listen for incoming messages
         socket.on("message", (message) => {
+            console.log(`Recieved message: ${message.content}`)
             setMessages([
                 ...messages,
-                message
+                {message: message, id: messages.length}
             ]);
             scrollToBottom();
         });
@@ -41,7 +42,7 @@ export function MessageBox({getUserName, socket}) {
     }, [messages]);
 
     function generateMessage() {
-        return {content: messageData, time: getTime(), user: getUserName(), uid: messageID};
+        return {content: encryptMessage(messageData), time: getTime(), user: getUserName(), uid: messageID};
     }
 
     function addUserMessage() {
@@ -70,10 +71,10 @@ export function MessageBox({getUserName, socket}) {
                 {getUserName().repeat(Math.floor(70 / getUserName().length))}
             </p>
                 {messages.map(
-                    i =><div key={i.uid} class={(i.user === getUserName()) ? 'message user' : ((i.user.toLowerCase() === 'admin') ? 'message admin' : 'message other')}>
+                    i =><div key={i.id} class={(i.message.user === getUserName()) ? 'message user' : ((i.message.user.toLowerCase() === 'admin') ? 'message admin' : 'message other')}>
                             <div>
-                                <div className='bubble'>{i.content}</div>
-                                {(i.user !== getUserName()) ? <div className='message-info'>{i.user} at {i.time}</div> : <div className='message-info'></div>}
+                                <div className='bubble'>{i.message.content}</div>
+                                {(i.message.user !== getUserName()) ? <div className='message-info'>{i.message.user} at {i.message.time}</div> : <div className='message-info'></div>}
                             </div>
                         </div>
                 )}
@@ -98,5 +99,6 @@ export function MessageBox({getUserName, socket}) {
 // for getUserName() hook
 MessageBox.propTypes = {
     getUserName: PropTypes.func.isRequired,
-    socket: PropTypes.any.isRequired
+    socket: PropTypes.any.isRequired,
+    encryptMessage: PropTypes.func.isRequired
 }

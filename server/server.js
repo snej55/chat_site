@@ -22,7 +22,7 @@ function string2Hash(string) {
 
 // --------------- ENCRYPTION ---------------- //
 
-// {socket_id: { encPubKey, encPrivKey, encSecret, encPrime, encGenerator}};
+// {socket_id: { encPubKey, encPrivKey, encSecret, encPrime, encGenerator, encIV, socAddress }};
 const clientENC = [];
 
 // --------------- INITIALIZATION --------------- //
@@ -61,40 +61,73 @@ io.on("connection", (socket) => {
   console.log("At ip address: ", socket.handshake.address);
   addresses_connected.push(socket.handshake.address);
   console.log(addresses_connected.includes(socket.handshake.address) ? "this ip is already here" : "new user");
-
-  // Listen for incoming messages from clients
-  socket.on("message", (message) => {
-    // Broadcast the message to all connected clients
-    console.log(message);
-
-    blockedWords.forEach((word) => {
-      const regex = new RegExp(word.toLowerCase(), "gi"); // Change the blocked word(Whole, No UPPER, lower)
-      if (message.content.toLowerCase().includes(word)) {
-        // Select a random element
-        const randomElement = periodicTableElements[Math.floor(Math.random() * periodicTableElements.length)];
-        const replacement = blockedWordsReplacements[word];
-        console.log(replacement);
-        message.content = message.content.replace(regex, replacement === 'PE' ? randomElement : replacement); // replace it
-        console.log("Filtered Content:", message.content);
+  if (addresses_connected.includes(socket.handshake.address)) {
+    clientENC.forEach((clientData) => {
+      if (clientData.socAddress == socket.handshake.address) {
+        clientENC[socket.id] = clientData;
+        console.log("cloned clientENC data");
       }
     });
+  }
 
-    // quick script to cap length of words to less than max_word_length
-    audited_message = '';
-    message.content.split(' ').forEach((word) => {
-      if (word.length > max_word_length) {
-        audited_message = audited_message + word.slice(0, max_word_length) + ' ';
-      } else {
-        audited_message = audited_message + word + ' ';
-      }
-    })
+  // Listen for incoming messages from clients
+  socket.on("message", (cypher_message) => {
+    try {
+      // Broadcast the message to all connected clients
+      console.log(`Encrypted message: ${cypher_message.content}`);
+      const bytes = AES.decrypt(cypher_message.content, clientENC[socket.id].encSecret, {iv: clientENC[socket.id].encIV});
+      var message = cypher_message;
+      message.content = bytes.toString(enc.Utf8);
+      console.log(`Decrypted message: ${message}`);
 
-    audited_message = audited_message.trim();
-    message.content = audited_message;
 
-    console.log(`Audited message: ${message.content}`);
+      blockedWords.forEach((word) => {
+        const regex = new RegExp(word.toLowerCase(), "gi"); // Change the blocked word(Whole, No UPPER, lower)
+        if (message.content.toLowerCase().includes(word)) {
+          // Select a random element
+          const randomElement = periodicTableElements[Math.floor(Math.random() * periodicTableElements.length)];
+          const replacement = blockedWordsReplacements[word];
+          console.log(replacement);
+          message.content = message.content.replace(regex, replacement === 'PE' ? randomElement : replacement); // replace it
+          console.log("Filtered Content:", message.content);
+        }
+      });
 
-    io.emit("message", message);
+      // quick script to cap length of words to less than max_word_length
+      audited_message = '';
+      message.content.split(' ').forEach((word) => {
+        if (word.length > max_word_length) {
+          audited_message = audited_message + word.slice(0, max_word_length) + ' ';
+        } else {
+          audited_message = audited_message + word + ' ';
+        }
+      })
+
+      audited_message = audited_message.trim();
+      message.content = audited_message;
+
+      console.log(`Audited message: ${message.content}`);
+
+      let socs_sent_to = []
+      io.sockets.sockets.forEach((soc) => {
+        if (clientENC[soc.id]) {
+          if (!(socs_sent_to.includes(soc)) && soc != io.socket) {
+            message_encrypted = message;
+            message_encrypted.content = AES.encrypt(message.content, clientENC[soc.id].encSecret, {iv: clientENC[soc.id].encIV}).toString();
+            soc.emit("message", message_encrypted);
+            socs_sent_to.push(soc);
+            console.log(soc.id);
+          } else {
+            if (soc == io.socket) {
+              console.log("I just tried to send a message to myself!");
+            }
+          }
+        }
+      })
+      io.emit("message", message);
+    } catch (err) {
+      console.log(err);
+    }
   });
 
   // listen for new user
@@ -210,6 +243,8 @@ io.on("connection", (socket) => {
     if (decrypted === "verify") {
       console.log("Verified - secrets match!");
       // everything is alright
+      clientENC[socket.id].encIV = verification.iv;
+      clientENC[socket.id].socAddress = socket.handshake.address;
       socket.emit("verified_secret", true);
     } else {
       console.log("Something went wrong!");
