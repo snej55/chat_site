@@ -30,7 +30,7 @@
     color: white;
     padding-top: 10px;
     padding-bottom: 10px;
-    min-height: 400px;
+    min-height: 70vh;
 }
 
 .info-text-user {
@@ -52,10 +52,10 @@
 .announcement-container {
     width: 200px;
     border-radius: 1;
-    height: 100vh;
+    height: auto;
     margin-right: 20px;
-    background-color: #2b315277;
-    border: 1px solid #37415a;
+    /* background-color: #2b315277; */
+    /* border: 1px solid #37415a; */
     user-select: none;
     -moz-user-select: -moz-none;
     -khtml-user-select: none;
@@ -73,6 +73,7 @@
 
 .announcement-content{
     margin: 10px;
+    padding-bottom: 10px;
     color: white;
-
+    height: auto;
 }
