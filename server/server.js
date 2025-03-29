@@ -1,22 +1,5 @@
 // BACKEND SERVER CODE
 
-// initialize express server
-const express = require("express");
-const http = require("http");
-const { Server } = require("socket.io");
-const fs = require("fs");
-const blockedWords = JSON.parse(fs.readFileSync("blockedWords.json", "utf8")).blockedWords;
-const blockedWordsReplacements = JSON.parse(fs.readFileSync("new-blocked-words.json", "utf-8"));
-const periodicTableElements = JSON.parse(fs.readFileSync("funnyreplacements.json","utf8")).periodicTableElements
-const app = express();
-const server = http.createServer(app);
-// initialize socket.io
-const io = new Server(server, {
-  cors: {
-    origin: "*",
-  },
-});
-
 // helper function for quick way to get time as HH:MM:SS
 function getTime() {
   var currentDate = new Date();
@@ -24,12 +7,71 @@ function getTime() {
   return dateTime;
 }
 
+// --------------- ENCRYPTION ---------------- //
+
+class Encryptor {
+  constructor() {
+      this.state = {
+          message: '',
+          secret: '',
+          cipher: '',
+          decrypted: ''
+      };
+  }
+
+  encrypt() {
+      const cipherText = AES.encrypt(this.state.message, this.state.secret);
+      this.setState({ cipher: cipherText.toString(), message: '' });
+  }
+
+  decrypt() {
+      let bytes;
+
+      try {
+          bytes = AES.decrypt(this.state.cipher, this.state.secret);
+          const decrypted = bytes.toString(enc.Utf8);
+          this.setState({ decrypted: decrypted });
+      } catch (err) {
+          console.log(`UNABLE TO DECRYPT ${err}`);
+      }
+  }
+}
+
+const encryptor = new Encryptor();
+let encPubKey;
+let encPrivKey;
+let encSecret;
+let encPrime;
+let encGenerator;
+
+// --------------- INITIALIZATION --------------- //
+
+// initialize express server
+const express = require("express");
+const http = require("http");
+const { Server } = require("socket.io");
+const { AES, enc } = require("crypto-js");
+const fs = require("fs");
+const blockedWords = JSON.parse(fs.readFileSync("blockedWords.json", "utf8")).blockedWords;
+const blockedWordsReplacements = JSON.parse(fs.readFileSync("new-blocked-words.json", "utf-8"));
+const periodicTableElements = JSON.parse(fs.readFileSync("funnyreplacements.json","utf8")).periodicTableElements
+const app = express();
+const server = http.createServer(app);
 // list to store ip addresses that have connected.
 addresses_connected = []
 const usernames = []
 const max_word_length = 500;
 
-io.emit("server_reload", "server_restart");
+
+// initialize socket.io
+const io = new Server(server, {
+  cors: {
+    origin: "*",
+  },
+});
+
+
+// ---------------- Handle socket.io signals ---------------- //
 
 // Handle WebSocket connections here
 io.on("connection", (socket) => {
@@ -142,6 +184,45 @@ io.on("connection", (socket) => {
     console.log(usernames);
     console.log(socket.id, " disconnected");
   });
+  
+
+  // encryption stuff
+  socket.on("enc_prime", (prime) => {
+    console.log("Recieved prime: ", prime);
+    encPrime = prime;
+    socket.emit("prime_agreed", encPrime);
+  });
+
+  socket.on("enc_generator", (generator) => {
+    encGenerator = generator;
+    console.log("Recieved generator: ", generator);
+    socket.emit("generator_agreed", encGenerator);
+  });
+
+  socket.on("set_generator", (success) => {
+    if (success) {
+      console.log(`Agreed on prime and generator:  P: ${encPrime}, G: ${encGenerator}`);
+      socket.emit("enc_gp_agreed", {prime: encPrime, generator: encGenerator});
+    }
+  });
+
+  socket.on("enc_pub_key", (pubKey) => {
+    // calculate our own public & private keys, then return our private key
+
+    encPrivKey = parseInt(Math.random() * 10) + 1;
+    encPubKey = (encGenerator ** encPrivKey) % encPrime;
+
+    // then calculate the secret
+    encSecret = (pubKey ** encPrivKey) % encPrime;
+
+    console.log('recieved pub: ', pubKey);
+    console.log('pub: ', encPubKey, 'priv: ', encPrivKey);
+
+    console.log("calculated secret: ", encSecret);
+
+    // give client our public key
+    socket.emit("enc_pub_key_calculated", {pubKey: encPubKey, prime: encPrime});
+  })
 });
 
 // list to PORT
