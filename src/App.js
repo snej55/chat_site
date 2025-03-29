@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import io from "socket.io-client";
+import CryptoJS, { AES, enc } from 'crypto-js';
 
 import { MessageBox } from './Components/Messages';
 import { InfoPanel } from './Components/Info.js';
 import { Login } from './Components/Login';
 import { LoadingPage } from './Components/Loading.js';
+
+import { string2Hash } from "./utils.js";
 // import { setupKeys } from './encryption.js';
 
 // ip addresses (old):
@@ -27,11 +30,14 @@ export default function App() {
   const [encSecret, setSecret] = useState();
   const [encPrime, setENCPrime] = useState();
   const [encGenerator, setENCGenerator] = useState();
+  // initialization vector
+  const [encIV, setENCIV] = useState(CryptoJS.lib.WordArray.random(16));
+  const [verifiedSecret, setVerifiedSecret] = useState(false);
 
   useEffect(() => {
-    socket.once("prime_agreed", (prime) => {
+    socket.on("prime_agreed", (prime) => {
       setENCPrime(prime);
-      socket.emit("enc_generator", parseInt(Math.random() * 10) + 1);
+      socket.emit("enc_generator", parseInt(Math.random() * 8) + 1);
     });
 
     return () => {
@@ -40,7 +46,7 @@ export default function App() {
   });
 
   useEffect(() => {
-    socket.once("generator_agreed", (generator) => {
+    socket.on("generator_agreed", (generator) => {
       setENCGenerator(generator);
       socket.emit("set_generator", true);
     });
@@ -51,12 +57,12 @@ export default function App() {
   });
 
   useEffect(() => {
-    socket.once("enc_gp_agreed", (response) => {
+    socket.on("enc_gp_agreed", (response) => {
       var prime = response.prime;
       var generator = response.generator;
 
       // randomly generate private key
-      var priv = parseInt(Math.random() * 10) + 1;
+      var priv = parseInt(Math.random() * 8) + 1;
       // calculate public key
       var pub = (generator ** priv) % prime;
 
@@ -74,17 +80,37 @@ export default function App() {
   });
 
   useEffect(() => {
-    socket.once("enc_pub_key_calculated", (response) => {
+    socket.on("enc_pub_key_calculated", (response) => {
       // calculate shared secret
       var secret = (response.pubKey ** encPrivateKey) % response.prime;
+      secret = string2Hash(String(secret * 7883));
       setSecret(secret);
-      console.log(response.pubKey, encPrivateKey, secret);
+
+      const verification = AES.encrypt("verify", secret, {iv: encIV}).toString();
+      console.log(`verifying ${verification}`)
+      socket.emit("verify_secret", {verification: verification, iv: encIV});
     });
 
     return () => {
       socket.off("enc_pub_key_calculated");
     }
-  })
+  });
+
+  useEffect(() => {
+    socket.on("verified_secret", (success) => {
+      if (success) {
+        setVerifiedSecret(true);
+      } else { // try again
+        console.log("exchanging keys...");
+        const primes = [179, 181, 191, 193, 283, 29, 127, 239, 199];
+        socket.emit("enc_prime", primes[Math.floor(Math.random() * primes.length)]);
+      }
+    });
+
+    return () => {
+      socket.off("verified_secret");
+    }
+  });
 
   // if username is undefined,
   // banish them to the login page.
@@ -101,7 +127,7 @@ export default function App() {
   }
 
   // we don't want them to be able to use it without encryption
-  if (!encSecret) {
+  if (!verifiedSecret) {
     return <LoadingPage />
   }
 

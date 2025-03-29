@@ -7,42 +7,23 @@ function getTime() {
   return dateTime;
 }
 
-// --------------- ENCRYPTION ---------------- //
+// simple hash generator
+function string2Hash(string) {
+  let hash = 0;
+  if (!string) return hash;
 
-class Encryptor {
-  constructor() {
-      this.state = {
-          message: '',
-          secret: '',
-          cipher: '',
-          decrypted: ''
-      };
+  for (i = 0; i < string.length; i++) {
+      char = string.charCodeAt(i);
+      hash = ((hash << 5) - hash) + char;
+      hash = hash & hash;
   }
-
-  encrypt() {
-      const cipherText = AES.encrypt(this.state.message, this.state.secret);
-      this.setState({ cipher: cipherText.toString(), message: '' });
-  }
-
-  decrypt() {
-      let bytes;
-
-      try {
-          bytes = AES.decrypt(this.state.cipher, this.state.secret);
-          const decrypted = bytes.toString(enc.Utf8);
-          this.setState({ decrypted: decrypted });
-      } catch (err) {
-          console.log(`UNABLE TO DECRYPT ${err}`);
-      }
-  }
+  return hash;
 }
 
-const encryptor = new Encryptor();
-let encPubKey;
-let encPrivKey;
-let encSecret;
-let encPrime;
-let encGenerator;
+// --------------- ENCRYPTION ---------------- //
+
+// {socket_id: { encPubKey, encPrivKey, encSecret, encPrime, encGenerator}};
+const clientENC = [];
 
 // --------------- INITIALIZATION --------------- //
 
@@ -50,6 +31,7 @@ let encGenerator;
 const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
+// const crypto = require('crypto');
 const { AES, enc } = require("crypto-js");
 const fs = require("fs");
 const blockedWords = JSON.parse(fs.readFileSync("blockedWords.json", "utf8")).blockedWords;
@@ -184,45 +166,74 @@ io.on("connection", (socket) => {
     console.log(usernames);
     console.log(socket.id, " disconnected");
   });
-  
 
   // encryption stuff
   socket.on("enc_prime", (prime) => {
     console.log("Recieved prime: ", prime);
-    encPrime = prime;
-    socket.emit("prime_agreed", encPrime);
+    clientENC[socket.id] = {};
+    clientENC[socket.id].encPrime = prime;
+    socket.emit("prime_agreed", clientENC[socket.id].encPrime);
   });
 
   socket.on("enc_generator", (generator) => {
-    encGenerator = generator;
+    clientENC[socket.id].encGenerator = generator;
     console.log("Recieved generator: ", generator);
-    socket.emit("generator_agreed", encGenerator);
+    socket.emit("generator_agreed", clientENC[socket.id].encGenerator);
   });
 
   socket.on("set_generator", (success) => {
     if (success) {
-      console.log(`Agreed on prime and generator:  P: ${encPrime}, G: ${encGenerator}`);
-      socket.emit("enc_gp_agreed", {prime: encPrime, generator: encGenerator});
+      console.log(`Agreed on prime and generator:  P: ${clientENC[socket.id].encPrime}, G: ${clientENC[socket.id].encGenerator}`);
+      socket.emit("enc_gp_agreed", {prime: clientENC[socket.id].encPrime, generator: clientENC[socket.id].encGenerator});
     }
   });
 
   socket.on("enc_pub_key", (pubKey) => {
     // calculate our own public & private keys, then return our private key
 
-    encPrivKey = parseInt(Math.random() * 10) + 1;
-    encPubKey = (encGenerator ** encPrivKey) % encPrime;
+    clientENC[socket.id].encPrivKey = parseInt(Math.random() * 8) + 1;
+    clientENC[socket.id].encPubKey = (clientENC[socket.id].encGenerator ** clientENC[socket.id].encPrivKey) % clientENC[socket.id].encPrime;
 
     // then calculate the secret
-    encSecret = (pubKey ** encPrivKey) % encPrime;
+    clientENC[socket.id].encSecret = (pubKey ** clientENC[socket.id].encPrivKey) % clientENC[socket.id].encPrime;
+    clientENC[socket.id].encSecret = string2Hash(String(clientENC[socket.id].encSecret * 7883));
 
     console.log('recieved pub: ', pubKey);
-    console.log('pub: ', encPubKey, 'priv: ', encPrivKey);
+    console.log('pub: ', clientENC[socket.id].encPubKey, 'priv: ', clientENC[socket.id].encPrivKey);
 
-    console.log("calculated secret: ", encSecret);
+    console.log("calculated secret: ", clientENC[socket.id].encSecret);
 
     // give client our public key
-    socket.emit("enc_pub_key_calculated", {pubKey: encPubKey, prime: encPrime});
-  })
+    socket.emit("enc_pub_key_calculated", {pubKey: clientENC[socket.id].encPubKey, prime: clientENC[socket.id].encPrime});
+  });
+
+  socket.on("verify_secret", (verification) => {
+    // decrypt verification using our secret
+    const bytes = AES.decrypt(verification.verification, clientENC[socket.id].encSecret, {iv: verification.iv});
+    const decrypted = bytes.toString(enc.Utf8);
+    console.log(`Decrypted: ${decrypted}`);
+
+    // check if decryption was successful
+    if (decrypted === "verify") {
+      console.log("Verified - secrets match!");
+      // everything is alright
+      socket.emit("verified_secret", true);
+    } else {
+      console.log("Something went wrong!");
+      // tell client to try again
+      socket.emit("verified_secret", false);
+    }
+
+    // // THIS IS THE OTHER WAY
+    // const encrypted = AES.encrypt("verify", clientENC[socket.id].encSecret, {iv: verification.iv}).toString();
+    // console.log(`Verifying: ${encrypted}`);
+
+    // if (encrypted === verification.verification) {
+    //   console.log("They match!");
+    // } else {
+    //   console.log("Something went wrong!");
+    // }
+  });
 });
 
 // list to PORT
