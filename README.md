@@ -2,6 +2,26 @@
 
 This is a basic messaging client, that sends and recieves messages via socket.io
 
+# Encryption:
+
+Encryption is currently a work in progress. Client to server messages are encrypted, but server to client messages are not (yet), the reason being that the server needs to cycle through every socket in `io.sockets`, and match the corresponding secret. Encryption keys for each client are stored in `clientENC`, where each client's secret is `clientENC[socket.id].encSecret`.
+
+Messages can be encrypted using the following:
+```
+encrypted = AES.encrypt(message, clientENC[socket.id].encSecret, {iv: clientENC[socket.id].encIV}).toString()
+```
+The `toString()` is important, as it prevents the function from returning a complex object that causes problems with `socket.emit()`.
+
+Similarly, messages can be decrypted using:
+```
+// AES.decrypt returns a byte value, so we need to convert it to a string
+decrypted = AES.decrypt(cypher, clientENC[socket.id].encSecret, {iv: clientENC[socket.id].encIV}).toString(enc.Utf8)
+```
+
+## Important
+
+Restarting the server with clients still running can cause issues (as the server will not have the clientENC data for them). Make sure to restart all clients after restarting the server.
+
 # Features 
  * Filtering words
  * Moderation (TODO)
