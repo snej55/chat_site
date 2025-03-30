@@ -62,37 +62,39 @@ export function MessageBox({getUserName, socket, encryptMessage, decryptMessage}
     }
 
     return (
-        <div className="chat-container">
-            <div className="chat-header">{getUserName()} in ChatBox v0.2.0</div>
+        // <body>
+            <div className="chat-container">
+                <div className="chat-header">{getUserName()} in ChatBox v0.2.0</div>
 
-            <div className='message-box'>
-                <p className="watermark" id="wm1">
-                    {/* Invisable watermark math stuff prevents moving out of the screen*/}
-                    {getUserName().repeat(Math.floor(70 / getUserName().length))}
-                </p>
-                {messages.map(
-                    i =><div key={i.id} class={(i.message.user === getUserName()) ? 'message user' : ((i.message.user.toLowerCase() === 'admin') ? 'message admin' : 'message other')}>
-                            <div>
-                                <div className='bubble'>{i.message.content}</div>
-                                {(i.message.user !== getUserName()) ? <div className='message-info'>{i.message.user} at {i.message.time}</div> : <div className='message-info'></div>}
+                <div className='message-box'>
+                    <p className="watermark" id="wm1">
+                        {/* Invisable watermark math stuff prevents moving out of the screen*/}
+                        {getUserName().repeat(Math.floor(70 / getUserName().length))}
+                    </p>
+                    {messages.map(
+                        i =><div key={i.id} class={(i.message.user === getUserName()) ? 'message user' : ((i.message.user.toLowerCase() === 'admin') ? 'message admin' : 'message other')}>
+                                <div>
+                                    <div className='bubble'>{i.message.content}</div>
+                                    {(i.message.user !== getUserName()) ? <div className='message-info'>{i.message.user} at {i.message.time}</div> : <div className='message-info'></div>}
+                                </div>
                             </div>
-                        </div>
-                )}
-                {/* dummy div to automatically scroll to bottom */}
-                <div style={{ float:"left", clear: "both" }} id="messageEnd">
+                    )}
+                    {/* dummy div to automatically scroll to bottom */}
+                    <div style={{ float:"left", clear: "both" }} id="messageEnd">
+                    </div>
+                </div>
+                
+                <div className='input-box'>
+                    <textarea maxlength="500" className='message-text' onChange={e => setMessageData(e.target.value)} placeholder='Enter your message here...' onKeyDown={e => (e.key === 'Enter' ? addUserMessage() : null)}></textarea>
+                    <button className="send-button" onClick={addUserMessage}>Send</button>
+                    
+                </div>
+                
+                <div className="info-panel">
+                    <div className="characters-left">{messageData.length}/500</div>
                 </div>
             </div>
-            
-            <div className='input-box'>
-                <textarea maxlength="500" className='message-text' onChange={e => setMessageData(e.target.value)} placeholder='Enter your message here...' onKeyDown={e => (e.key === 'Enter' ? addUserMessage() : null)}></textarea>
-                <button className="send-button" onClick={addUserMessage}>Send</button>
-                
-            </div>
-            
-            <div className="info-panel">
-                <div className="characters-left">{messageData.length}/500</div>
-            </div>
-        </div>
+        // </body>
     )
 }
 

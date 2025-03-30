@@ -1,3 +1,7 @@
+body{
+    overflow-y: hidden;
+}
+
 .chat-container {
     display: flex;
     flex-direction: column;
@@ -9,7 +13,7 @@
     background: linear-gradient(#191e3c, #000005); */
     background-color: #13172f;
     /* border-radius: 10px; */
-    overflow: hidden;
+    /* overflow: hidden; */
     box-shadow: 20px 20px 50px #1111;
     border: 1px solid #37415a;
 }
