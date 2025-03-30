@@ -62,7 +62,7 @@ export function MessageBox({getUserName, socket, encryptMessage, decryptMessage}
     }
 
     return (
-        <body>
+        // <body>
             <div className="chat-container">
                 <div className="chat-header">{getUserName()} in ChatBox v0.2.0</div>
 
@@ -94,7 +94,7 @@ export function MessageBox({getUserName, socket, encryptMessage, decryptMessage}
                     <div className="characters-left">{messageData.length}/500</div>
                 </div>
             </div>
-        </body>
+        // </body>
     )
 }
 
