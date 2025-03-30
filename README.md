@@ -94,7 +94,8 @@ For more information on how the secret generation works, look here: [Diffie-Hell
  * ~~Fix duplicate messages bug~~
  * ~~Filter names~~
  * ~~Fix message bubbles css~~
- * Banning & kicking
+ * ~~Kicking~~
+ * Banning
  * ~~Filtering & Added Funny Replacements for filtered words~~
  * ~~Colored admin messages~~
  * ~~Auto scroll~~
