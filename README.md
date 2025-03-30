@@ -98,6 +98,6 @@ For more information on how the secret generation works, look here: [Diffie-Hell
  * ~~Filtering & Added Funny Replacements for filtered words~~
  * ~~Colored admin messages~~
  * ~~Auto scroll~~
- * Admin token
+ * ~~Admin token~~
  * Fix announcement hard coded in issue
  * Levenshtein distance to protect "ADMIN" username and sensored words
