@@ -40,9 +40,10 @@ const periodicTableElements = JSON.parse(fs.readFileSync("funnyreplacements.json
 const app = express();
 const server = http.createServer(app);
 // list to store ip addresses that have connected.
-addresses_connected = []
-const usernames = []
+const addresses_connected = [];
+const usernames = [];
 const max_word_length = 500;
+const banned_addresses = [];
 
 // admin password
 const admin_token = "beans"; // for testing, actual password is 'IDr1nkT01l£tW@t£R$P££DY!'
@@ -65,11 +66,18 @@ io.on("connection", (socket) => {
   console.log(addresses_connected.includes(socket.handshake.address) ? "this ip is already here" : "new user");
   if (addresses_connected.includes(socket.handshake.address)) {
     clientENC.forEach((clientData) => {
-      if (clientData.socAddress == socket.handshake.address) {
+      if (clientData.socAddress === socket.handshake.address) {
         clientENC[socket.id] = clientData;
         console.log("cloned clientENC data");
       }
     });
+  }
+
+  // check if this ip address has been banned
+  if (banned_addresses.includes(socket.handshake.address)) {
+    console.log(`This ip is banned: ${socket.handshake.address}. Refusing connection: `);
+    socket.disconnect();
+    console.log(`Socket disconnected!`);
   }
 
   // send a message to all clients
@@ -153,6 +161,17 @@ io.on("connection", (socket) => {
           console.log(`Kicking: ${uname}`);
           let soc = getSocketFromUsername(uname);
           if (soc) {
+            soc.disconnect();
+          }
+        });
+        break;
+      case 'ban':
+        args.forEach((uname) => {
+          console.log(`Banning: ${uname}`);
+          let soc = getSocketFromUsername(uname);
+          if (soc) {
+            banned_addresses.push(soc.handshake.address);
+            console.log(`Banned ip address: ${soc.handshake.address}`);
             soc.disconnect();
           }
         });

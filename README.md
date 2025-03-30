@@ -84,21 +84,21 @@ For more information on how the secret generation works, look here: [Diffie-Hell
 > Restarting the server with clients still running can cause issues (as the server will not have the clientENC data for them). Make sure to restart all clients after > restarting the server.
 
 ## TODO: 
+ * Replying
+ * Banning
+ * Fix announcement hard coded in issue
+ * Levenshtein distance to protect "ADMIN" username and sensored words
  * ~~Better login~~
  * ~~No login impersonation~~
  * ~~User list~~
  * ~~Fix user list spacing~~
- * Replying
  * ~~Client side decryption for encrypted messages~~
  * ~~Debug server-side secret matching~~
  * ~~Fix duplicate messages bug~~
  * ~~Filter names~~
  * ~~Fix message bubbles css~~
  * ~~Kicking~~
- * Banning
  * ~~Filtering & Added Funny Replacements for filtered words~~
  * ~~Colored admin messages~~
  * ~~Auto scroll~~
  * ~~Admin token~~
- * Fix announcement hard coded in issue
- * Levenshtein distance to protect "ADMIN" username and sensored words
