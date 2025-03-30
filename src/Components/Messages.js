@@ -23,8 +23,8 @@ export function MessageBox({getUserName, socket, encryptMessage, decryptMessage}
     useEffect(() => {
         // listen for incoming messages
         socket.on("message", (mes) => {
-            console.log(`Recieved message: ${mes.content}`)
-            const message = {message: {content: mes.content, time: mes.time, user: mes.user, uid: mes.uid}, id: mes.length}
+            console.log(`Recieved encrypted message: ${mes.content}`)
+            const message = {message: {content: decryptMessage(mes.content), time: mes.time, user: mes.user, uid: mes.uid}, id: mes.length}
             setMessages([
                 ...messages,
                 message

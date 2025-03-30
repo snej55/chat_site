@@ -70,6 +70,30 @@ io.on("connection", (socket) => {
     });
   }
 
+  // send a message to all clients
+  function broadcastMessage(mes) {
+      let socs_sent_to = []
+      io.sockets.sockets.forEach((soc) => {
+        try {
+          if (clientENC[soc.id] != undefined) {
+            if (!(socs_sent_to.includes(soc)) && soc != io.socket) {
+              var message_encrypted = JSON.parse(JSON.stringify(mes)); // create a clone
+              message_encrypted.content = AES.encrypt(mes.content, clientENC[soc.id].encSecret, {iv: clientENC[soc.id].encIV}).toString();
+              soc.emit("message", message_encrypted); // TODO: Change this to message_encrypted
+              socs_sent_to.push(soc);
+              console.log(soc.id);
+            } else {
+              if (soc == io.socket) {
+                console.log("I just tried to send a message to myself!");
+              }
+            }
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      });
+  }
+
   // Listen for incoming messages from clients
   socket.on("message", (cypher_message) => {
     try {
@@ -78,7 +102,7 @@ io.on("connection", (socket) => {
       const bytes = AES.decrypt(cypher_message.content, clientENC[socket.id].encSecret, {iv: clientENC[socket.id].encIV});
       var message = cypher_message;
       message.content = bytes.toString(enc.Utf8);
-      console.log(`Decrypted message: ${message}`);
+      console.log(`Decrypted message: ${message.content}`);
 
 
       blockedWords.forEach((word) => {
@@ -108,23 +132,23 @@ io.on("connection", (socket) => {
 
       console.log(`Audited message: ${message.content}`);
 
-      let socs_sent_to = []
-      io.sockets.sockets.forEach((soc) => {
-        if (clientENC[soc.id]) {
-          if (!(socs_sent_to.includes(soc)) && soc != io.socket) {
-            // message_encrypted = message;
-            // message_encrypted.content = AES.encrypt(message.content, clientENC[soc.id].encSecret, {iv: clientENC[soc.id].encIV}).toString();
-            soc.emit("message", message); // TODO: Change this to message_encrypted
-            socs_sent_to.push(soc);
-            console.log(soc.id);
-          } else {
-            if (soc == io.socket) {
-              console.log("I just tried to send a message to myself!");
-            }
-          }
-        }
-      })
-      io.emit("message", message);
+      // let socs_sent_to = []
+      // io.sockets.sockets.forEach((soc) => {
+      //   if (clientENC[soc.id] != undefined) {
+      //     if (!(socs_sent_to.includes(soc)) && soc != io.socket) {
+      //       var message_encrypted = JSON.parse(JSON.stringify(message)); // create a clone
+      //       message_encrypted.content = AES.encrypt(message.content, clientENC[soc.id].encSecret, {iv: clientENC[soc.id].encIV}).toString();
+      //       soc.emit("message", message_encrypted); // TODO: Change this to message_encrypted
+      //       socs_sent_to.push(soc);
+      //       console.log(soc.id);
+      //     } else {
+      //       if (soc == io.socket) {
+      //         console.log("I just tried to send a message to myself!");
+      //       }
+      //     }
+      //   }
+      // });
+      broadcastMessage(message);
     } catch (err) {
       console.log(err);
     }
@@ -141,7 +165,7 @@ io.on("connection", (socket) => {
     io.emit("update_users", usernames);
 
     // send admin message to rest of users
-    io.emit("message", {content: messageData, time: getTime(), user: "ADMIN", uid: 1001});
+    broadcastMessage({content: messageData, time: getTime(), user: "ADMIN", uid: 1001});
   })
 
   socket.on("check_user", (username) => {
@@ -188,7 +212,7 @@ io.on("connection", (socket) => {
         
         // send message to everyone
         var messageData = `${uname.username} has left the chatbox!`
-        io.emit("message", {content: messageData, time: getTime(), user: "ADMIN", uid: 1001});
+        broadcastMessage({content: messageData, time: getTime(), user: "ADMIN", uid: 1001})
         usernames.splice(usernames.indexOf(uname), 1);
       }
     })

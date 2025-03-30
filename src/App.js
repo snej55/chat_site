@@ -82,7 +82,7 @@ export default function App() {
       var secret = (response.pubKey ** encPrivateKey) % response.prime;
       secret = string2Hash(String(secret * 7883));
       setSecret(secret);
-
+      
       const verification = AES.encrypt("verify", secret, {iv: encIV}).toString();
       console.log(`Verifying...`);
       socket.emit("verify_secret", {verification: verification, iv: encIV});
@@ -139,7 +139,6 @@ export default function App() {
 
   function decryptMessage(message) {
     const bytes =  AES.decrypt(message, encSecret, {iv: encIV});
-    console.log(`Decrypted: ${bytes.toString(enc.Utf8)}`);
     return bytes.toString(enc.Utf8);
   }
 
