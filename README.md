@@ -88,9 +88,9 @@ For more information on how the secret generation works, look here: [Diffie-Hell
  * ~~User list~~
  * ~~Fix user list spacing~~
  * Replying
- * Client side decryption for encrypted messages
- * Debug server-side secret matching
- * Fix duplicate messages bug
+ * ~~Client side decryption for encrypted messages~~
+ * ~~Debug server-side secret matching~~
+ * ~~Fix duplicate messages bug~~
  * ~~Filter names~~
  * ~~Fix message bubbles css~~
  * Banning & kicking
