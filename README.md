@@ -85,9 +85,9 @@ For more information on how the secret generation works, look here: [Diffie-Hell
 
 ## TODO: 
  * Replying
- * Banning
  * Fix announcement hard coded in issue
  * Levenshtein distance to protect "ADMIN" username and sensored words
+ * ~~IP Banning~~
  * ~~Better login~~
  * ~~No login impersonation~~
  * ~~User list~~

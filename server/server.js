@@ -161,6 +161,7 @@ io.on("connection", (socket) => {
           console.log(`Kicking: ${uname}`);
           let soc = getSocketFromUsername(uname);
           if (soc) {
+            soc.emit("kicked", true);
             soc.disconnect();
           }
         });
@@ -172,6 +173,7 @@ io.on("connection", (socket) => {
           if (soc) {
             banned_addresses.push(soc.handshake.address);
             console.log(`Banned ip address: ${soc.handshake.address}`);
+            soc.emit("kicked", true);
             soc.disconnect();
           }
         });

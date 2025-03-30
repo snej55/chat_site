@@ -131,6 +131,17 @@ export default function App() {
     }
   });
 
+  useEffect(() => {
+    socket.on("kicked", (_) => {
+      window.location.reload();
+      alert("You have been kicked from the chatbox!");
+    });
+
+    return () => {
+      socket.off("kicked");
+    }
+  });
+
   // if username is undefined,
   // banish them to the login page.
   if (!username) {
