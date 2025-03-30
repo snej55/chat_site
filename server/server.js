@@ -134,23 +134,44 @@ io.on("connection", (socket) => {
 
       console.log(`Audited message: ${message.content}`);
 
-      // let socs_sent_to = []
-      // io.sockets.sockets.forEach((soc) => {
-      //   if (clientENC[soc.id] != undefined) {
-      //     if (!(socs_sent_to.includes(soc)) && soc != io.socket) {
-      //       var message_encrypted = JSON.parse(JSON.stringify(message)); // create a clone
-      //       message_encrypted.content = AES.encrypt(message.content, clientENC[soc.id].encSecret, {iv: clientENC[soc.id].encIV}).toString();
-      //       soc.emit("message", message_encrypted); // TODO: Change this to message_encrypted
-      //       socs_sent_to.push(soc);
-      //       console.log(soc.id);
-      //     } else {
-      //       if (soc == io.socket) {
-      //         console.log("I just tried to send a message to myself!");
-      //       }
-      //     }
-      //   }
-      // });
+      let admin_message = '';
+      if (message.user.toLowerCase() === 'admin') {
+        console.log("This was an admin message!");
+        // check for commands
+        var command_found = '';
+        let args = '';
+        message.content.split(' ').forEach(
+          (word) => {
+            if (word === '/kick') {
+              command_found = 'kick';
+            } else if (command_found != '') {
+              if (word.charAt(0) === '@') {
+                if (command_found === 'kick') {
+                  let user_to_kick = word.slice(1, word.length);
+                  usernames.forEach((uname) => {
+                    if (uname.username.toLowerCase() === user_to_kick.toLowerCase()) {
+                      let soc = uname.socket_id;
+                      io.sockets.sockets.forEach((s) => {
+                        if (s.id === soc) {
+                          s.disconnect();
+                          admin_message = `${user_to_kick} has left the chatbox!`;
+                        }
+                      })
+                    }
+                  })
+                }
+              }
+              args = word;
+              command_found = '';
+            }
+          }
+        )
+      }
+
       broadcastMessage(message);
+      if (admin_message) {
+        broadcastMessage({content: admin_message, time: getTime(), user: "ADMIN", uid: 1001});
+      }
     } catch (err) {
       console.log(err);
     }
@@ -213,8 +234,8 @@ io.on("connection", (socket) => {
         console.log(uname.username + ' has disconnected');
         
         // send message to everyone
-        var messageData = `${uname.username} has left the chatbox!`
-        broadcastMessage({content: messageData, time: getTime(), user: "ADMIN", uid: 1001})
+        var messageData = `${uname.username} has left the chatbox!`;
+        broadcastMessage({content: messageData, time: getTime(), user: "ADMIN", uid: 1001});
         usernames.splice(usernames.indexOf(uname), 1);
       }
     })
