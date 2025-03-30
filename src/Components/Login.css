@@ -29,6 +29,7 @@ body {
   }
   
   body {  
+    overflow: hidden;
     background: repeating-linear-gradient(
     45deg,
     #191e3c,
