@@ -120,7 +120,7 @@ io.on("connection", (socket) => {
       });
 
       // quick script to cap length of words to less than max_word_length
-      audited_message = '';
+      let audited_message = '';
       message.content.split(' ').forEach((word) => {
         if (word.length > max_word_length) {
           audited_message = audited_message + word.slice(0, max_word_length) + ' ';
@@ -134,7 +134,6 @@ io.on("connection", (socket) => {
 
       console.log(`Audited message: ${message.content}`);
 
-      let admin_message = '';
       if (message.user.toLowerCase() === 'admin') {
         console.log("This was an admin message!");
         // check for commands
@@ -148,17 +147,18 @@ io.on("connection", (socket) => {
               if (word.charAt(0) === '@') {
                 if (command_found === 'kick') {
                   let user_to_kick = word.slice(1, word.length);
-                  usernames.forEach((uname) => {
-                    if (uname.username.toLowerCase() === user_to_kick.toLowerCase()) {
-                      let soc = uname.socket_id;
-                      io.sockets.sockets.forEach((s) => {
-                        if (s.id === soc) {
-                          s.disconnect();
-                          admin_message = `${user_to_kick} has left the chatbox!`;
-                        }
-                      })
+                  usernames.forEach(
+                    (uname) => {
+                      if (uname.username.toLowerCase() === user_to_kick.toLowerCase()) {
+                        let soc = uname.socket_id;
+                        io.sockets.sockets.forEach((s) => {
+                          if (s.id === soc) {
+                            s.disconnect();
+                          }
+                        })
+                      }
                     }
-                  })
+                  )
                 }
               }
               args = word;
@@ -169,9 +169,6 @@ io.on("connection", (socket) => {
       }
 
       broadcastMessage(message);
-      if (admin_message) {
-        broadcastMessage({content: admin_message, time: getTime(), user: "ADMIN", uid: 1001});
-      }
     } catch (err) {
       console.log(err);
     }
