@@ -69,6 +69,15 @@ export function MessageBox({getUserName, socket, encryptMessage, decryptMessage}
         }
     }
 
+    function parseMessage(i) {
+        if (i.message.user.toLowerCase() === 'admin') {
+            return i.message.content.split(' ').map(
+                word => (word.charAt(0) === '/' ? <b><i>{word}</i> </b> : (word.charAt(0) === '@' ? <b><i>{word}</i> </b> : word + ' '))
+            );
+        }
+        return i.message.content;
+    }
+
     return (
         // <body>
             <div className="chat-container">
@@ -82,7 +91,7 @@ export function MessageBox({getUserName, socket, encryptMessage, decryptMessage}
                     {messages.map(
                         i =><div key={i.id} class={getMessageClass(i)}>
                                 <div>
-                                    <div className='bubble'>{i.message.content}</div>
+                                    <div className='bubble'>{parseMessage(i)}</div>
                                     {(i.message.user !== getUserName()) ? <div className='message-info'>{i.message.user} at {i.message.time}</div> : <div className='message-info'></div>}
                                 </div>
                             </div>

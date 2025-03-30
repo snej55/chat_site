@@ -45,7 +45,7 @@ const usernames = []
 const max_word_length = 500;
 
 // admin password
-const admin_token = "beans"; // for testing
+const admin_token = "beans"; // for testing, actual password is 'IDr1nkT01l£tW@t£R$P££DY!'
 
 // initialize socket.io
 const io = new Server(server, {
