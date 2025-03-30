@@ -81,8 +81,8 @@ export function MessageBox({getUserName, socket, encryptMessage, decryptMessage}
     return (
         // <body>
             <div className="chat-container">
-                <div className="chat-header">{getUserName()} in ChatBox v0.2.0</div>
-
+                {getUserName() === "ADMIN" && <div className="chat-header-admin">{getUserName()} in ChatBox v0.2.0</div>}
+                {getUserName() !== "ADMIN" && <div className="chat-header">{getUserName()} in ChatBox v0.2.0</div>}
                 <div className='message-box'>
                     <p className="watermark" id="wm1">
                         {/* Invisable watermark math stuff prevents moving out of the screen*/}
