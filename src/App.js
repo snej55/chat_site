@@ -33,6 +33,10 @@ export default function App() {
   const [encIV, setENCIV] = useState(CryptoJS.lib.WordArray.random(16));
   const [verifiedSecret, setVerifiedSecret] = useState(false);
 
+  const [isAdmin, setIsAdmin] = useState(undefined);
+  const [adminToken, setAdminToken] = useState();
+  const [checkedToken, setCheckedToken] = useState(false);
+
   useEffect(() => {
     socket.on("prime_agreed", (prime) => {
       setENCPrime(prime);
@@ -110,10 +114,27 @@ export default function App() {
     }
   });
 
+  useEffect(() => {
+    socket.on("checked_token", (success) => {
+      if (success) {
+        console.log("Admin permissions granted!");
+        setUserName("ADMIN");
+        setIsAdmin(true);
+      } else {
+        console.log("Admin permissions denied!");
+        setIsAdmin(false);
+      }
+    });
+
+    return () => {
+      socket.off("checked_token");
+    }
+  });
+
   // if username is undefined,
   // banish them to the login page.
   if (!username) {
-    return <Login setUserName={setUserName} socket={socket} />
+    return <Login setUserName={setUserName} socket={socket} setAdminToken={setAdminToken} />
   }
   
   if (!exchangedKeys) {
@@ -124,8 +145,18 @@ export default function App() {
     setExchangedKeys(true);
   }
 
+  
   // we don't want them to be able to use it without encryption
   if (!verifiedSecret) {
+    return <LoadingPage />
+  }
+  
+  if (!checkedToken) {
+    socket.emit("check_token", encryptMessage(adminToken));
+    setCheckedToken(true);
+  }
+  
+  if (isAdmin === undefined) {
     return <LoadingPage />
   }
 

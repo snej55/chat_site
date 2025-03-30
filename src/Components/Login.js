@@ -6,7 +6,7 @@ const invalid_characters = ["$", "{", "}", ".", "*", "%"];
 const max_username_length = 30;
 const min_username_length = 2;
 
-export function Login({setUserName, socket}) {
+export function Login({setUserName, socket, setAdminToken}) {
     const [name, setName] = useState('');
 
     const handleSubmit = e => {
@@ -84,7 +84,7 @@ export function Login({setUserName, socket}) {
             </form>
             <label>
                 {/* Input admin token */}
-                <input id="inputAdmin" type ="password"></input>
+                <input id="inputAdmin" type ="password" onChange={e => setAdminToken(e.target.value)}></input>
             </label>
             <p id = 'copyright'>Copyright © 2025 Jens Kromdijk, Nathan Yin, Jan Lukasiak</p>
             <a href="https://github.com/snej55/chat_site" id = 'github'>GitHub</a>
@@ -94,5 +94,6 @@ export function Login({setUserName, socket}) {
 
 Login.propTypes = {
     setUserName: PropTypes.func.isRequired,
-    socket: PropTypes.any.isRequired
+    socket: PropTypes.any.isRequired,
+    setAdminToken: PropTypes.func.isRequired,
 };

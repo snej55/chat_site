@@ -44,6 +44,8 @@ addresses_connected = []
 const usernames = []
 const max_word_length = 500;
 
+// admin password
+const admin_token = "beans"; // for testing
 
 // initialize socket.io
 const io = new Server(server, {
@@ -258,34 +260,56 @@ io.on("connection", (socket) => {
   });
 
   socket.on("verify_secret", (verification) => {
-    // decrypt verification using our secret
-    const bytes = AES.decrypt(verification.verification, clientENC[socket.id].encSecret, {iv: verification.iv});
-    const decrypted = bytes.toString(enc.Utf8);
-    console.log(`Decrypted: ${decrypted}`);
-
-    // check if decryption was successful
-    if (decrypted === "verify") {
-      console.log("Verified - secrets match!");
-      // everything is alright
-      clientENC[socket.id].encIV = verification.iv;
-      clientENC[socket.id].socAddress = socket.handshake.address;
-      socket.emit("verified_secret", true);
-    } else {
-      console.log("Something went wrong!");
-      // tell client to try again
-      socket.emit("verified_secret", false);
+    try {
+      // decrypt verification using our secret
+      const bytes = AES.decrypt(verification.verification, clientENC[socket.id].encSecret, {iv: verification.iv});
+      const decrypted = bytes.toString(enc.Utf8);
+      console.log(`Decrypted: ${decrypted}`);
+  
+      // check if decryption was successful
+      if (decrypted === "verify") {
+        console.log("Verified - secrets match!");
+        // everything is alright
+        clientENC[socket.id].encIV = verification.iv;
+        clientENC[socket.id].socAddress = socket.handshake.address;
+        socket.emit("verified_secret", true);
+      } else {
+        console.log("Something went wrong!");
+        // tell client to try again
+        socket.emit("verified_secret", false);
+      }
+    } catch (err) {
+      console.log(err);
     }
 
-    // // THIS IS THE OTHER WAY
-    // const encrypted = AES.encrypt("verify", clientENC[socket.id].encSecret, {iv: verification.iv}).toString();
-    // console.log(`Verifying: ${encrypted}`);
+    /* // THIS IS THE OTHER WAY
+    const encrypted = AES.encrypt("verify", clientENC[socket.id].encSecret, {iv: verification.iv}).toString();
+    console.log(`Verifying: ${encrypted}`);
 
-    // if (encrypted === verification.verification) {
-    //   console.log("They match!");
-    // } else {
-    //   console.log("Something went wrong!");
-    // }
+    if (encrypted === verification.verification) {
+      console.log("They match!");
+    } else {
+      console.log("Something went wrong!");
+    } */
   });
+
+  socket.on("check_token", (cypher) => {
+    try {
+      const bytes = AES.decrypt(cypher, clientENC[socket.id].encSecret, {iv: clientENC[socket.id].encIV});
+      let token = bytes.toString(enc.Utf8);
+      console.log(`Checking admin token: ${token} against ${admin_token}`);
+      if (token === admin_token) {
+        console.log("Success!");
+        socket.emit("checked_token", true);
+      } else {
+        console.log("Incorrect!");
+        socket.emit("checked_token", false);
+      }
+    } catch (err) {
+      console.log(err);
+      socket.emit("checked_token", false);
+    }
+  })
 });
 
 // list to PORT

@@ -15,7 +15,7 @@ export function MessageBox({getUserName, socket, encryptMessage, decryptMessage}
         setFirstConnection(true);
         socket.emit("new_user", getUserName());
     }
-  
+
     const scrollToBottom = () => {
         document.getElementById("messageEnd").scrollIntoView({ behavior: "smooth" });
     }
@@ -61,6 +61,14 @@ export function MessageBox({getUserName, socket, encryptMessage, decryptMessage}
         }
     }
 
+    function getMessageClass(i) {
+        if (i.message.user.toLowerCase() === 'admin') {
+            return 'message admin';
+        } else {
+            return (i.message.user === getUserName()) ? 'message user' : 'message other';
+        }
+    }
+
     return (
         // <body>
             <div className="chat-container">
@@ -72,7 +80,7 @@ export function MessageBox({getUserName, socket, encryptMessage, decryptMessage}
                         {getUserName().repeat(Math.floor(70 / getUserName().length))}
                     </p>
                     {messages.map(
-                        i =><div key={i.id} class={(i.message.user === getUserName()) ? 'message user' : ((i.message.user.toLowerCase() === 'admin') ? 'message admin' : 'message other')}>
+                        i =><div key={i.id} class={getMessageClass(i)}>
                                 <div>
                                     <div className='bubble'>{i.message.content}</div>
                                     {(i.message.user !== getUserName()) ? <div className='message-info'>{i.message.user} at {i.message.time}</div> : <div className='message-info'></div>}
