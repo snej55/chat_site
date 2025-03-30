@@ -4,6 +4,7 @@ This is a basic messaging client, that sends and recieves messages via socket.io
 
 
 # Features 
+ * Encryption (AES, with secure key exchange)
  * Filtering words
  * Public Chatting
  * User List
