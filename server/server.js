@@ -76,24 +76,89 @@ io.on("connection", (socket) => {
   function broadcastMessage(mes) {
       let socs_sent_to = []
       io.sockets.sockets.forEach((soc) => {
-        try {
-          if (clientENC[soc.id] != undefined) {
-            if (!(socs_sent_to.includes(soc)) && soc != io.socket) {
-              var message_encrypted = JSON.parse(JSON.stringify(mes)); // create a clone
-              message_encrypted.content = AES.encrypt(mes.content, clientENC[soc.id].encSecret, {iv: clientENC[soc.id].encIV}).toString();
-              soc.emit("message", message_encrypted); // TODO: Change this to message_encrypted
-              socs_sent_to.push(soc);
-              console.log(soc.id);
-            } else {
-              if (soc == io.socket) {
-                console.log("I just tried to send a message to myself!");
-              }
+      try {
+        if (clientENC[soc.id] != undefined) {
+          if (!(socs_sent_to.includes(soc)) && soc != io.socket) {
+            var message_encrypted = JSON.parse(JSON.stringify(mes)); // create a clone
+            message_encrypted.content = AES.encrypt(mes.content, clientENC[soc.id].encSecret, {iv: clientENC[soc.id].encIV}).toString();
+            soc.emit("message", message_encrypted); // TODO: Change this to message_encrypted
+            socs_sent_to.push(soc);
+            console.log(soc.id);
+          } else {
+            if (soc == io.socket) {
+              console.log("I just tried to send a message to myself!");
             }
           }
-        } catch (err) {
-          console.log(err);
         }
-      });
+      } catch (err) {
+        console.log(err);
+      }
+    });
+  }
+
+  function getSocketFromUsername(username) {
+    let s;
+    usernames.forEach((uname) => {
+      if (username.toLowerCase() == uname.username.toLowerCase()) {
+        // get the socket id for that user
+        let soc_id = uname.socket_id;
+
+        console.log(soc_id);
+        
+        // find corresponding socket
+        io.sockets.sockets.forEach((soc) => {
+          console.log(soc.id);
+          if (soc.id === soc_id) {
+            s = soc;
+          }
+        });
+      }
+    });
+
+    return s;
+  }
+
+  // function to parse admin commands
+  // e.g /kick @billybob would return {command: 'kick', args: 'billybob'}
+  function parseCommand(admin_command) {
+    let command = '';
+    let args = '';
+    admin_command.split(' ').forEach(
+      (word) => {
+        if (word.charAt(0) === '/') {
+          command = word.slice(1, word.length);
+        } else if (word.charAt(0) === '@') {
+          args += word.slice(1, word.length) + ' ';
+        }
+      }
+    );
+
+    console.log(command, args);
+
+    return {command: command, args: args};
+  }
+
+  // command
+  function executeCommand(com) {
+    let command = com.command;
+    // convert to an array for convenience
+    let args = com.args.split(' ');
+    
+    console.log(`Executing ${command.toUpperCase()} with ${args}`);
+
+    switch (command) {
+      case 'kick':
+        // kick each user in args
+        args.forEach((uname) => {
+          console.log(`Kicking: ${uname}`);
+          let soc = getSocketFromUsername(uname);
+          if (soc) {
+            soc.disconnect();
+          }
+        });
+      default:
+        return;
+    }
   }
 
   // Listen for incoming messages from clients
@@ -137,35 +202,8 @@ io.on("connection", (socket) => {
       if (message.user.toLowerCase() === 'admin') {
         console.log("This was an admin message!");
         // check for commands
-        var command_found = '';
-        let args = '';
-        message.content.split(' ').forEach(
-          (word) => {
-            if (word === '/kick') {
-              command_found = 'kick';
-            } else if (command_found != '') {
-              if (word.charAt(0) === '@') {
-                if (command_found === 'kick') {
-                  let user_to_kick = word.slice(1, word.length);
-                  usernames.forEach(
-                    (uname) => {
-                      if (uname.username.toLowerCase() === user_to_kick.toLowerCase()) {
-                        let soc = uname.socket_id;
-                        io.sockets.sockets.forEach((s) => {
-                          if (s.id === soc) {
-                            s.disconnect();
-                          }
-                        })
-                      }
-                    }
-                  )
-                }
-              }
-              args = word;
-              command_found = '';
-            }
-          }
-        )
+        let command = parseCommand(message.content);
+        executeCommand(command);
       }
 
       broadcastMessage(message);
