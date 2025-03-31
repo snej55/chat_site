@@ -23,7 +23,7 @@ const socket = io("http://localhost:5001");
 export default function App() {
   const [username, setUserName] = useState();
   const [exchangedKeys, setExchangedKeys] = useState(false);
-
+  
   const [encPubKey, setPubKey] = useState();
   const [encPrivateKey, setPrivateKey] = useState();
   const [encSecret, setSecret] = useState();
@@ -32,11 +32,13 @@ export default function App() {
   // initialization vector
   const [encIV, setENCIV] = useState(CryptoJS.lib.WordArray.random(16));
   const [verifiedSecret, setVerifiedSecret] = useState(false);
-
+  
   const [isAdmin, setIsAdmin] = useState(undefined);
   const [adminToken, setAdminToken] = useState();
   const [checkedToken, setCheckedToken] = useState(false);
 
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
+  
   useEffect(() => {
     socket.on("prime_agreed", (prime) => {
       setENCPrime(prime);
@@ -134,9 +136,10 @@ export default function App() {
   useEffect(() => {
     socket.on("kicked", (_) => {
       window.location.reload();
+      sleep(300);
       alert("You have been kicked from the chatbox!");
     });
-
+    
     return () => {
       socket.off("kicked");
     }
