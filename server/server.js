@@ -45,6 +45,9 @@ const usernames = [];
 const max_word_length = 500;
 const banned_addresses = [];
 
+// {username: ip}
+const banned = {};
+
 // admin password
 const admin_token = "beans"; // for testing, actual password is 'IDr1nkT01l£tW@t£R$P££DY!'
 
@@ -172,6 +175,7 @@ io.on("connection", (socket) => {
           let soc = getSocketFromUsername(uname);
           if (soc) {
             banned_addresses.push(soc.handshake.address);
+            banned[uname] = soc.handshake.address;
             console.log(`Banned ip address: ${soc.handshake.address}`);
             soc.emit("kicked", true);
             soc.disconnect();
@@ -182,13 +186,12 @@ io.on("connection", (socket) => {
         case 'unban':
           args.forEach((uname) => {
             console.log(`Unbanning: ${uname}`);
-            let soc = getSocketFromUsername(uname);
-            if (soc) {
-              location = banned_addresses.indexOf(soc.handshake.address)/* Find where the ID is */
-              console.log("location of unban ip: ",location)
-              banned_addresses[location] = " ";/*set to space*/
-              console.log(`unbanned ip address: ${soc.handshake.address}`);
-              console.log("banned_addresses:",banned_addresses)
+            let banned_ip = banned[uname];
+            if (banned_ip) {
+              console.log(`Banned ip: ${banned_ip}`);
+              console.log(`Current banned addresses: ${banned_addresses}`);
+              banned_addresses.splice(banned_addresses.indexOf(banned_ip), 1); // remove ip
+              console.log(`New banned addresses: ${banned_addresses}`);
             }
           });
       default:
