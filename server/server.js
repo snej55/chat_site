@@ -175,8 +175,22 @@ io.on("connection", (socket) => {
             console.log(`Banned ip address: ${soc.handshake.address}`);
             soc.emit("kicked", true);
             soc.disconnect();
+            console.log(banned_addresses)
           }
         });
+        break;
+        case 'unban':
+          args.forEach((uname) => {
+            console.log(`Unbanning: ${uname}`);
+            let soc = getSocketFromUsername(uname);
+            if (soc) {
+              location = banned_addresses.indexOf(soc.handshake.address)/* Find where the ID is */
+              console.log("location of unban ip: ",location)
+              banned_addresses[location] = " ";/*set to space*/
+              console.log(`unbanned ip address: ${soc.handshake.address}`);
+              console.log("banned_addresses:",banned_addresses)
+            }
+          });
       default:
         return;
     }
