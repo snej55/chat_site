@@ -192,6 +192,7 @@ io.on("connection", (socket) => {
               console.log(`Current banned addresses: ${banned_addresses}`);
               banned_addresses.splice(banned_addresses.indexOf(banned_ip), 1); // remove ip
               console.log(`New banned addresses: ${banned_addresses}`);
+              banned[uname] = null;
             }
           });
       default:
