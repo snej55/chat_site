@@ -64,12 +64,12 @@ const io = new Server(server, {
 // Handle WebSocket connections here
 io.on("connection", (socket) => {
   console.log("A new user has connected", socket.id);
-  console.log("At ip address: ", socket.handshake.address);
-  addresses_connected.push(socket.handshake.address);
-  console.log(addresses_connected.includes(socket.handshake.address) ? "this ip is already here" : "new user");
-  if (addresses_connected.includes(socket.handshake.address)) {
+  console.log("At ip address: ", socket.request.connection.remoteAddress);
+  addresses_connected.push(socket.request.connection.remoteAddress);
+  console.log(addresses_connected.includes(socket.request.connection.remoteAddress) ? "this ip is already here" : "new user");
+  if (addresses_connected.includes(socket.request.connection.remoteAddress)) {
     clientENC.forEach((clientData) => {
-      if (clientData.socAddress === socket.handshake.address) {
+      if (clientData.socAddress === socket.request.connection.remoteAddress) {
         clientENC[socket.id] = clientData;
         console.log("cloned clientENC data");
       }
@@ -77,8 +77,8 @@ io.on("connection", (socket) => {
   }
 
   // check if this ip address has been banned
-  if (banned_addresses.includes(socket.handshake.address)) {
-    console.log(`This ip is banned: ${socket.handshake.address}. Refusing connection: `);
+  if (banned_addresses.includes(socket.request.connection.remoteAddress)) {
+    console.log(`This ip is banned: ${socket.request.connection.remoteAddress}. Refusing connection: `);
     socket.disconnect();
     console.log(`Socket disconnected!`);
   }
@@ -183,18 +183,18 @@ io.on("connection", (socket) => {
           }
         });
         break;
-        case 'unban':
-          args.forEach((uname) => {
-            console.log(`Unbanning: ${uname}`);
-            let banned_ip = banned[uname];
-            if (banned_ip) {
-              console.log(`Banned ip: ${banned_ip}`);
-              console.log(`Current banned addresses: ${banned_addresses}`);
-              banned_addresses.splice(banned_addresses.indexOf(banned_ip), 1); // remove ip
-              console.log(`New banned addresses: ${banned_addresses}`);
-              banned[uname] = null;
-            }
-          });
+      case 'unban':
+        args.forEach((uname) => {
+          console.log(`Unbanning: ${uname}`);
+          let banned_ip = banned[uname];
+          if (banned_ip) {
+            console.log(`Banned ip: ${banned_ip}`);
+            console.log(`Current banned addresses: ${banned_addresses}`);
+            banned_addresses.splice(banned_addresses.indexOf(banned_ip), 1); // remove ip
+            console.log(`New banned addresses: ${banned_addresses}`);
+            banned[uname] = null;
+          }
+        });
       default:
         return;
     }
@@ -366,7 +366,7 @@ io.on("connection", (socket) => {
         console.log("Verified - secrets match!");
         // everything is alright
         clientENC[socket.id].encIV = verification.iv;
-        clientENC[socket.id].socAddress = socket.handshake.address;
+        clientENC[socket.id].socAddress = socket.request.connection.remoteAddress;
         socket.emit("verified_secret", true);
       } else {
         console.log("Something went wrong!");
