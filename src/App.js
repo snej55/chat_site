@@ -136,8 +136,9 @@ export default function App() {
   useEffect(() => {
     socket.on("kicked", (_) => {
       window.location.reload();
-      sleep(300);
-      alert("You have been kicked from the chatbox!");
+      // sleep(5000);
+      // console.log("sleeping[debug]")
+      // alert("You have been kicked from the chatbox!");
     });
     
     return () => {
