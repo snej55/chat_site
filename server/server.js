@@ -44,6 +44,7 @@ const addresses_connected = [];
 const usernames = [];
 const max_word_length = 500;
 const banned_addresses = [];
+const mute_list = [];
 
 // {username: ip}
 const banned = {};
@@ -195,6 +196,27 @@ io.on("connection", (socket) => {
             banned[uname] = null;
           }
         });
+        break;
+      case 'mute':
+        args.forEach((uname) => {
+          console.log(`Muting: ${uname}`);
+          let soc = getSocketFromUsername(uname);
+          if (soc) {
+            soc.emit("muted", true);
+            mute_list.push({username: uname, socket_id: soc.id});
+          }
+        });
+        break;
+      case 'unmute':
+        args.forEach((uname) => {
+          console.log(`Unmuting: ${uname}`);
+          mute_list.forEach((member) => {
+            if (member.username.toLowerCase() == uname.toLowerCase()) {
+              mute_list.splice(mute_list.indexOf(member), 1);
+            }
+          })
+        });
+        break;
       default:
         return;
     }
@@ -245,7 +267,16 @@ io.on("connection", (socket) => {
         executeCommand(command);
       }
 
-      broadcastMessage(message);
+      var isMuted = false;
+      mute_list.forEach((member) => {
+        if (member.socket_id === socket.id) {
+          isMuted = true;
+        }
+      })
+
+      if (!isMuted) {
+        broadcastMessage(message);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -311,6 +342,14 @@ io.on("connection", (socket) => {
         var messageData = `${uname.username} has left the chatbox!`;
         broadcastMessage({content: messageData, time: getTime(), user: "ADMIN", uid: 1001});
         usernames.splice(usernames.indexOf(uname), 1);
+      }
+    });
+
+    // remove them from mute_list
+    mute_list.forEach((member) => {
+      if (member.socket_id === socket.id) {
+        console.log(`Removing ${member.username} from mute list`);
+        mute_list.splice(mute_list.indexOf(member), 1);
       }
     })
 
