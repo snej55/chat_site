@@ -86,7 +86,7 @@ For more information on how the secret generation works, look here: [Diffie-Hell
 
 ## TODO: 
  * Replying
- * Mute command
+ * ~~Mute command~~
  * Fix announcement hard coded in issue
  * Levenshtein distance to protect "ADMIN" username and sensored words
  * --Fix unbanning~~
