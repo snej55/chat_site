@@ -89,10 +89,6 @@ body{
     transition: 0.3s;
     cursor: pointer;
     user-select: none;
-    -moz-user-select: -moz-none;
-    -khtml-user-select: none;
-    -webkit-user-select: none;
-    -o-user-select: none;
 }
 
 .bubble:hover {
