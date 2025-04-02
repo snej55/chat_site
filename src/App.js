@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import io from "socket.io-client";
-import CryptoJS, { AES, enc, createHash } from 'crypto-js';
+import CryptoJS, { AES, enc } from 'crypto-js';
 
 import { MessageBox } from './Components/Messages';
 import { InfoPanel } from './Components/Info.js';
@@ -91,7 +91,7 @@ export default function App() {
       var hmac = CryptoJS.HmacSHA256(secret.toString(), secret.toString());
       var hash = hmac.toString(CryptoJS.enc.Hex);
       secret = hash;
-      
+
       setSecret(secret);
       
       const verification = AES.encrypt("verify", secret, {iv: encIV}).toString();
