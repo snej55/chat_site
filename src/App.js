@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import io from "socket.io-client";
-import CryptoJS, { AES, enc } from 'crypto-js';
+import CryptoJS, { AES, enc, createHash } from 'crypto-js';
 
 import { MessageBox } from './Components/Messages';
 import { InfoPanel } from './Components/Info.js';
@@ -18,7 +18,7 @@ import { string2Hash } from "./utils.js";
 // jens: http://10.24.79.53:5001 at *a* port
 
 // !! PLEASE USE localhost:PORT for testing to avoid issues with serverside code
-const socket = io("http://localhost:5001");
+const socket = io("http://10.24.79.53:5001");
 
 export default function App() {
   const [username, setUserName] = useState();
@@ -87,6 +87,11 @@ export default function App() {
       // calculate shared secret
       var secret = (response.pubKey ** encPrivateKey) % response.prime;
       secret = string2Hash(String(secret * 7883));
+      
+      var hmac = CryptoJS.HmacSHA256(secret.toString(), secret.toString());
+      var hash = hmac.toString(CryptoJS.enc.Hex);
+      secret = hash;
+      
       setSecret(secret);
       
       const verification = AES.encrypt("verify", secret, {iv: encIV}).toString();
@@ -184,7 +189,7 @@ export default function App() {
   }
 
   function decryptMessage(message) {
-    const bytes =  AES.decrypt(message, encSecret, {iv: encIV});
+    const bytes = AES.decrypt(message, encSecret, {iv: encIV});
     return bytes.toString(enc.Utf8);
   }
 

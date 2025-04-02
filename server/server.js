@@ -76,7 +76,11 @@ const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
 // const crypto = require('crypto');
+const CryptoJS = require("crypto-js");
 const { AES, enc } = require("crypto-js");
+
+const { createHash } = require('crypto');
+
 const fs = require("fs");
 const blockedWords = JSON.parse(fs.readFileSync("blockedWords.json", "utf8")).blockedWords;
 const blockedWordsReplacements = JSON.parse(fs.readFileSync("new-blocked-words.json", "utf-8"));
@@ -432,6 +436,10 @@ io.on("connection", (socket) => {
     // then calculate the secret
     clientENC[socket.id].encSecret = (pubKey ** clientENC[socket.id].encPrivKey) % clientENC[socket.id].encPrime;
     clientENC[socket.id].encSecret = string2Hash(String(clientENC[socket.id].encSecret * 7883));
+
+    var hmac = CryptoJS.HmacSHA256(clientENC[socket.id].encSecret.toString(), clientENC[socket.id].encSecret.toString());
+    var hash = hmac.toString(CryptoJS.enc.Hex);
+    clientENC[socket.id].encSecret = hash;
 
     // give client our public key
     socket.emit("enc_pub_key_calculated", {pubKey: clientENC[socket.id].encPubKey, prime: clientENC[socket.id].encPrime});
