@@ -9,6 +9,7 @@ export function MessageBox({getUserName, socket, encryptMessage, decryptMessage}
     const [messages, setMessages] = useState([]);
     const [messageID, setMessageID] = useState(0);
     const [firstConnection, setFirstConnection] = useState(false);
+    const [replyMessage, setReplyMessage] = useState(null);
 
     // check if this is the first time we connected
     if (!firstConnection) {
@@ -78,6 +79,10 @@ export function MessageBox({getUserName, socket, encryptMessage, decryptMessage}
         return i.message.content;
     }
 
+    function clearReply() {
+        setReplyMessage(null);
+    }
+
     return (
         <div className="chat-container">
             {getUserName() === "ADMIN" && <div className="chat-header-admin">{getUserName()} in ChatBox v0.3.1</div>}
@@ -91,8 +96,9 @@ export function MessageBox({getUserName, socket, encryptMessage, decryptMessage}
                     i =><div key={i.id} class={getMessageClass(i)}>
                             <div>
                                 <div className='bubble'>
+                                    {i.message.reply && <div><b>{i.message.reply.user}</b>: {i.message.reply.content}</div>}
                                     <div>{parseMessage(i)}</div>
-                                    {i.message.user === getUserName() ? null : <button class="button-extra">reply</button>}
+                                    {i.message.user === getUserName() ? null : <button class="button-extra" onClick={() => {setReplyMessage(i)}}>reply</button>}
                                 </div>
                                 {(i.message.user !== getUserName()) ? <div className='message-info'>{i.message.user} at {i.message.time}</div> : <div className='message-info'></div>}
                             </div>
@@ -102,6 +108,14 @@ export function MessageBox({getUserName, socket, encryptMessage, decryptMessage}
                 <div style={{ float:"left", clear: "both" }} id="messageEnd">
                 </div>
             </div>
+
+            {replyMessage && <div className="reply-preview-container">
+                <button className="reply-remove-button" onClick={clearReply}>x</button>
+                <div className="reply-preview-header">Replying to <b>@{replyMessage.message.user}</b> at {replyMessage.message.time}:</div>
+                <div className="reply-preview">
+                    {replyMessage.message.content}
+                </div>
+            </div>}
             
             <div className='input-box'>
                 <textarea maxlength="500" className='message-text' onChange={e => setMessageData(e.target.value)} placeholder='Enter your message here...' onKeyDown={e => (e.key === 'Enter' ? addUserMessage() : null)}></textarea>

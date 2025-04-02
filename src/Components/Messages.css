@@ -128,7 +128,6 @@ body{
     border-top: 1px solid #37415a;
 }
 
-
 .message-text {
     flex-grow: 1;
     background: #37415a;
@@ -215,7 +214,7 @@ body{
 .button-extra {
     position: absolute;
     opacity: 0;
-    transition: 0.2s;
+    transition: 0.1s ease-in-out;
     font-size: 13px;
     border: 1px solid #fff;
     background-color: #ddd;
@@ -253,4 +252,50 @@ p.watermark#wm1{
     -o-user-select: none;
     user-select: none;
     overflow: hidden;   
+}
+
+.reply-preview-container {
+    background-color: #191e3c;
+    border-top: 1px solid #37415a;
+    display: flex;
+    flex-direction: column;
+}
+
+.reply-preview-header {
+    font-size: 12px;
+    margin-top: 5px;
+    font-style: italic;
+    margin-left: 5px;
+    display: inline-block;
+}
+
+.reply-preview {
+    display: block;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #242e45;
+    text-align: left;
+    /* width: fit-content; */
+    word-break: break-word;
+    margin: 0px;
+    margin-top: 5px;
+}
+
+.reply-remove-button {
+    float: right;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    border-radius: 5px;
+    text-align: right;
+    align-self: flex-end;
+    background-color: #7891a5;
+    border: none;
+    transition: 0.2s;
+}
+
+.reply-remove-button:hover {
+    background-color: #fff;
+    transform: scale(0.8);
 }
