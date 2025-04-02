@@ -15,7 +15,7 @@ body{
     /* border-radius: 10px; */
     /* overflow: hidden; */
     box-shadow: 20px 20px 50px #1111;
-    border: 1px solid #37415a;
+    border: 1px solid #37415a;   
 }
 
 .chat-header {
@@ -88,7 +88,9 @@ body{
     opacity: 1.0;
     transition: 0.3s;
     cursor: pointer;
+    position: relative;
 }
+
 
 .bubble:hover {
     opacity: 0.7;
@@ -176,7 +178,7 @@ body{
     padding-bottom: 4px;
 }
 
-button {
+.send-button {
     background-color: #55647d;
     padding: 10px 15px;
     margin-left: 10px;
@@ -190,24 +192,50 @@ button {
 }
 
 @keyframes bounce {
-0% {
-    transform: translateY(0px);
-    transform: scale(1);
-}
-50% {
-    transform: translateY(-4px);
-    transform: scale(1.04);
-}
-100% {
-    transform: translateY(0px);
-    transform: scale(1);
-}
+    0% {
+        transform: translateY(0px);
+        transform: scale(1);
+    }
+    50% {
+        transform: translateY(-4px);
+        transform: scale(1.04);
+    }
+    100% {
+        transform: translateY(0px);
+        transform: scale(1);
+    }
 }
 
-button:hover {
+.send-button:hover {
     animation: bounce 1s infinite ease-in-out;
     background-color: #7891a5;
 }
+
+
+.button-extra {
+    position: absolute;
+    opacity: 0;
+    transition: 0.2s;
+    font-size: 13px;
+    border: 1px solid #fff;
+    background-color: #ddd;
+    color: black;
+    border-radius: 5px;
+}
+
+.bubble:hover > .button-extra {
+    translate: 10px;
+    /* background-color: #7891a5; */
+    opacity: 1.7;
+}
+
+.button-extra:hover {
+    background-color: #ddd;
+    color: black;
+    transform: scale(0.9);
+    opacity: 1.0;
+}
+
 p.watermark#wm1{
     position:absolute;;
     font-size: x-large;

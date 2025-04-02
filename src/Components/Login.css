@@ -104,15 +104,22 @@ input#input:focus {
 }
 
 button#button{
-    margin: 0 0 18px 0;
+    background-color: #55647d;
+    padding: 10px 15px;
+    margin-left: 10px;
+    cursor: pointer;
+    /* transition: background-color 0.3s ease; */
+    transition: 0.3s ease;
+    border: none;
+    color: white;
     border-radius: 5px;
-    color: #fff;
-    transition: 0.2s;
-    transform: scale(1);
-} 
+    max-height: 70px;
+    min-height: 40px
+}
 
 button#button:hover {
     transform: scale(1.1);
+    background-color: #7891a5;
 }
 
 input#inputAdmin{

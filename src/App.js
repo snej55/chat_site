@@ -31,14 +31,12 @@ export default function App() {
   const [encPrime, setENCPrime] = useState();
   const [encGenerator, setENCGenerator] = useState();
   // initialization vector
-  const [encIV, setENCIV] = useState(CryptoJS.lib.WordArray.random(16));
+  const [encIV, _] = useState(CryptoJS.lib.WordArray.random(16));
   const [verifiedSecret, setVerifiedSecret] = useState(false);
   
   const [isAdmin, setIsAdmin] = useState(undefined);
   const [adminToken, setAdminToken] = useState();
   const [checkedToken, setCheckedToken] = useState(false);
-
-  const sleep = ms => new Promise(r => setTimeout(r, ms));
   
   useEffect(() => {
     socket.on("prime_agreed", (prime) => {
