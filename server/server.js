@@ -22,6 +22,50 @@ function string2Hash(string) {
 
 // --------------- ENCRYPTION ---------------- //
 
+/*
+How the key exchange works:
+
+1. Client and Server agree on a prime and generator
+
+e.g:
+prime = 179
+generator = 9
+
+2. Client and server both randomly generate a private key
+
+Client: private = 12
+Server: private = 7
+
+3. Client and server both calculate public key
+
+Client: public = (generator ^ private) % prime
+ = (9 ** 12) % 179
+ = 100
+
+Server: public = (generator ^ private) % prime
+ = (9 ** 7) % 179
+ = 89
+
+4. Exchange public keys
+
+Client: pubServer = 89
+Server: pubClient = 100
+
+5. Calculate shared secret
+
+secret = (public ^ private) % prime
+
+Client: (pubServer ** private) % prime
+ = (89 ** 12) % 179
+ = 17
+
+Server: (pubClient ** private) % prime
+ = (100 ** 7) % 179
+ = 17
+
+Shared secret => 17
+*/
+
 // {socket_id: { encPubKey, encPrivKey, encSecret, encPrime, encGenerator, encIV, socAddress }};
 const clientENC = [];
 
