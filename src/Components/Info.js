@@ -2,6 +2,18 @@ import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './Info.css'
 
+let announcementData = ''; 
+
+fetch('/announcement.txt') // read public/announcement.txt
+    .then((res) => res.text())
+    .then((data) => {
+        announcementData = data; // store it 
+        console.log('Announcement Loaded:', announcementData);
+    })
+    .catch((err) => console.error('Error fetching announcement:', err));
+
+export {announcementData};
+
 export function InfoPanel({ getUserName, socket }) {
     const [userList, setUserList] = useState([]);
 
@@ -24,7 +36,7 @@ export function InfoPanel({ getUserName, socket }) {
             </div>
             <div className='announcement-container'>
                 <div className = "announcement-header"><b>Announcements</b></div>
-                <div className='announcement-content'>file</div>
+                <div className='announcement-content'>{announcementData}</div>
             </div>
         </div>
     )
