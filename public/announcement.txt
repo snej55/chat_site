@@ -1,1 +1,2 @@
-Welcome To CIMS Beta Testing version 0.3.2
+Welcome to CIMS V1.0.0 - CAST Instant Messaging System 
+Copyright © 2025 Jens Kromdijk, Nathan Yin, Jan Lukasiak
