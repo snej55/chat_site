@@ -39,12 +39,12 @@ Server: private = 7
 3. Client and server both calculate public key
 
 Client: public = (generator ^ private) % prime
- = (9 ** 12) % 179
- = 100
+= (9 ** 12) % 179
+= 100
 
 Server: public = (generator ^ private) % prime
- = (9 ** 7) % 179
- = 89
+= (9 ** 7) % 179
+= 89
 
 4. Exchange public keys
 
@@ -56,12 +56,12 @@ Server: pubClient = 100
 secret = (public ^ private) % prime
 
 Client: (pubServer ** private) % prime
- = (89 ** 12) % 179
- = 17
+= (89 ** 12) % 179
+= 17
 
 Server: (pubClient ** private) % prime
- = (100 ** 7) % 179
- = 17
+= (100 ** 7) % 179
+= 17
 
 Shared secret => 17
 */
@@ -96,6 +96,8 @@ const mute_list = [];
 
 // {username: ip}
 const banned = {};
+
+const admin_token = "beans"; // use 'beans' or something for testing
 
 // initialize socket.io
 const io = new Server(server, {
@@ -491,7 +493,6 @@ io.on("connection", (socket) => {
       const bytes = AES.decrypt(cypher, clientENC[socket.id].encSecret, {iv: clientENC[socket.id].encIV});
       let token = bytes.toString(enc.Utf8);
       // admin password
-      const admin_token = "IDr1nkT01l£tW@t£R$P££DY!"; // use 'beans' or something for testing
       console.log(`Checking admin token: ${token} against ${admin_token}`);
       if (token === admin_token) {
         console.log("Success!");
