@@ -8,7 +8,7 @@ This is a basic messaging client, that sends and recieves messages via socket.io
  * Moderation (Secure admin login with the ability to kick and ban clients)
  * Filtering words
  * Public Chatting
- * Message Replying
+ * Message replying
  * User List
  * Announcements
 
