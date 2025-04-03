@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './Login.css';
 
-const invalid_characters = ["$", "{", "}", ".", "*", "%"," ","/"," "];
+const invalid_characters = ["$", "{", "}", ".", "*", "%"," ","/"," ", "@", ","];
 const max_username_length = 30;
 const min_username_length = 2;
 
@@ -49,7 +49,7 @@ export function Login({setUserName, socket, setAdminToken}) {
         // check if username contains illegal characters
         for (var i = 0; i < invalid_characters.length; ++i) {
             if (username.includes(invalid_characters[i])) {
-                alert("Sorry, your username cannot contain any of the following characters: $, {, }, ., *, % or any spaces");
+                alert("Sorry, your username cannot contain any of the following characters: @, $, {, }, ., *, % or any spaces");
                 return false;
             }
         }

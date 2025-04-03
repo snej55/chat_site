@@ -97,9 +97,6 @@ const mute_list = [];
 // {username: ip}
 const banned = {};
 
-// admin password
-const admin_token = "IDr1nkT01l£tW@t£R$P££DY!"; // use 'beans' or something for testing
-
 // initialize socket.io
 const io = new Server(server, {
   cors: {
@@ -493,6 +490,8 @@ io.on("connection", (socket) => {
     try {
       const bytes = AES.decrypt(cypher, clientENC[socket.id].encSecret, {iv: clientENC[socket.id].encIV});
       let token = bytes.toString(enc.Utf8);
+      // admin password
+      const admin_token = "IDr1nkT01l£tW@t£R$P££DY!"; // use 'beans' or something for testing
       console.log(`Checking admin token: ${token} against ${admin_token}`);
       if (token === admin_token) {
         console.log("Success!");
