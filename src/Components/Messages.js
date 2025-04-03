@@ -25,7 +25,10 @@ export function MessageBox({getUserName, socket, encryptMessage, decryptMessage}
         // listen for incoming messages
         socket.on("message", (mes) => {
             console.log(`Recieved encrypted message: ${mes.content}`)
-            const message = {message: {content: decryptMessage(mes.content), time: mes.time, user: mes.user, uid: mes.uid}, id: mes.length}
+            let message = {message: {content: decryptMessage(mes.content), time: mes.time, user: mes.user, uid: mes.uid}, id: messages.length, reply: mes.reply ? mes.reply : null}
+            if (message.reply) {
+                message.reply.content = decryptMessage(message.reply.content);
+            }
             setMessages([
                 ...messages,
                 message
@@ -43,7 +46,15 @@ export function MessageBox({getUserName, socket, encryptMessage, decryptMessage}
     }, [messages]);
 
     function generateMessage() {
-        return {content: encryptMessage(messageData), time: getTime(), user: getUserName(), uid: messageID};
+        var rep = replyMessage;
+        if (rep) {
+            rep.message.content = encryptMessage(rep.message.content);
+            if (rep.reply) {
+                rep.reply = null;
+            }
+        }
+        clearReply()
+        return {content: encryptMessage(messageData), time: getTime(), user: getUserName(), uid: messageID, reply: rep ? rep.message : null};
     }
 
     function addUserMessage() {
@@ -96,9 +107,9 @@ export function MessageBox({getUserName, socket, encryptMessage, decryptMessage}
                     i =><div key={i.id} class={getMessageClass(i)}>
                             <div>
                                 <div className='bubble'>
-                                    {i.message.reply && <div><b>{i.message.reply.user}</b>: {i.message.reply.content}</div>}
+                                    {i.reply && <div className={(i.message.user.toLowerCase() === 'admin') ? "message-reply-admin" : (i.message.user === getUserName() ? "message-reply-user" : "message-reply-other")}><b>{i.reply.user}</b>: {i.reply.content}</div>}
                                     <div>{parseMessage(i)}</div>
-                                    {i.message.user === getUserName() ? null : <button class="button-extra" onClick={() => {setReplyMessage(i)}}>reply</button>}
+                                    {i.message.user === getUserName() ? null : <button class="button-extra" onClick={() => {setReplyMessage(JSON.parse(JSON.stringify(i)))}}>reply</button>}
                                 </div>
                                 {(i.message.user !== getUserName()) ? <div className='message-info'>{i.message.user} at {i.message.time}</div> : <div className='message-info'></div>}
                             </div>

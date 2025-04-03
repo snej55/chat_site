@@ -141,6 +141,10 @@ io.on("connection", (socket) => {
           if (!(socs_sent_to.includes(soc)) && soc != io.socket) {
             var message_encrypted = JSON.parse(JSON.stringify(mes)); // create a clone
             message_encrypted.content = AES.encrypt(mes.content, clientENC[soc.id].encSecret, {iv: clientENC[soc.id].encIV}).toString();
+            if (message_encrypted.reply) {
+              console.log(`encrypting reply: ${message_encrypted.reply.content}`)
+              message_encrypted.reply.content = AES.encrypt(mes.reply.content, clientENC[soc.id].encSecret, {iv: clientENC[soc.id].encIV}).toString()
+            }
             soc.emit("message", message_encrypted); // TODO: Change this to message_encrypted
             socs_sent_to.push(soc);
             console.log(soc.id);
@@ -275,10 +279,16 @@ io.on("connection", (socket) => {
     try {
       // Broadcast the message to all connected clients
       console.log(`Encrypted message: ${cypher_message.content}`);
-      const bytes = AES.decrypt(cypher_message.content, clientENC[socket.id].encSecret, {iv: clientENC[socket.id].encIV});
+      var bytes = AES.decrypt(cypher_message.content, clientENC[socket.id].encSecret, {iv: clientENC[socket.id].encIV});
       var message = cypher_message;
       message.content = bytes.toString(enc.Utf8);
       console.log(`Decrypted message: ${message.content}`);
+
+      if (cypher_message.reply) {
+        bytes = AES.decrypt(cypher_message.reply.content, clientENC[socket.id].encSecret, {iv: clientENC[socket.id].encIV});
+        message.reply.content = bytes.toString(enc.Utf8);
+        console.log(`Decrypted message reply: ${message.reply.content}`);
+      }
 
 
       blockedWords.forEach((word) => {

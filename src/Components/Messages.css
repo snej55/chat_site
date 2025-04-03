@@ -259,6 +259,7 @@ p.watermark#wm1{
     border-top: 1px solid #37415a;
     display: flex;
     flex-direction: column;
+    border-radius: 5px;
 }
 
 .reply-preview-header {
@@ -272,7 +273,9 @@ p.watermark#wm1{
 .reply-preview {
     display: block;
     padding: 5px;
-    border-radius: 5px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    /* border-radius: 5px; */
     background-color: #242e45;
     text-align: left;
     /* width: fit-content; */
@@ -298,4 +301,28 @@ p.watermark#wm1{
 .reply-remove-button:hover {
     background-color: #fff;
     transform: scale(0.8);
+}
+
+.message-reply-user {
+    background-color: #105c11;
+    padding: 5px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    font-style: italic;
+}
+
+.message-reply-admin {
+    background-color: #740c14;
+    padding: 5px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    font-style: italic;
+}
+
+.message-reply-other {
+    background-color: #37415a;
+    padding: 5px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    font-style: italic;
 }
