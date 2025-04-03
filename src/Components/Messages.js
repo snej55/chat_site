@@ -118,6 +118,14 @@ export function MessageBox({getUserName, socket, encryptMessage, decryptMessage}
                 {/* dummy div to automatically scroll to bottom */}
                 <div style={{ float:"left", clear: "both" }} id="messageEnd">
                 </div>
+                <div style={{ float:"left", clear: "both" }} id="messageEnd">
+                </div>
+                <div style={{ float:"left", clear: "both" }} id="messageEnd">
+                </div>
+                <div style={{ float:"left", clear: "both" }} id="messageEnd">
+                </div>
+                <div style={{ float:"left", clear: "both" }} id="messageEnd">
+                </div>
             </div>
 
             {replyMessage && <div className="reply-preview-container">
