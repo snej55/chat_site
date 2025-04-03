@@ -100,6 +100,8 @@ export function MessageBox({getUserName, socket, encryptMessage, decryptMessage}
     if (addedMessage) {
         setShouldScroll(true);
         setAddedMessage(false);
+        document.getElementsByClassName('message-text')[0].value = '';
+        setMessageData('');
     }
 
     if (shouldScroll) {
@@ -141,7 +143,7 @@ export function MessageBox({getUserName, socket, encryptMessage, decryptMessage}
             </div>}
             
             <div className='input-box'>
-                <textarea maxlength="500" className='message-text' onChange={e => setMessageData(e.target.value)} placeholder='Enter your message here...' onKeyDown={e => (e.key === 'Enter' ? addUserMessage() : null)}></textarea>
+                <textarea maxlength="500" className='message-text' onChange={e => setMessageData(e.target.value)} value={messageData} placeholder='Enter your message here...' onKeyDown={e => (e.key === 'Enter' ? addUserMessage() : null)}></textarea>
                 <button className="send-button" onClick={addUserMessage}>Send</button>
                 
             </div>

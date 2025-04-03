@@ -149,7 +149,7 @@ export default function App() {
       socket.off("kicked");
     }
   });
-
+  
   // if username is undefined,
   // banish them to the login page.
   if (!username) {
@@ -192,6 +192,7 @@ export default function App() {
     return bytes.toString(enc.Utf8);
   }
 
+  window.scrollTo(0, 0);
   // return actual message box
   return (
     <div className="container">

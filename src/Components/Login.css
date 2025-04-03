@@ -18,6 +18,10 @@ body {
     background: linear-gradient(#000005, #191e3c);
 }
 
+main {
+    height: 100%;
+}
+
 /* Start of background */
 @keyframes move-it {
     0% {
@@ -29,17 +33,24 @@ body {
   }
   
   body {  
+    position: absolute;
     overflow: hidden;
+    height: 100%;
+    min-height: 100%;
+    overflow-y: scroll;
     background: repeating-linear-gradient(
     45deg,
     #191e3c,
     #191e3c 5%,
     #141932 5%,
     #141932 10%
+    
   );
     background-size: 400px 400px;
     animation: move-it 15s linear infinite;
   }
+
+
 
 /* End of */
 
