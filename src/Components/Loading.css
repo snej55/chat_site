@@ -1,0 +1,44 @@
+.loading-wrapper {
+    flex-direction: column;
+    align-items: center;
+}
+
+@keyframes wave {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+/* HTML: <div class="loader"></div> */
+/* HTML: <div class="loader"></div> */
+.loading-text {
+    width: fit-content;
+    padding-bottom: 5px;
+    font-weight: bold;
+    font-family: monospace;
+    font-size: 20px;
+    overflow: hidden;
+    color: #0000;
+    text-shadow: 0 0 0 #ffffff,10ch 0 0 #ffffff;
+    background: linear-gradient(#ffffff 0 0) bottom left/0% 3px no-repeat;
+    animation: l14 1.5s infinite;
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+  }
+  .loading:before {
+    content: "Loading...";
+  }
+  @keyframes l14 {
+      80%  {text-shadow:    0  0 0 #ffffff,10ch 0 0 #ffffff;background-size:100% 3px}
+      100% {text-shadow: -10ch 0 0 #ffffff,0    0 0 #ffffff}
+  }
+
+.loading-support {
+    font-style: italic;
+}
