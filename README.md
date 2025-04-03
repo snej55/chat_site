@@ -86,7 +86,7 @@ For more information on how the secret generation works, look here: [Diffie-Hell
 > Restarting the server with clients still running can cause issues (as the server will not have the clientENC data for them). Make sure to restart all clients after > restarting the server.
 
 ## TODO:
- * Fix input box clearing
+ * ~~Fix input box clearing~~
  * ~~Fix autoscrolling~~
  * ~~Fix announcement hard coded in issue~~
  * ~~Replying~~
