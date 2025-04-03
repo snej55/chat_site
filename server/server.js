@@ -97,7 +97,7 @@ const mute_list = [];
 // {username: ip}
 const banned = {};
 
-const admin_token = "beans"; // use 'beans' or something for testing
+const admin_token = "beans"; // not the actual password haha
 
 // initialize socket.io
 const io = new Server(server, {
