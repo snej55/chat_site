@@ -11,6 +11,9 @@ export function MessageBox({getUserName, socket, encryptMessage, decryptMessage}
     const [firstConnection, setFirstConnection] = useState(false);
     const [replyMessage, setReplyMessage] = useState(null);
 
+    const [shouldScroll, setShouldScroll] = useState(false);
+    const [addedMessage, setAddedMessage] = useState(false);
+
     // check if this is the first time we connected
     if (!firstConnection) {
         setFirstConnection(true);
@@ -18,7 +21,7 @@ export function MessageBox({getUserName, socket, encryptMessage, decryptMessage}
     }
 
     const scrollToBottom = () => {
-        document.getElementById("messageEnd").scrollIntoView({ behavior: "smooth" });
+        document.getElementById("messageEnd").scrollIntoView({behavior: 'smooth'})
     }
 
     useEffect(() => {
@@ -33,7 +36,7 @@ export function MessageBox({getUserName, socket, encryptMessage, decryptMessage}
                 ...messages,
                 message
             ]);
-            scrollToBottom();
+            setAddedMessage(true);
         });
 
         // clean up
@@ -94,11 +97,21 @@ export function MessageBox({getUserName, socket, encryptMessage, decryptMessage}
         setReplyMessage(null);
     }
 
+    if (addedMessage) {
+        setShouldScroll(true);
+        setAddedMessage(false);
+    }
+
+    if (shouldScroll) {
+        setShouldScroll(false);
+        scrollToBottom();
+    }
+
     return (
         <div className="chat-container">
             {getUserName() === "ADMIN" && <div className="chat-header-admin">{getUserName()} in ChatBox Release v1.0.0</div>}
             {getUserName() !== "ADMIN" && <div className="chat-header">{getUserName()} in ChatBox Release v1.0.0</div>}
-            <div className='message-box'>
+            <div className='message-box' id="msbx">
                 <p className="watermark" id="wm1">
                     {/* Invisable watermark math stuff prevents moving out of the screen*/}
                     {getUserName().repeat(Math.floor(70 / getUserName().length))}
@@ -116,15 +129,8 @@ export function MessageBox({getUserName, socket, encryptMessage, decryptMessage}
                         </div>
                 )}
                 {/* dummy div to automatically scroll to bottom */}
-                <div style={{ float:"left", clear: "both" }} id="messageEnd">
-                </div>
-                <div style={{ float:"left", clear: "both" }} id="messageEnd">
-                </div>
-                <div style={{ float:"left", clear: "both" }} id="messageEnd">
-                </div>
-                <div style={{ float:"left", clear: "both" }} id="messageEnd">
-                </div>
-                <div style={{ float:"left", clear: "both" }} id="messageEnd">
+                <div style={{ float:"left", clear: "both", padding: "40px", background: "#FFFFFF", opacity: 0.0}} id="messageEnd">
+                    
                 </div>
             </div>
 
