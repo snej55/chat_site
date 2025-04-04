@@ -36,7 +36,10 @@ export function MessageBox({getUserName, socket, encryptMessage, decryptMessage}
                 ...messages,
                 message
             ]);
-            setAddedMessage(true);
+
+            if (message.user.toLowerCase() === getUserName().toLowerCase()) {
+                setAddedMessage(true);
+            }
         });
 
         // clean up
