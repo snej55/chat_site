@@ -83,7 +83,7 @@ decrypted = AES.decrypt(cypher, clientENC[socket.id].encSecret, {iv: clientENC[s
 For more information on how the secret generation works, look here: [Diffie-Hellman Key Exchange](https://medium.com/@dazimax/how-to-securely-exchange-encryption-decryption-keys-over-a-public-communication-network-27f225af4fdb), or look at the encryption section in *server.js*.
 
 > [!CAUTION]
-> Restarting the server with clients still running can cause issues (as the server will not have the clientENC data for them). Make sure to restart all clients after > restarting the server.
+> Restarting the server with clients still running can cause issues (as the server will not have the `clientENC` data for them). Make sure to restart all clients after > restarting the server.
 
 ## TODO:
  * ~~Fix input box clearing~~
