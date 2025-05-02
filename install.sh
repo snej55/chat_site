@@ -1,6 +1,5 @@
 npm install
 
 cd server 
-npm start
+npm install
 cd ..
-npm start
