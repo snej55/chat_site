@@ -12,7 +12,7 @@ This is a basic messaging client, that sends and recieves messages via socket.io
  * User List
  * Announcements
 
-![image](https://github.com/snej55/chat_site/blob/main/media/Screenshot_1.png)
+![image](https://github.com/snej55/chat_site/blob/main/media/screenshot_2.png)
 
 
 >[!NOTE]
