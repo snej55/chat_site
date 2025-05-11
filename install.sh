@@ -1,5 +1,3 @@
 npm install
 
-cd server 
-npm install
-cd ..
+cd server; npm install
