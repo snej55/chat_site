@@ -11,7 +11,8 @@ body{
     /* background: -webkit-linear-gradient(#191e3c, #000005);
     background: -moz-linear-gradient(#191e3c, #000005);
     background: linear-gradient(#191e3c, #000005); */
-    background-color: #13172f;
+    background-color: #13172fa6;
+    backdrop-filter: blur(10px);
     /* border-radius: 10px; */
     /* overflow: hidden; */
     box-shadow: 20px 20px 50px #1111;
