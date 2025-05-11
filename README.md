@@ -31,7 +31,7 @@ cd chat_site
 ```
 
 >[!TIP]
->One Step Installation (Skips step2-4)
+>One Step Installation (Skips steps 2-3)
 >```bash
 > bash install.sh
 >```
