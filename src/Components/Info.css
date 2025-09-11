@@ -9,8 +9,7 @@
     border-radius: 1;
     height: 100vh;
     margin-right: 20px;
-    background-color: #2b315200;
-    backdrop-filter: blur(10px);
+    background-color: #2b31528a;
     border: 1px solid #37415a;
     user-select: none;
     -moz-user-select: -moz-none;

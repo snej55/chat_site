@@ -28,6 +28,7 @@ export function MessageBox({getUserName, socket, encryptMessage, decryptMessage}
         // listen for incoming messages
         socket.on("message", (mes) => {
             console.log(`Recieved encrypted message: ${mes.content}`)
+            console.log(`From user: ${mes.user}`)
             let message = {message: {content: decryptMessage(mes.content), time: mes.time, user: mes.user, uid: mes.uid}, id: messages.length, reply: mes.reply ? mes.reply : null}
             if (message.reply) {
                 message.reply.content = decryptMessage(message.reply.content);
@@ -37,7 +38,7 @@ export function MessageBox({getUserName, socket, encryptMessage, decryptMessage}
                 message
             ]);
 
-            if (message.user.toLowerCase() === getUserName().toLowerCase()) {
+            if (message.user === getUserName()) {
                 setAddedMessage(true);
             }
         });
@@ -122,7 +123,7 @@ export function MessageBox({getUserName, socket, encryptMessage, decryptMessage}
                     {getUserName().repeat(Math.floor(70 / getUserName().length))}
                 </p>
                 {messages.map(
-                    i =><div key={i.id} class={getMessageClass(i)}>
+                    i =><div key={i.id} className={getMessageClass(i)}>
                             <div>
                                 <div className='bubble'>
                                     {i.reply && <div className={(i.message.user.toLowerCase() === 'admin') ? "message-reply-admin" : (i.message.user === getUserName() ? "message-reply-user" : "message-reply-other")}><b>{i.reply.user}</b>: {i.reply.content}</div>}
@@ -146,7 +147,7 @@ export function MessageBox({getUserName, socket, encryptMessage, decryptMessage}
             </div>}
             
             <div className='input-box'>
-                <textarea maxlength="500" className='message-text' onChange={e => setMessageData(e.target.value)} value={messageData} placeholder='Enter your message here...' onKeyDown={e => (e.key === 'Enter' ? addUserMessage() : null)}></textarea>
+                <textarea maxLength="500" className='message-text' onChange={e => setMessageData(e.target.value)} value={messageData} placeholder='Enter your message here...' onKeyDown={e => (e.key === 'Enter' ? addUserMessage() : null)}></textarea>
                 <button className="send-button" onClick={addUserMessage}>Send</button>
                 
             </div>
