@@ -1,10 +1,12 @@
-body,html {
+body,
+html {
   height: 100vh;
   margin: 0;
   padding: 0;
   background-color: #111;
   color: white;
-  font-family: Arial,sans-serif
+  font-family: Arial, sans-serif;
+  overscroll-behavior: none;
 }
 
 .container {
@@ -14,7 +16,20 @@ body,html {
 }
 
 /* hide page scrollbar */
-html { scrollbar-width: none; } /* Firefox */
-body { -ms-overflow-style: none; } /* IE and Edge */
-body::-webkit-scrollbar, body::-webkit-scrollbar-button { display: none; } /* Chrome */
+html {
+  scrollbar-width: none;
+}
+
+/* Firefox */
+body {
+  -ms-overflow-style: none;
+}
+
+/* IE and Edge */
+body::-webkit-scrollbar,
+body::-webkit-scrollbar-button {
+  display: none;
+}
+
+/* Chrome */
 /* end hide page scrollbar */
