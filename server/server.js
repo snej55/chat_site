@@ -74,6 +74,7 @@ const clientENC = [];
 // initialize express server
 const express = require("express");
 const http = require("http");
+const https = require("https");
 const { Server } = require("socket.io");
 // const crypto = require('crypto');
 const CryptoJS = require("crypto-js");
@@ -82,11 +83,28 @@ const { AES, enc } = require("crypto-js");
 const { createHash } = require('crypto');
 
 const fs = require("fs");
+const path = require("path");
 const blockedWords = JSON.parse(fs.readFileSync("blockedWords.json", "utf8")).blockedWords;
 const blockedWordsReplacements = JSON.parse(fs.readFileSync("new-blocked-words.json", "utf-8"));
 const periodicTableElements = JSON.parse(fs.readFileSync("funnyreplacements.json","utf8")).periodicTableElements
 const app = express();
-const server = http.createServer(app);
+
+// --- HTTPS (Certbot / Let's Encrypt) --- //
+const DOMAIN = "app.nathanyin.com";
+const sslOptions = {
+  key:  fs.readFileSync(`/etc/letsencrypt/live/${DOMAIN}/privkey.pem`),
+  cert: fs.readFileSync(`/etc/letsencrypt/live/${DOMAIN}/fullchain.pem`),
+};
+const server = https.createServer(sslOptions, app);
+
+// HTTP -> HTTPS redirect on port 80
+const httpRedirect = express();
+httpRedirect.all("*", (req, res) => {
+  res.redirect(301, `https://${req.headers.host}${req.url}`);
+});
+http.createServer(httpRedirect).listen(80, () => {
+  console.log("HTTP redirect server listening on port 80");
+});
 // list to store ip addresses that have connected.
 const addresses_connected = [];
 const usernames = [];
@@ -509,7 +527,7 @@ io.on("connection", (socket) => {
 });
 
 // list to PORT
-PORT = 5001
+PORT = 443
 server.listen(PORT, () => {
-  console.log(`Server is running on port *${PORT}`);
+  console.log(`HTTPS server is running on port *${PORT}`);
 });
