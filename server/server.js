@@ -90,7 +90,7 @@ const periodicTableElements = JSON.parse(fs.readFileSync("funnyreplacements.json
 const app = express();
 
 // --- HTTPS (Certbot / Let's Encrypt) --- //
-const DOMAIN = "app.nathanyin.com";
+const DOMAIN = "chat.nathanyin.com";
 const certPath = `/etc/letsencrypt/live/${DOMAIN}`;
 let sslOptions = null;
 let useSSL = false;
