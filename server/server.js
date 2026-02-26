@@ -91,20 +91,47 @@ const app = express();
 
 // --- HTTPS (Certbot / Let's Encrypt) --- //
 const DOMAIN = "app.nathanyin.com";
-const sslOptions = {
-  key:  fs.readFileSync(`/etc/letsencrypt/live/${DOMAIN}/privkey.pem`),
-  cert: fs.readFileSync(`/etc/letsencrypt/live/${DOMAIN}/fullchain.pem`),
-};
-const server = https.createServer(sslOptions, app);
+const certPath = `/etc/letsencrypt/live/${DOMAIN}`;
+let sslOptions = null;
+let useSSL = false;
 
-// HTTP -> HTTPS redirect on port 80
-const httpRedirect = express();
-httpRedirect.all("*", (req, res) => {
-  res.redirect(301, `https://${req.headers.host}${req.url}`);
-});
-http.createServer(httpRedirect).listen(80, () => {
-  console.log("HTTP redirect server listening on port 80");
-});
+try {
+  sslOptions = {
+    key:  fs.readFileSync(path.join(certPath, "privkey.pem")),
+    cert: fs.readFileSync(path.join(certPath, "fullchain.pem")),
+  };
+  useSSL = true;
+  console.log("SSL certificates loaded successfully");
+} catch (err) {
+  console.warn("SSL certificates not found — running in HTTP-only (dev) mode");
+}
+
+// Backend server (HTTPS in production, HTTP in dev)
+const server = useSSL
+  ? https.createServer(sslOptions, app)
+  : http.createServer(app);
+
+if (useSSL) {
+  // Frontend HTTPS server (React static build) on port 443
+  const frontendApp = express();
+  const buildPath = path.join(__dirname, "..", "build");
+  frontendApp.use(express.static(buildPath));
+  frontendApp.get("*", (req, res) => {
+    res.sendFile(path.join(buildPath, "index.html"));
+  });
+  https.createServer(sslOptions, frontendApp).listen(443, () => {
+    console.log("Frontend HTTPS server listening on port 443");
+  });
+
+  // HTTP -> HTTPS redirect on port 80
+  const httpRedirect = express();
+  httpRedirect.all("*", (req, res) => {
+    res.redirect(301, `https://${req.headers.host}${req.url}`);
+  });
+  http.createServer(httpRedirect).listen(80, () => {
+    console.log("HTTP redirect server listening on port 80");
+  });
+}
 // list to store ip addresses that have connected.
 const addresses_connected = [];
 const usernames = [];
