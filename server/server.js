@@ -172,8 +172,22 @@ io.on("connection", (socket) => {
   // check if this ip address has been banned
   if (banned_addresses.includes(socket.request.connection.remoteAddress)) {
     console.log(`This ip is banned: ${socket.request.connection.remoteAddress}. Refusing connection: `);
+    socket.emit("kicked", true); // true = ban (sets localStorage tag)
     socket.disconnect();
     console.log(`Socket disconnected!`);
+  }
+
+  // check browser-side ban/mute tags (prevents VPN evasion)
+  if (socket.handshake.auth && socket.handshake.auth.browserBanned) {
+    console.log(`Browser ban tag detected for socket ${socket.id}. Refusing connection.`);
+    socket.emit("kicked", true);
+    socket.disconnect();
+    console.log(`Socket disconnected (browser ban)!`);
+  }
+  if (socket.handshake.auth && socket.handshake.auth.browserMuted) {
+    console.log(`Browser mute tag detected for socket ${socket.id}. Auto-muting.`);
+    // We'll add to mute_list once username is set (handled below)
+    socket.browserMuted = true;
   }
 
   // send a message to all clients
@@ -274,7 +288,7 @@ io.on("connection", (socket) => {
             banned_addresses.push(soc.handshake.address);
             banned[uname] = soc.handshake.address;
             console.log(`Banned ip address: ${soc.handshake.address}`);
-            soc.emit("kicked", true);
+            soc.emit("kicked", true); // true = ban, sets localStorage tag in browser
             soc.disconnect();
             console.log(banned_addresses)
           }
@@ -290,6 +304,11 @@ io.on("connection", (socket) => {
             banned_addresses.splice(banned_addresses.indexOf(banned_ip), 1); // remove ip
             console.log(`New banned addresses: ${banned_addresses}`);
             banned[uname] = null;
+          }
+          // Also clear browser ban tag if user is currently connected
+          let soc = getSocketFromUsername(uname);
+          if (soc) {
+            soc.emit("unbanned");
           }
         });
         break;
@@ -310,7 +329,12 @@ io.on("connection", (socket) => {
             if (member.username.toLowerCase() == uname.toLowerCase()) {
               mute_list.splice(mute_list.indexOf(member), 1);
             }
-          })
+          });
+          // Clear browser mute tag
+          let soc = getSocketFromUsername(uname);
+          if (soc) {
+            soc.emit("unmuted");
+          }
         });
         break;
       default:
@@ -390,6 +414,13 @@ io.on("connection", (socket) => {
     var messageData = username + " has joined the chatbox!"
     usernames.push({'username': username, 'socket_id': socket.id});
     console.log(usernames);
+
+    // auto-mute if browser had a mute tag
+    if (socket.browserMuted) {
+      console.log(`Auto-muting ${username} (browser mute tag)`);
+      mute_list.push({username: username, socket_id: socket.id});
+      socket.emit("muted", true);
+    }
 
     // update username lists on client side
     io.emit("update_users", usernames);

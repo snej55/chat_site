@@ -19,7 +19,12 @@ import { string2Hash } from "./utils.js";
 // rasp pi: 10.24.79.219
 
 // !! PLEASE USE localhost:PORT for testing to avoid issues with serverside code
-const socket = io("https://app.nathanyin.com:5001");
+const socket = io("https://app.nathanyin.com:5001", {
+  auth: {
+    browserBanned: localStorage.getItem("banned") === "true",
+    browserMuted: localStorage.getItem("muted") === "true",
+  }
+});
 
 export default function App() {
   const [username, setUserName] = useState();
@@ -138,15 +143,30 @@ export default function App() {
   });
 
   useEffect(() => {
-    socket.on("kicked", (_) => {
+    socket.on("kicked", (isBan) => {
+      if (isBan) {
+        localStorage.setItem("banned", "true");
+      }
       window.location.reload();
-      // sleep(5000);
-      // console.log("sleeping[debug]")
-      // alert("You have been kicked from the chatbox!");
+    });
+
+    socket.on("muted", (_) => {
+      localStorage.setItem("muted", "true");
+    });
+
+    socket.on("unmuted", (_) => {
+      localStorage.removeItem("muted");
+    });
+
+    socket.on("unbanned", (_) => {
+      localStorage.removeItem("banned");
     });
     
     return () => {
       socket.off("kicked");
+      socket.off("muted");
+      socket.off("unmuted");
+      socket.off("unbanned");
     }
   });
   
