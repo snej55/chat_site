@@ -19,7 +19,7 @@ import { string2Hash } from "./utils.js";
 // rasp pi: 10.24.79.219
 
 // !! PLEASE USE localhost:PORT for testing to avoid issues with serverside code
-const socket = io("https://app.nathanyin.com");
+const socket = io("https://app.nathanyin.com:5001");
 
 export default function App() {
   const [username, setUserName] = useState();

@@ -526,8 +526,8 @@ io.on("connection", (socket) => {
   })
 });
 
-// list to PORT
-PORT = 443
+// Backend API port
+PORT = 5001
 server.listen(PORT, () => {
-  console.log(`HTTPS server is running on port *${PORT}`);
+  console.log(`Backend HTTPS server is running on port *${PORT}`);
 });
